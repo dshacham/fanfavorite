@@ -1,0 +1,27 @@
+@import 'index';
+
+footer {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: $darkest-brown;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $mocha-op;
+    box-shadow: 0 -1px 5px $mocha;
+
+    .footer-name {
+        font-family: 'Calistoga', cursive;
+    }
+
+    .footer-contact {
+        a{
+            margin: 0 0.5rem;
+            font-size: 2rem;
+            color: $mocha-op;
+        }
+    }
+}

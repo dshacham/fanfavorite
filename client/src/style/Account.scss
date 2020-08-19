@@ -1,0 +1,181 @@
+@import "index";
+
+.account-container {
+    width: 100%;
+    min-height: 65vh;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 2rem 0 3.5rem;
+
+    a {
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .personal-account {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-basis: 22%;
+        padding: 2rem;
+        box-shadow: -1px 2px 5px $mocha;
+
+        .h4-account {
+            font-size: 1.8rem;
+            text-align: center;
+            color: $dark-brown;
+            margin-bottom: 1rem;
+        }
+
+        .personal-info {
+            margin-bottom: 1rem;
+
+            .label {
+                margin-top: 1rem;
+                color: $mocha;
+            }
+
+            .info {
+                font-size: 1.3rem;
+                color: $dark-brown;
+                font-weight: bold;
+            }
+
+            p {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+
+            .edit-btn, .save-button {
+                width: 100%;
+                background-color: $darkest-brown;
+                color: $mocha-op;
+                border-radius: $border;
+                padding: 0.7rem;
+                margin-top: 2rem;
+                cursor: pointer;
+                font-weight: bold;
+                align-self: center;
+            }
+
+            .create-links {
+                display: flex;
+                flex-direction: column;
+                margin: 4rem 0 1rem;
+            }
+
+            // edit form:
+            .edit-form {
+                display: flex;
+                flex-direction: column;
+
+                .edit-label-user-info {
+                    padding: 0.3rem;
+                }
+
+                .edit-label {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    input,
+                    textarea {
+                        height: 2.5rem;
+                        width: 100%;
+                        padding: 1ch;
+                        margin: 0.3rem 0;
+                        border: 1px solid $dark-brown;
+                        border-radius: 0.1rem;
+                        font-size: 1.1rem;
+                        color: $dark-brown;
+
+                        &::placeholder {
+                            font-family: 'El Messiri', sans-serif;
+                        }
+                    }
+                }
+
+                .save-button {
+                    margin-top: 1rem;
+                    padding: 0.5rem 2.5rem;
+                    width: 50%;
+                }
+            
+                .button-margin {
+                    margin-top: 2rem;
+                    padding: 0.5rem 2.5rem;
+                }
+
+                .cancel-edit {
+                    text-decoration: underline;
+                    cursor: pointer;
+                    font-size: 0.9rem;
+                    color: $mocha;
+                    align-self: center;
+                    margin-top: 0.5rem;
+                }
+            }
+        }  
+    }
+    
+    .personal-lists {
+        padding: 2rem 0 2rem;
+        margin: 2rem;
+        display: flex;
+        justify-content: space-around;
+        flex-basis: 70%;
+    
+        .fic-list-container, .eps-list-container {
+            width: 100%;
+            padding: 1rem 2rem 3rem 2rem;
+            margin-right: 1rem;
+            display: flex;
+            flex-direction: column;
+            border: 0.1rem solid rgba(105, 68, 11, 0.5);
+            border-radius: $border;
+            box-shadow: 0 1px 5px $mocha;
+
+            .lists-title {
+                font-size: 1.5rem;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+    
+            .no-lists {
+                text-align: center;
+            }
+
+            .create-btn {
+                width: 30%;
+                background-color: $darkest-brown;
+                color: $mocha-op;
+                border-radius: $border;
+                padding: 0.7rem;
+                margin-top: 2rem;
+                cursor: pointer;
+                font-weight: bold;
+                align-self: center;
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width: 768px) {
+    .account-container {
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        .personal-account {
+            width: 35%;
+        }
+        .personal-lists {
+            width: 60%;
+
+        }
+    }
+}
+
+
