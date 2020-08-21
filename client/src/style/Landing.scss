@@ -1,8 +1,26 @@
 @import 'index';
 
 .landing {
-    img {
-        max-width: 100%;
-        display: block;
-    }
+    // img {
+    //     max-width: 100%;
+    //     display: block;
+    // }
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+
+        .number-container {
+            display: flex;
+            align-items: center;
+            margin: 0 4rem;
+
+            .number {
+                font-size: 20rem;
+            }
+
+            .text {
+                font-size: 2.5rem;
+            }
+        }
+
 }

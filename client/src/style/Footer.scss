@@ -5,23 +5,27 @@ footer {
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: $darkest-brown;
+    background-color: $cafe-au-lait;
     padding: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: $mocha-op;
-    box-shadow: 0 -1px 5px $mocha;
+    color: $coffee-darker;
+    box-shadow: 0 -2px 5px $coffee-darker;
 
     .footer-name {
         font-family: 'Calistoga', cursive;
     }
 
     .footer-contact {
-        a{
+        a {
             margin: 0 0.5rem;
             font-size: 2rem;
-            color: $mocha-op;
+            color: $coffee-darker;
+
+            .icon:hover {
+                color: $coffee
+            }
         }
     }
 }

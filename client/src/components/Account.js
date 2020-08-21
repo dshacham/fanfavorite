@@ -2,14 +2,14 @@ import React, { useState, useEffect, useContext, Fragment } from 'react';
 import Context from './Context';
 import { useHistory, Link } from 'react-router-dom';
 import '../style/Account.scss';
-import ListCard from './ListCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import ListCard from './ListCard';
 
 const Account = () => {
     const history = useHistory();
 
-    const { setLoggedIn, getUserData, userData, setUserData, setListInfo, token } = useContext(Context);
+    const { setLoggedIn, getUserData, userData, setUserData, setListInfo, token, userFicLists, userEpLists } = useContext(Context);
 
     const [isListClicked, setIsListClicked] = useState(false);
     // this state change fragment between info and inputs to be edited
@@ -95,13 +95,10 @@ const Account = () => {
 
     // redirect to list page
     useEffect(() => {
-        isListClicked && history.push('/list');
+        isListClicked && history.push("/list");
         isAccountDeleted && history.push('/');
     });
-
     
-    console.log(userData)
-
     return (
         <div className="account-container">
             <div className="personal-account slide-from-left">
@@ -138,8 +135,8 @@ const Account = () => {
                                 <p className="info">{userData && userData.email}</p>
                                 <button className="edit-btn" onClick={() => setEditInfo(true)}>EDIT / CHANGE PASSWORD</button>
                                 <div className="create-links">
-                                    <Link to="addficlist">Create Fan Fiction List</Link>
                                     <Link to="addepslist">Create Episodes List</Link>
+                                    <Link to="addficlist">Create Fan Fiction List</Link>
                                 </div>
                             </div>
                         </Fragment>
@@ -148,27 +145,33 @@ const Account = () => {
             <div className="personal-lists slide-from-right">
                 <div className="fic-list-container">
                     <h3 className="lists-title">Fan Fiction Lists</h3>
+                    <div className="list-item-title">
                     {
-                        userData &&
-                        userData.ficLists &&
-                        userData.ficLists.length ?
+                        userFicLists &&
+                        userFicLists &&
+                        userFicLists.length ?
                             <Fragment>
-                                {userData.ficLists.map((el, i) => <ListCard key={i} setIsListClicked={setIsListClicked} setListInfo={setListInfo} el={el} />)}
+                                {
+                                    userFicLists.map((el, i) => <ListCard className="list-card" key={i} setIsListClicked={setIsListClicked} el={el} />)
+                                }
                             </Fragment>
-                            :
+                        :
                             <Fragment>
                                 <p className="no-lists">You haven't added any lists.</p>
                             </Fragment>
                     }
+                    </div>
                 </div>
                 <div className="eps-list-container">
                     <h3 className="lists-title">Episodes Lists</h3>
                     {
-                        userData &&
-                        userData.epsLists &&
-                        userData.epsLists.length ?
+                        userEpLists &&
+                        userEpLists &&
+                        userEpLists.length ?
                             <Fragment>
-                                {userData.epsLists.map((el, i) => <ListCard key={i} setIsListClicked={setIsListClicked} setListInfo={setListInfo} el={el} />)}
+                                {
+                                    userEpLists.map((el, i) => <ListCard key={i} setIsListClicked={setIsListClicked} el={el} />)
+                                }
                             </Fragment>
                             :
                             <Fragment>
