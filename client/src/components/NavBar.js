@@ -9,6 +9,7 @@ const NavBar = () => {
     const history = useHistory();
     const { userData, setUserData, setToken, setLoggedIn, loggedIn } = useContext(Context);
 
+    const [statusChange, setStatusChange] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState(false);
@@ -39,13 +40,14 @@ const NavBar = () => {
             setToken(header);
             setUserData(data.user);
             setLoggedIn(true);
+            setStatusChange(true);
         } else {
             setErrorMsg(true);
         }
     }
 
     useEffect(() => {
-        loggedIn && history.push('/account');
+        statusChange && history.push('/account');
     });
 
     return (

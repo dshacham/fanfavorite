@@ -5,7 +5,7 @@ const auth = require("../middleware/authenticator");
 const isAdmin = require("../middleware/rolesAuthenticator");
 
 
-// Route.get("/admin", auth, isAdmin, getUsers);
+Route.get("/admin", auth, isAdmin, getUsers);
 Route.get("/", auth, getUser);
 Route.post("/", validateUser(), postUser);
 Route.post("/login", login);

@@ -4,6 +4,8 @@ const { Schema } = mongoose;
 
 const EpSchema = new Schema({
 
+    fandom: { type: String, required: true },
+
     title: { type: String, required: true },
 
     season: { type: String, required: true },

@@ -1,6 +1,7 @@
 const createError = require("http-errors");
 const User = require("../models/UserSchema");
-const FicList = require("../models/ficListSchema");
+const FicList = require("../models/FicListSchema");
+const Fic = require("../models/FicSchema");
 const { encrypt } = require("../lib/encryption");
 
 

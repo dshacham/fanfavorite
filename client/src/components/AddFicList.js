@@ -7,11 +7,11 @@ import axios from 'axios';
 const AddFicList = () => {
     const history = useHistory();
 
-    const { userData, setUserData, token} = useContext(Context);
+    const { userData, setUserData, token, setListInfo} = useContext(Context);
 
     const [fandom, setFandom] = useState('');
     const listType = 'fanfiction';
-    
+
     // route to list page after creation
     const [statusAdded, setStatusAdded] = useState(false)
 
@@ -36,12 +36,12 @@ const AddFicList = () => {
             body: JSON.stringify(ficListData)
         }
 
-        const resp = await fetch('/fanfics', postListData);
+        const resp = await fetch('/ficlists', postListData);
         const data = await resp.json();
 
-        console.log(data)
         if (data.success) {
-            setUserData(data.user)
+            setUserData(data.user);
+            setListInfo(data.ficList);
             localStorage.setItem('list-info', JSON.stringify(data.ficList));
             setStatusAdded(true)
         }

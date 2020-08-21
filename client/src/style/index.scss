@@ -66,6 +66,10 @@ ul {
     list-style: none;
 }
 
+button:focus {
+    outline: none;
+}
+
 .slide-from-left {
     -webkit-animation: slide-from-left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     animation: slide-from-left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
