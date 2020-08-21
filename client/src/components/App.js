@@ -9,6 +9,7 @@ import Footer from "./Footer";
 import Landing from "./Landing";
 import SignUp from "./SignUp";
 import Account from "./Account";
+import AddFicList from "./AddFicList";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -78,7 +79,7 @@ function App() {
     const response = await fetch('/users', options);
     const data = await response.json();
     console.log(data.user)
-    // setUserData(data.user);
+    setUserData(data.user);
   };
 
   // LOAD THE USER DATA IF LOGGED IN:
@@ -113,8 +114,8 @@ function App() {
             <Route path="/" exact component={Landing} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/account" exact component={Account} />
+            <Route path="/addficlist" exact component={AddFicList} />
             {/* <Route path="/fanfics" exact component={Fanfics} />
-            <Route path="/addfanfic" exact component={FanficForm} />
             <Route path="/fanfic" exact component={FanficInfo} />
             <Route path="/register" exact component={Register} />
             <Route path="/login" exact component={Login} />
