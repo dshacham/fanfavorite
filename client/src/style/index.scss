@@ -8,6 +8,17 @@ $mocha-op: rgba(255, 231, 196, 0.7rem);
 $dark-brown: #69440b;
 $darkest-brown: #543d37;
 
+$isabelline: #FBF2EE;
+$champagne: #F7E6DE;
+$champagne-darker: #F3DACE;
+$desert-sand: #EDC4B3;
+$tumbleweed: #DEAB90;
+$antique-brass: #C38E70;
+$cafe-au-lait: #B07D62;
+$brown-sugar: #9D6B53;
+$coffee: #8A5A44;
+$coffee-darker: #774936;
+
 /* FONTS */
 @import url("https://fonts.googleapis.com/css2?family=Calistoga&family=El+Messiri:wght@500&family=Pangolin&family=Special+Elite&display=swap");
 // font-family: 'Calistoga', cursive;
@@ -15,7 +26,7 @@ $darkest-brown: #543d37;
 // font-family: 'Special Elite', cursive;
 // font-family: 'El Messiri', sans-serif;
 
-$border: 0.2rem;
+$border: 0.15rem;
 
 /* BASIC RULES */
 
@@ -35,8 +46,8 @@ html {
 body {
     
     font-family: 'El Messiri', sans-serif;
-    background-color: $lighter-brown;
-    color: $dark-brown;
+    background-color: $champagne-darker;
+    color: $coffee;
     position: relative;
     min-height: 100%;
     padding-bottom: 6rem;
@@ -44,7 +55,11 @@ body {
 
 a {
     text-decoration: none;
-    color: $mocha;
+    color: $brown-sugar;
+}
+
+a:hover {
+    color: $coffee-darker
 }
 
 ul {

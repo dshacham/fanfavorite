@@ -19,12 +19,12 @@
         align-items: center;
         flex-basis: 22%;
         padding: 2rem;
-        box-shadow: -1px 2px 5px $mocha;
+        box-shadow: -1px 2px 5px $coffee-darker;
 
         .h4-account {
             font-size: 1.8rem;
             text-align: center;
-            color: $dark-brown;
+            color: $brown-sugar;
             margin-bottom: 1rem;
         }
 
@@ -33,12 +33,12 @@
 
             .label {
                 margin-top: 1rem;
-                color: $mocha;
+                color: $brown-sugar;
             }
 
             .info {
                 font-size: 1.3rem;
-                color: $dark-brown;
+                color: $coffee;
                 font-weight: bold;
             }
 
@@ -49,14 +49,20 @@
 
             .edit-btn, .save-button {
                 width: 100%;
-                background-color: $darkest-brown;
-                color: $mocha-op;
+                background-color: $brown-sugar;
+                color: $champagne-darker;
                 border-radius: $border;
+                border: 1px solid $coffee-darker;
                 padding: 0.7rem;
                 margin-top: 2rem;
                 cursor: pointer;
                 font-weight: bold;
                 align-self: center;
+                box-shadow: 1px 1px 3px $coffee-darker;
+            }
+
+            .edit-btn:hover, .save-button:hover {
+                color: $desert-sand;
             }
 
             .create-links {
@@ -80,20 +86,25 @@
                     flex-direction: column;
                     justify-content: center;
 
-                    input,
-                    textarea {
+                    input {
                         height: 2.5rem;
                         width: 100%;
                         padding: 1ch;
                         margin: 0.3rem 0;
-                        border: 1px solid $dark-brown;
-                        border-radius: 0.1rem;
+                        border: 1px solid $cafe-au-lait;
+                        border-radius: $border;
                         font-size: 1.1rem;
                         color: $dark-brown;
 
                         &::placeholder {
                             font-family: 'El Messiri', sans-serif;
+                            color: $brown-sugar;
+                            font-size: 0.9rem;
                         }
+                    }
+                    input:focus {
+                        outline: none;
+                        border: 1px solid $coffee-darker;
                     }
                 }
 
@@ -111,10 +122,13 @@
                 .cancel-edit {
                     text-decoration: underline;
                     cursor: pointer;
-                    font-size: 0.9rem;
-                    color: $mocha;
+                    font-size: 0.8rem;
+                    color: $brown-sugar;
                     align-self: center;
                     margin-top: 0.5rem;
+                }
+                .cancel-edit:hover {
+                    color: $coffee-darker;
                 }
             }
         }  
@@ -135,7 +149,7 @@
             flex-direction: column;
             border: 0.1rem solid rgba(105, 68, 11, 0.5);
             border-radius: $border;
-            box-shadow: 0 1px 5px $mocha;
+            // box-shadow: -1px 2px 5px $coffee-darker;
 
             .lists-title {
                 font-size: 1.5rem;
