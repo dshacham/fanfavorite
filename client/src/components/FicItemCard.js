@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import '../style/ItemCard.scss';
 import Context from './Context';
 
-const ItemCard = ({ fic }) => {
+const FicItemCard = ({ fic }) => {
 
     return (
         <ul className="item-card">
@@ -16,4 +16,4 @@ const ItemCard = ({ fic }) => {
     )
 }
 
-export default ItemCard;
+export default FicItemCard;

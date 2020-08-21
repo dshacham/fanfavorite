@@ -4,14 +4,16 @@ import { useHistory, Link } from 'react-router-dom';
 import '../style/Account.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import ListCard from './ListCard';
+import FicListCard from './FicListCard';
+import EpListCard from './EpListCard';
 
 const Account = () => {
     const history = useHistory();
 
     const { setLoggedIn, getUserData, userData, setUserData, setListInfo, token, userFicLists, userEpLists } = useContext(Context);
 
-    const [isListClicked, setIsListClicked] = useState(false);
+    const [isFicListClicked, setIsFicListClicked] = useState(false);
+    const [isEpListClicked, setIsEpListClicked] = useState(false);
     // this state change fragment between info and inputs to be edited
     const [editInfo, setEditInfo] = useState(false);
     // this will be the new info inserted by the user:
@@ -96,7 +98,8 @@ const Account = () => {
 
     // redirect to list page
     useEffect(() => {
-        isListClicked && history.push("/list");
+        isFicListClicked && history.push("/ficlist");
+        isEpListClicked && history.push("/eplist");
         isAccountDeleted && history.push('/');
     });
     
@@ -153,7 +156,7 @@ const Account = () => {
                         userFicLists.length ?
                             <Fragment>
                                 {
-                                    userFicLists.map((el, i) => <ListCard className="list-card" key={i} setIsListClicked={setIsListClicked} el={el} />)
+                                    userFicLists.map((el, i) => <FicListCard className="list-card" key={i} setIsFicListClicked={setIsFicListClicked} el={el} />)
                                 }
                             </Fragment>
                         :
@@ -171,7 +174,7 @@ const Account = () => {
                         userEpLists.length ?
                             <Fragment>
                                 {
-                                    userEpLists.map((el, i) => <ListCard key={i} setIsListClicked={setIsListClicked} el={el} />)
+                                    userEpLists.map((el, i) => <EpListCard className="list-card" key={i} setIsEpListClicked={setIsEpListClicked} el={el} />)
                                 }
                             </Fragment>
                             :

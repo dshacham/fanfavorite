@@ -1,9 +1,9 @@
 import React, { useContext, Fragment, useEffect, useState } from 'react';
 import Context from './Context';
 import '../style/ListData.scss';
-import ItemCard from './ItemCard';
+import FicItemCard from './FicItemCard';
 
-const ListData = () => {
+const FicListData = () => {
     const { listInfo, setListInfo, userData, setUserData, token, userFanfics } = useContext(Context);
 
     const [fandom, setFandom] = useState('');
@@ -13,7 +13,6 @@ const ListData = () => {
     const [genre, setGenre] = useState('');
     const [description, setDescription] = useState('');
     const [source, setSource] = useState('');
-
     
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -66,7 +65,7 @@ const ListData = () => {
                                 userFanfics && userFanfics.map((fic, i) => {
                                     return (
                                     fic.fic.fandom === fandom ?
-                                            <ItemCard key={i} fic={fic.fic} />
+                                            <FicItemCard key={i} fic={fic.fic} />
                                         : null
                                     )
                                 })
@@ -142,4 +141,4 @@ const ListData = () => {
     );
 }
 
-export default ListData;
+export default FicListData;

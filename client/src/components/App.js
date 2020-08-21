@@ -10,7 +10,9 @@ import Landing from "./Landing";
 import SignUp from "./SignUp";
 import Account from "./Account";
 import AddFicList from "./AddFicList";
-import ListData from "./ListData.js"
+import AddEpsList from "./AddEpsList";
+import FicListData from "./FicListData.js"
+import EpListData from "./EpListData.js"
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -73,21 +75,21 @@ function App() {
 
     const request3 = await fetch('/eplists', options);
     const response3 = await request3.json();
-    response3.epsLists &&
-    response3.epsLists.map(epsList => {
-      allEpsLists.push({epsList});
+    response3.epLists &&
+    response3.epLists.map(epList => {
+      allEpsLists.push({epList});
     });
     setUserEpLists(allEpsLists);
 
     const request4 = await fetch('/episodes', options);
     const response4 = await request4.json();
     response4.eps &&
-    response4.eps.map(eps => {
-      allEps.push({eps});
+    response4.eps.map(ep => {
+      allEps.push({ep});
     });
     setUserEpisodes(allEps);
   };
-  
+
   // FETCH USER INFO:
   const getUserData = async () => {
     const options = {
@@ -101,7 +103,6 @@ function App() {
 
     const response = await fetch('/users', options);
     const data = await response.json();
-    console.log(data)
     setUserData(data.user);
   };
 
@@ -144,16 +145,9 @@ function App() {
             <Route path="/signup" exact component={SignUp} />
             <Route path="/account" exact component={Account} />
             <Route path="/addficlist" exact component={AddFicList} />
-            <Route path="/list" exact component={ListData} />
-
-            {/* <Route path="/fanfics" exact component={Fanfics} />
-            <Route path="/fanfic" exact component={FanficInfo} />
-
-            {/* <Route path="/fanfics" exact component={Fanfics} />
-
-            <Route path="/register" exact component={Register} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/logout" component={Logout} /> */}
+            <Route path="/addepslist" exact component={AddEpsList} />
+            <Route path="/ficlist" exact component={FicListData} />
+            <Route path="/eplist" exact component={EpListData} />
           </Switch>
           <Footer />
         </Router>

@@ -4,13 +4,13 @@ import Context from './Context';
 import '../style/AddFicList.scss';
 import axios from 'axios';
 
-const AddFicList = () => {
+const AddEpsList = () => {
     const history = useHistory();
 
     const { userData, setUserData, token, setListInfo} = useContext(Context);
 
     const [fandom, setFandom] = useState('');
-    const listType = 'fanfiction';
+    const listType = 'episodes';
 
     // route to list page after creation
     const [statusAdded, setStatusAdded] = useState(false)
@@ -22,7 +22,7 @@ const AddFicList = () => {
     const handleCreateList = async (e) => {
         e.preventDefault();
 
-        const ficListData = {
+        const epListData = {
             fandom,
             listType,
         }
@@ -33,28 +33,28 @@ const AddFicList = () => {
                 "Content-Type": "application/json",
                 'x-auth': token
             },
-            body: JSON.stringify(ficListData)
+            body: JSON.stringify(epListData)
         }
 
-        const resp = await fetch('/ficlists', postListData);
+        const resp = await fetch('/eplists', postListData);
         const data = await resp.json();
 
         if (data.success) {
             setUserData(data.user);
-            setListInfo(data.ficList);
-            localStorage.setItem('list-info', JSON.stringify(data.ficList));
+            setListInfo(data.epList);
+            localStorage.setItem('list-info', JSON.stringify(data.epList));
             setStatusAdded(true)
         }
     }
 
     useEffect(() => {
-        statusAdded && history.push("/ficlist");
+        statusAdded && history.push("/eplist");
     })
 
     return (
         <div className="form-container">
             <form className="list-form" onSubmit={handleCreateList}>
-                <h2 className="h2-list">CREATE A FAN FICTION LIST</h2>
+                <h2 className="h2-list">CREATE AN EPISODE LIST</h2>
                 <label className="list-label">Fandom *
                     <input
                         className="list-input"
@@ -74,4 +74,4 @@ const AddFicList = () => {
     )
 }
 
-export default AddFicList;
+export default AddEpsList;
