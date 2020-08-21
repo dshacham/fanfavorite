@@ -40,7 +40,8 @@ function App() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'x-auth': token
       }
     };
 
@@ -50,36 +51,19 @@ function App() {
 
     const request1 = await fetch('/fanfics', options);
     const response1 = await request1.json();
-    console.log(response1.data)
-    response1.data && response1.data.fanfics.map(ficList => {
-      allFicLists.push({ficList
-        // fandom: ficList.fandom,
-        // fics: ficList.fics,
-        // author: ficList.author,
-        // ship: ficList.ship,
-        // genre: ficList.genre,
-        // description: ficList.description,
-        // source: ficList.source,
-      });
+    response1.ficLists && response1.ficLists.map(ficList => {
+      allFicLists.push({ficList});
     });
     setUserFanfics(allFicLists);
 
     const request2 = await fetch('/episodes', options);
     const response2 = await request2.json();
-    response2.data && response2.data.episodes.map(epsList => {
-      allFicLists.push({epsList
-        // fandom: ficList.fandom,
-        // fics: ficList.fics,
-        // author: ficList.author,
-        // ship: ficList.ship,
-        // genre: ficList.genre,
-        // description: ficList.description,
-        // source: ficList.source,
-      });
+    response2.epsLists && response2.epsLists.map(epsList => {
+      allFicLists.push({epsList});
     });
     setUserEpisodes(allEpsLists);
   };
-
+  
   // FETCH USER INFO:
   const getUserData = async () => {
     const options = {
@@ -91,9 +75,13 @@ function App() {
       }
     };
 
-    const request3 = await fetch('/users', options);
-    const response3 = await request3.json();
-    setUserData(response3.user);
+    const response = await fetch('/users', options);
+    const data = await response.json();
+    console.log(data.user)
+    if (data.success) {
+      setUserData(data.user);
+
+    }
   };
 
   // LOAD THE USER DATA IF LOGGED IN:
@@ -102,6 +90,10 @@ function App() {
       setLoggedIn(true);
       getUserData();
     }
+  }, []);
+
+  useEffect(() => {
+    fetchFaves();
   }, []);
 
   useEffect(() => {

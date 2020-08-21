@@ -68,6 +68,7 @@ const Account = () => {
 
         const response = await fetch('/users', newUserData);
         const data = await response.json();
+
         if (data.success) {
             setUserData(data.user);
             setEditInfo(false);

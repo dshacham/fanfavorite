@@ -1,6 +1,6 @@
 const createError = require("http-errors");
-const User = require("../models/userSchema");
-const Fic = require("../models/ficSchema");
+const User = require("../models/UserSchema");
+const FicList = require("../models/ficListSchema");
 const { encrypt } = require("../lib/encryption");
 
 
@@ -17,7 +17,7 @@ exports.getUser = async (req, res, next) => {
     const { token } = req.header;
     const { id } = req.user;
     try {
-        const user = await User.findById(id).populate('fics').populate('eps').exec();
+        const user = await User.findById(id).populate("ficLists").populate("epsLists").exec();
         res.json({ success: true, user: user });
     } catch (err) {
         next(err);
@@ -45,9 +45,8 @@ exports.putUser = async (req, res, next) => {
             user.password = hashedPassword;
         }
 
-        const updatedUser = await User.findByIdAndUpdate(req.user._id, user, { new: true }).populate("fics").exec();
+        const updatedUser = await User.findByIdAndUpdate(req.user._id, user, { new: true }).populate("ficLists").populate("epsLists").exec();
         if (!updatedUser) throw createError(500);
-        // console.log('updatedUser: ', updatedUser);
 
         res.json({ success: true, user: updatedUser });
     } catch (err) {

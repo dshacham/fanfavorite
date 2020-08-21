@@ -5,11 +5,11 @@ const auth = require("../middleware/authenticator");
 const isAdmin = require("../middleware/rolesAuthenticator");
 
 
-Route.get("/admin", auth, isAdmin, getUsers);
-Route.get("/:id", auth, getUser);
+// Route.get("/admin", auth, isAdmin, getUsers);
+Route.get("/", auth, getUser);
 Route.post("/", validateUser(), postUser);
 Route.post("/login", login);
-Route.put("/:id", auth, putUser);
-Route.delete("/:id", auth, deleteUser);
+Route.put("/", auth, putUser);
+Route.delete("/", auth, deleteUser);
 
 module.exports = Route;
