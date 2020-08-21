@@ -8,7 +8,9 @@ const { cors } = require("./middleware/security");
 const indexRoute = require("./routes/indexRoute");
 const userRoute = require("./routes/userRoute");
 const ficsRoute = require("./routes/ficsRoute");
+const ficListsRoute = require("./routes/ficListsRoute");
 const epsRoute = require("./routes/epsRoute");
+const epListsRoute = require("./routes/epListsRoute");
 
 const PORT = process.env.PORT || 4000;
 
@@ -23,7 +25,9 @@ server.use(express.static("client/build"));
 
 server.use("/", indexRoute);
 server.use("/users", userRoute);
+server.use("/ficlists", ficListsRoute);
 server.use("/fanfics", ficsRoute);
+server.use("/eplists", epListsRoute);
 server.use("/episodes", epsRoute);
 
 server.use((req, res, next) => {

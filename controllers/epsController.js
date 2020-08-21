@@ -3,21 +3,6 @@ const Episode = require("../models/epSchema");
 const User = require("../models/UserSchema");
 const env = require("../config/config");
 
-// // Mongo URI
-// const mongoURI = env.db;
-
-// // Create mongo connection
-// const conn = mongoose.createConnection(mongoURI);
-
-// //Init gfs
-// let gfs;
-
-// conn.once('open', () => {
-//     //Init stream
-//     gfs = Grid(conn.db, mongoose.mongo);
-//     gfs.collection("uploads");
-// });
-
 
 exports.getEps = async (req, res, next) => {
     try {

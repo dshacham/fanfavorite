@@ -3,21 +3,6 @@ const Fic = require("../models/ficSchema");
 const User = require("../models/UserSchema");
 const env = require("../config/config");
 
-// // Mongo URI
-// const mongoURI = env.db;
-
-// // Create mongo connection
-// const conn = mongoose.createConnection(mongoURI);
-
-// //Init gfs
-// let gfs;
-
-// conn.once('open', () => {
-//     //Init stream
-//     gfs = Grid(conn.db, mongoose.mongo);
-//     gfs.collection("uploads");
-// });
-
 
 exports.getFics = async (req, res, next) => {
     try {
@@ -45,7 +30,6 @@ exports.getFic = async (req, res, next) => {
 exports.postFic = async (req, res, next) => {
     try {
         const newFic = new Fic({
-            fandom: req.body.fandom,
             title: req.body.title,
             author: req.body.author,
             ship: req.body.ship,
