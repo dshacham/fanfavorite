@@ -8,10 +8,10 @@ const ListCard = ({ el, setIsListClicked }) => {
     return (
         <div>
             <button onClick={() => {
-                // setListInfo(el);
+                setListInfo(el);
                 localStorage.setItem('list-info', JSON.stringify(el));
                 setIsListClicked(true);
-            }} className="to-list">{el.fandom}</button>
+            }} className="to-list">{el.ficList.fandom}</button>
         </div>
     )
 }

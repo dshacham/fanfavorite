@@ -15,10 +15,12 @@ import ListData from "./ListData.js"
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [userFanfics, setUserFanfics] = useState(null);
-  const [userEpisodes, setUserEpisodes] = useState(null);
-  const [listInfo, setListInfo] = useState(null);
-  const [listItems, setListItems] = useState(null);
+  const [userFicLists, setUserFicLists] = useState('');
+  const [userFanfics, setUserFanfics] = useState('');
+  const [userEpLists, setUserEpLists] = useState('');
+  const [userEpisodes, setUserEpisodes] = useState('');
+  const [listInfo, setListInfo] = useState('');
+  const [listItems, setListItems] = useState('');
   const [userData, setUserData] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
@@ -37,31 +39,7 @@ function App() {
       setWinWidth('mobile')
   }, []);
 
-    // FETCH USER INFO:
-    const getUserData = async () => {
-      const options = {
-        method: 'GET',
-        headers: {
-          'x-auth': token,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      };
-  
-      const request3 = await fetch('/users', options);
-      const response3 = await request3.json();
-      setUserData(response3.user);
-    };
-  
-    // LOAD THE USER DATA IF LOGGED IN:
-    useEffect(() => {
-      if (token) {
-        setLoggedIn(true);
-        getUserData();
-      }
-    }, []);
-    console.log(userData)
-  // FUNCTION FETCHING ALL THE EVENTS:
+  // FETCH ALL FAVE LISTS:
   const fetchFaves = async () => {
     const options = {
       method: 'GET',
@@ -73,32 +51,66 @@ function App() {
     };
 
     const allFicLists = [];
-
+    const allFics = [];
     const allEpsLists = [];
+    const allEps = [];
 
-    const request1 = await fetch('/fanfics', options);
+    const request1 = await fetch('/ficlists', options);
     const response1 = await request1.json();
-console.log(response1.ficLists)
     response1.ficLists && 
       response1.ficLists.map(ficList => {
-        if (ficList.ficsToken === token) {
-          allFicLists.push({ficList});
-        }
-        console.log(ficList)
+        allFicLists.push({ficList});
     });
-  
-    setUserFanfics(allFicLists);
-console.log(userFanfics)
-    const request2 = await fetch('/episodes', options);
+    setUserFicLists(allFicLists);
+
+    const request2 = await fetch('/fanfics', options);
     const response2 = await request2.json();
-    response2.epsLists && response1.epsLists.epsToken === token &&
-    response2.epsLists.map(epsList => {
-      allFicLists.push({epsList});
+    response2.fics && 
+      response2.fics.map(fic => {
+        allFics.push({fic});
     });
-    setUserEpisodes(allEpsLists);
+    setUserFanfics(allFics);
+
+    const request3 = await fetch('/eplists', options);
+    const response3 = await request3.json();
+    response3.epsLists &&
+    response3.epsLists.map(epsList => {
+      allEpsLists.push({epsList});
+    });
+    setUserEpLists(allEpsLists);
+
+    const request4 = await fetch('/episodes', options);
+    const response4 = await request4.json();
+    response4.eps &&
+    response4.eps.map(eps => {
+      allEps.push({eps});
+    });
+    setUserEpisodes(allEps);
   };
 
+  // FETCH USER INFO:
+  const getUserData = async () => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-auth': token,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    };
 
+    const request3 = await fetch('/users', options);
+    const response3 = await request3.json();
+    setUserData(response3.user);
+  };
+
+  // LOAD THE USER DATA IF LOGGED IN:
+  useEffect(() => {
+    if (token) {
+      setLoggedIn(true);
+      getUserData();
+    }
+  }, []);
 
   useEffect(() => {
     fetchFaves();
@@ -108,13 +120,17 @@ console.log(userFanfics)
       fetchFaves();
   }, [listInfo]);
 
+//   useEffect(() => {
+//     fetchFaves();
+// }, [userFanfics]);
+
   useEffect(() => {
     fetchFaves();
   }, [userData]);
 
   return (
     <div className="App">
-      <Context.Provider value={{fetchFaves, userFanfics, setUserFanfics, userEpisodes, setUserEpisodes, listInfo, setListInfo, listItems, setListItems, userData, setUserData, getUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn, winWidth, setWinWidth}}>
+      <Context.Provider value={{fetchFaves, userFicLists, setUserFicLists, userFanfics, setUserFanfics, userEpLists, setUserEpLists, userEpisodes, setUserEpisodes, listInfo, setListInfo, listItems, setListItems, userData, setUserData, getUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn, winWidth, setWinWidth}}>
         <Router>
         <NavBar />
           {/* {winWidth === 'desktop' ?

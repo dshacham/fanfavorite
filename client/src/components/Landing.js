@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/Landing.scss';
 import { NavLink } from 'react-router-dom';
 
 const Landing = () => {
-
+    const [isListClicked, setIsListClicked] = useState(false);
     useEffect(() => {
         window.scrollTo(0, 0)
     }, []);

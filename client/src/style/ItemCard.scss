@@ -1,0 +1,22 @@
+@import 'index';
+
+.item-card {
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: -1px 1px 5px rgba(119, 73, 54, 0.4);
+    // border: 0.1rem solid rgba(119, 73, 54, 0.3);
+    border-radius: $border;
+    width: 100%;
+    padding: 2rem 0;
+    margin: 0.25rem 0;
+    
+    .item {
+        font-weight: bold;
+        margin: 0 0.7rem;
+        font-size: 1.1rem;
+        .category {
+            font-weight: 300;
+            font-size: 0.9rem;
+        }
+    }
+}

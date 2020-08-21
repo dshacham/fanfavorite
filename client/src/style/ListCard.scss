@@ -6,8 +6,11 @@
     border: none;
     color: $brown-sugar;
     font-size: 1.2rem;
+    margin: 0.7rem 2rem;
+    transition: all .3s ease-in-out;
 }
 
 .to-list:hover {
-    color: $coffee-darker
+    color: $coffee-darker;
+    transform: scale(1.15);
 }
