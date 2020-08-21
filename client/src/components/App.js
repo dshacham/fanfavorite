@@ -78,10 +78,7 @@ function App() {
     const response = await fetch('/users', options);
     const data = await response.json();
     console.log(data.user)
-    if (data.success) {
-      setUserData(data.user);
-
-    }
+    // setUserData(data.user);
   };
 
   // LOAD THE USER DATA IF LOGGED IN:
