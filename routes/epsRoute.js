@@ -2,10 +2,10 @@ const Route = require("express").Router();
 const { getEp, getEps, postEp, putEp, deleteEp } = require("../controllers/epController");
 const auth = require("../middleware/authenticator");
 
-Route.get("/", auth, getEps);
-Route.get("/:id", auth, getEp);
+Route.get("/", getEps);
+Route.get("/", getEp);
 Route.post("/", auth, postEp);
-Route.put("/:id", auth, putEp);
-Route.delete("/:id", auth, deleteEp);
+Route.put("/:id", putEp);
+Route.delete("/:id", deleteEp);
 
 module.exports = Route;
