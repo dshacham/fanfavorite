@@ -3,7 +3,7 @@ const { getFic, getFics, postFic, putFic, deleteFic } = require("../controllers/
 const auth = require("../middleware/authenticator");
 
 Route.get("/", getFics);
-Route.get("/", getFic);
+Route.get("/:id", getFic);
 Route.post("/", auth, postFic);
 Route.put("/:id", putFic);
 Route.delete("/:id", deleteFic);

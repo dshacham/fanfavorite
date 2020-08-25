@@ -54,25 +54,34 @@
                 border-radius: $border;
                 border: 1px solid $coffee-darker;
                 padding: 0.7rem;
-                margin-top: 2rem;
                 cursor: pointer;
                 font-weight: bold;
-                align-self: center;
                 box-shadow: 1px 1px 3px $coffee-darker;
             }
-
+            .edit-btn-one {
+                margin: 2rem 0 0.5rem;
+            }
             .edit-btn:hover, .save-button:hover {
                 color: $desert-sand;
+            }
+
+            .delete-button {
+                text-align: center;
+                margin: 0.2rem auto;
+                cursor: pointer;
+                text-decoration: underline;
+                font-size: 0.8rem;
+                color: $brown-sugar;
+            }
+            .delete-button:hover {
+                color: $coffee-darker;
             }
 
             .create-links {
                 display: flex;
                 flex-direction: column;
                 margin: 4rem 0 1rem;
-                a {
-
-                    font-size: 1.1rem;
-                }
+                font-size: 1.1rem;
             }
 
             // edit form:
@@ -113,8 +122,8 @@
                 }
 
                 .save-button {
-                    margin-top: 1rem;
-                    padding: 0.5rem 2.5rem;
+                    margin: 1rem auto 0;
+                    // padding: 0.5rem 2.5rem;
                     width: 50%;
                 }
             

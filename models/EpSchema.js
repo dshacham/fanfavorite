@@ -4,8 +4,6 @@ const { Schema } = mongoose;
 
 const EpSchema = new Schema({
 
-    fandom: { type: String, required: true },
-
     title: { type: String, required: true },
 
     season: { type: String, required: true },
@@ -14,7 +12,7 @@ const EpSchema = new Schema({
 
     whyFave: { type: String, required: true },
 
-    source: { type: String, required: false },
+    moreInfo: { type: String, required: false },
 
     // authorId: { type: String, required: false },
 });

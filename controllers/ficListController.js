@@ -18,7 +18,7 @@ exports.getFicList = async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        const ficList = await FicList.findById(id);
+        const ficList = await FicList.findById(id).populate('fics');
         if (!ficList) throw createError(404);
         res.json({ success: true, ficList: ficList });
     }
@@ -63,7 +63,7 @@ exports.deleteFicList = async (req, res, next) => {
         const ficList = await FicList.findByIdAndDelete(id);
         if (!ficList) throw createError(404);
         const ficLists = await FicList.find({});
-        res.json({ success: true, ficList: ficLists });
+        res.json({ success: true, ficLists: ficLists });
     }
     catch (err) {
         next(err);

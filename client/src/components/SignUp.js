@@ -11,9 +11,7 @@ const SignUp = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    // set a status for what happens after sign up 
-    // const [isSignedUp, setIsSignedUp] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -22,31 +20,34 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
 
-        const signUpData = {
-            username,
-            email,
-            password,
-        }
-
-        const userData = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(signUpData)
-
-        }
-        const resp = await fetch('/users', userData);
-        const header = resp.headers.get('x-auth');
-        const data = await resp.json();
-
-        // console.log("res:", data);
-
-        if (data.success) {
-            localStorage.setItem('token', header);
-            setToken(header);
-            setUserData(data.user)
-            setLoggedIn(true)
+        if (password === confirmPassword) {
+            const signUpData = {
+                username,
+                email,
+                password,
+            }
+    
+            const userData = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(signUpData)
+    
+            }
+            const resp = await fetch('/users', userData);
+            const header = resp.headers.get('x-auth');
+            const data = await resp.json();
+            if (data.success) {
+                localStorage.setItem('token', header);
+                setToken(header);
+                setUserData(data.user)
+                setLoggedIn(true)
+            } else {
+                window.alert(Object.values(data.message[0]));
+            }
+        } else {
+            window.alert('Password doesnn\'t match');
         }
     };
 
@@ -81,6 +82,14 @@ const SignUp = () => {
                         value={password}
                         required
                         onChange={(e) => setPassword(e.target.value)} />
+                </label>
+                <label className="signup-label">Confirm Password *
+                        <input
+                        className="signup-input"
+                        type="password"
+                        value={confirmPassword}
+                        required
+                        onChange={(e) => setConfirmPassword(e.target.value)} />
                 </label>
                 <h5 className="h5-signup"> * Required fields </h5>
                 <button

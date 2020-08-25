@@ -1,18 +1,153 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, Fragment, useEffect } from 'react';
 import '../style/ItemCard.scss';
 import Context from './Context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const FicItemCard = ({ fic }) => {
+    const { getUserData, setUserData, setUserFanfics, listInfo, setListInfo, token } = useContext(Context);
+
+    const [editInfo, setEditInfo] = useState(false);
+    const [ficInfo, setFicInfo] = useState('');
+    const [newTitle, setNewTitle] = useState('');
+    const [newAuthor, setNewAuthor] = useState('');
+    const [newShip, setNewShip] = useState('');
+    const [newGenre, setNewGenre] = useState('');
+    const [newDescription, setNewDescription] = useState('');
+    const [newSource, setNewSource] = useState('');
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        getUserData();
+    }, []);
+
+    const fetchFic = async () => {
+        const options = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'x-auth': token,
+          }
+        };
+
+        const request1 = await fetch('/fanfics/' + fic, options);
+        const response1 = await request1.json();
+        if (response1.fic) {
+            setFicInfo(response1.fic);
+        }
+      };
+
+    const handleSubmitEdit = async (e) => {
+        e.preventDefault();
+
+        // old data:
+        const { title, author, ship, genre, description, source, listId } = ficInfo;
+        
+        const newInfo = {
+            title: newTitle === '' ? title : newTitle,
+            author: newAuthor === '' ? author : newAuthor,
+            ship: newShip === '' ? ship : newShip,
+            genre: newGenre === '' ? genre : newGenre,
+            description: newDescription === '' ? description : newDescription,
+            source: newSource === '' ? source : newSource,
+            listId
+        };
+
+        const newFicData = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "x-auth": token
+            },
+            body: JSON.stringify(newInfo)
+        };
+
+        const request = await fetch('/fanfics/' + fic, newFicData);
+        const response = await request.json();
+        if (response.success) {
+            setListInfo(response.ficList);
+            setEditInfo(false);
+        };
+    };
+
+    const deleteItem = async (e) => {
+        e.preventDefault();
+
+        const deletedItem = {
+            method: "DELETE",
+            headers: {
+                "x-auth": token,
+            },
+        };
+
+        const request = await fetch('/fanfics/' + fic, deletedItem);
+        const response = await request.json();
+        if (response.success) {
+            setListInfo(response.ficList);
+            localStorage.setItem('list-info', JSON.stringify(listInfo));
+        };
+    };
+
+    useEffect(() => {
+        fetchFic();
+    }, []);
+
+    useEffect(() => {
+        fetchFic();
+    }, [listInfo]);
 
     return (
-        <ul className="item-card">
-            <li className="item"><span className="category">Title: </span>{fic.title}</li>
-            <li className="item"><span className="category">Author: </span>{fic.author}</li>
-            <li className="item"><span className="category">Ship: </span>{fic.ship}</li>
-            <li className="item"><span className="category">Genre: </span>{fic.genre}</li>
-            <li className="item"><span className="category">Description: </span>{fic.description}</li>
-            <li className="item"><span className="category">Source: </span><a href={fic.source} target='_blank' rel="noopener noreferrer">{fic.source}</a></li>
-        </ul>
+        <div className="item-cards-container">
+            {
+                editInfo ?
+                    <Fragment>
+                        <div className="item-edit-form">
+                            <form onSubmit={handleSubmitEdit} className="item-edit-form">
+                                <div className="ok-cancel">
+                                    <button type="submit" className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
+                                    <button className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditInfo(false)}/></button>
+                                </div>
+                                <label htmlFor="title" className="item-edit-label item-edit-label-info">
+                                    <input type="text" placeholder={ficInfo.title} onChange={(e) => setNewTitle(e.target.value)} />
+                                </label>
+                                <label htmlFor="author" className="item-edit-label item-edit-label-info">
+                                    <input type="text" placeholder={ficInfo.author} onChange={(e) => setNewAuthor(e.target.value)} />
+                                </label>
+                                <label htmlFor="ship" className="item-edit-label item-edit-label-info">
+                                    <input type="text" placeholder={ficInfo.ship} onChange={(e) => setNewShip(e.target.value)} />
+                                </label>
+                                <label htmlFor="genre" className="item-edit-label item-edit-label-info">
+                                    <input type="text" placeholder={ficInfo.genre} onChange={(e) => setNewGenre(e.target.value)} />
+                                </label>
+                                <label htmlFor="description" className="item-edit-label item-edit-label-info">
+                                    <input type="text" placeholder={ficInfo.description} onChange={(e) => setNewDescription(e.target.value)} />
+                                </label>
+                                <label htmlFor="source" className="item-edit-label item-edit-label-info">
+                                    <input type="text" placeholder={ficInfo.source} onChange={(e) => setNewSource(e.target.value)} />
+                                </label>
+                            </form>
+                        </div>
+                    </Fragment>
+                    :
+                    <Fragment>
+                        <ul className="item-card">
+                            <li className="item"><span className="category">Title: </span>{ficInfo.title}</li>
+                            <li className="item"><span className="category">Author: </span>{ficInfo.author}</li>
+                            <li className="item"><span className="category">Ship: </span>{ficInfo.ship}</li>
+                            <li className="item"><span className="category">Genre: </span>{ficInfo.genre}</li>
+                            <li className="item"><span className="category">Description: </span>{ficInfo.description}</li>
+                            <li className="item"><span className="category">Source: </span><a href={ficInfo.source} target='_blank' rel="noopener noreferrer">{ficInfo.source}</a></li>
+                        </ul>
+                        <div className="item-edit-delete">
+                            <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
+                            <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
+                                if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteItem(e) }
+                            }} />
+                        </div>
+                    </Fragment>
+            }
+        </div>
     )
 }
 

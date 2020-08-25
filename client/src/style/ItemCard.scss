@@ -1,22 +1,106 @@
 @import 'index';
 
-.item-card {
+.item-cards-container {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-between;
     box-shadow: -1px 1px 5px rgba(119, 73, 54, 0.4);
     // border: 0.1rem solid rgba(119, 73, 54, 0.3);
     border-radius: $border;
     width: 100%;
     padding: 2rem 0;
     margin: 0.25rem 0;
-    
-    .item {
-        font-weight: bold;
-        margin: 0 0.7rem;
-        font-size: 1.1rem;
-        .category {
-            font-weight: 300;
-            font-size: 0.9rem;
+
+    .item-card {
+        display: flex;
+        flex-wrap: wrap;
+        
+        .item {
+            font-weight: bold;
+            margin: 0 0.7rem;
+            font-size: 1.1rem;
+            .category {
+                font-weight: 300;
+                font-size: 0.9rem;
+            }
         }
     }
+
+    .item-edit-delete {
+        display: flex;
+        margin: 0 0.5rem;
+        visibility: hidden;
+
+        .icon-ed-de {
+            margin: 0 0.3rem;
+            cursor: pointer;
+        }
+        .icon-ed-de:hover {
+            color: $coffee-darker;
+        }
+    }
+
+    // edit form:
+    .item-edit-form {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        .item-edit-label-info {
+            padding: 0.3rem;
+            margin: 0 1rem;
+        }
+
+        .item-edit-label {
+            // width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            input {
+                height: 2.5rem;
+                width: 100%;
+                padding: 1ch;
+                margin: 0.3rem 0;
+                border: 1px solid $cafe-au-lait;
+                border-radius: $border;
+                font-size: 1.1rem;
+                color: $dark-brown;
+
+                &::placeholder {
+                    font-family: 'El Messiri', sans-serif;
+                    color: $brown-sugar;
+                    font-size: 0.9rem;
+                }
+            }
+            input:focus {
+                outline: none;
+                border: 1px solid $coffee-darker;
+            }
+        }
+
+        .ok-cancel {
+            flex-basis: 100%;
+            text-align: right;
+            margin: 0 1rem;
+            
+            .item-save-button {
+                border: none;
+                background: none;
+                cursor: pointer;
+                color: $brown-sugar;
+                margin: 0 0.3rem;
+                font-size: 1rem;
+            }
+            .item-save-button:hover {
+                color: $coffee-darker;
+            }
+        }
+    }
+}  
+
+
+.item-cards-container:hover .item-edit-delete {
+    visibility: visible;
+    color: $brown-sugar;
 }
+

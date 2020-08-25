@@ -1,7 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const User = require("../models/UserSchema");
 
-exports.validateUser = () => {
+exports.editUsernameValidator = () => {
     return [
         body("username")
             .isLength({ min: 6 })
@@ -20,30 +20,6 @@ exports.validateUser = () => {
                   });
                 });
               }),
-
-        body("email")
-            .isEmail()
-            .normalizeEmail()
-            .trim()
-            .withMessage("Invalid email")
-            .custom((value, {req}) => {
-                return new Promise((resolve, reject) => {
-                  User.findOne({email: req.body.email}, function(err, user){
-                    if (err) {
-                      reject(new Error('Server Error'));
-                    }
-                    if (Boolean(user)) {
-                      reject(new Error('E-mail already in use'));
-                    }
-                    resolve(true);
-                  });
-                });
-              }),
-
-        body("password")
-            .isLength({ min: 6 })
-            .trim()
-            .withMessage("Password is too short"),
 
         (req, res, next) => {
             let errors = validationResult(req);

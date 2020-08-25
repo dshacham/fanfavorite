@@ -11,7 +11,7 @@ const EpListCard = ({ el, setIsEpListClicked }) => {
                 setListInfo(el);
                 localStorage.setItem('list-info', JSON.stringify(el));
                 setIsEpListClicked(true);
-            }} className="to-list">{el.epList.fandom}</button>
+            }} className="to-list">{el.fandom}</button>
         </div>
     )
 }

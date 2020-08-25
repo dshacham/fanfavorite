@@ -70,10 +70,34 @@
             .login-btn:hover {
                 color: $desert-sand;
             }
-            .signup {
-                font-size: 0.9rem;
-                text-decoration: underline;
+
+            .sign-forgot-error-container {
+                display: flex;
+                justify-content: space-between;
+
+                .signin-error {
+                    color: $brown-sugar;
+                    font-size: 0.8rem;
+                    visibility: hidden;
+                }
+                .show-error {
+                    visibility: visible;
+                }
+
+                .sign-forgot-container {
+                    display: flex;
+                    justify-content: flex-end;
+                    margin-right: 0.7rem;
+                    
+                    .signup-forgot {
+                        font-size: 0.85rem;
+                        text-decoration: underline;
+                        margin-left: 1.2rem;
+                    }
+                }
             }
+
+
         }
     }
 }

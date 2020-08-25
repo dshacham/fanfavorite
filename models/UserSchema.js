@@ -21,8 +21,9 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     ficLists: [{ type: mongoose.Schema.Types.ObjectId, ref: "FicList" }],
     epsLists: [{ type: mongoose.Schema.Types.ObjectId, ref: "EpsList" }],
-    fics: [{ type: mongoose.Schema.Types.ObjectId, ref: "Fic" }],
-    eps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Episode" }],
+    createdAt: { type: Date, default: Date.now },
+    // fics: [{ type: mongoose.Schema.Types.ObjectId, ref: "Fic" }],
+    // eps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Episode" }],
 });
 
 UserSchema.plugin(uniqueValidator);

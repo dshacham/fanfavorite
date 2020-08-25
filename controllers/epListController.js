@@ -59,9 +59,9 @@ exports.deleteEpList = async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        const epList = await EpList.findByIdAndDelete(id);
+        const epList = await EpsList.findByIdAndDelete(id);
         if (!epList) throw createError(404);
-        const epLists = await EpList.find({});
+        const epLists = await EpsList.find({});
         res.json({ success: true, epList: epLists });
     }
     catch (err) {

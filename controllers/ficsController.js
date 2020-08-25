@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 const Fic = require("../models/FicSchema");
+const FicList = require("../models/FicListSchema");
 const User = require("../models/UserSchema");
 const env = require("../config/config");
 
@@ -29,22 +30,15 @@ exports.getFic = async (req, res, next) => {
 
 exports.postFic = async (req, res, next) => {
     try {
-        const newFic = new Fic({
-            fandom: req.body.fandom,
-            title: req.body.title,
-            author: req.body.author,
-            ship: req.body.ship,
-            genre: req.body.genre,
-            description: req.body.description,
-            source: req.body.source,
-            // authorId: req.user._id
-        });
+        const newFic = new Fic(req.body);
         await newFic.save();
         let userData = await User.findById(req.user._id);
-        userData.fics.push(newFic._id);
+        let listData = await FicList.findById(req.body.listId);
+        listData.fics.push(newFic._id);
         userData.save();
+        listData.save();
 
-        res.json({ success: true, fic: newFic, user: userData });
+        res.json({ success: true, fic: newFic, ficList: listData, user: userData });
     }
     catch (err) {
         next(err);
@@ -57,8 +51,9 @@ exports.putFic = async (req, res, next) => {
 
     try {
         const updateFic = await Fic.findByIdAndUpdate(id, fic, { new: true });
+        let listData = await FicList.findById(fic.listId);
         if (!fic) throw createError(404);
-        res.json({ success: true, fic: updateFic });
+        res.json({ success: true, fic: updateFic, ficList: listData });
     }
     catch (err) {
         next(err);
@@ -69,10 +64,14 @@ exports.deleteFic = async (req, res, next) => {
     const { id } = req.params;
 
     try {
+        const ficData = await Fic.findById(id);
         const fic = await Fic.findByIdAndDelete(id);
+        const fics = await Fic.find();
+        const ficList =  await FicList.findById(ficData.listId);
+        ficList.fics.pull({_id: id});
+        ficList.save();
         if (!fic) throw createError(404);
-        const fics = await Fic.find({});
-        res.json({ success: true, fic: fics });
+        res.json({ success: true, fics: fics, ficList: ficList });
     }
     catch (err) {
         next(err);

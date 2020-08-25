@@ -37,7 +37,20 @@ exports.postUser = async (req, res, next) => {
     }
 };
 
-exports.putUser = async (req, res, next) => {
+exports.putUsername = async (req, res, next) => {
+    const user = req.body;
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.user._id, user, { new: true }).populate("ficLists").populate("epsLists").exec();
+        if (!updatedUser) throw createError(500);
+
+        res.json({ success: true, user: updatedUser });
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.putPassword = async (req, res, next) => {
     const user = req.body;
 
     try {
@@ -56,7 +69,7 @@ exports.putUser = async (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res, next) => {
-    const { id } = req.body;
+    const { id } = req.params;
 
     try {
         const user = await User.findByIdAndDelete(id);

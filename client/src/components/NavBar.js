@@ -36,11 +36,13 @@ const NavBar = () => {
         const header = resp.headers.get('x-auth');
 
         if (data.success) {
+            console.log(data)
             localStorage.setItem('token', header);
             setToken(header);
             setUserData(data.user);
             setLoggedIn(true);
             setStatusChange(true);
+            setErrorMsg(false);
         } else {
             setErrorMsg(true);
         }
@@ -60,7 +62,7 @@ const NavBar = () => {
             </div>
             <div className="acc-signout-container">
                 <NavLink to="account"><FontAwesomeIcon className="icon-acc" title="account" icon={faUserCircle} /></NavLink>
-                <NavLink to="/" onClick={() => { localStorage.clear(); setLoggedIn(false) }} className="signout">sign out</NavLink>
+                <NavLink to="/" onClick={() => { localStorage.clear(); setStatusChange(false); setLoggedIn(false) }} className="signout">sign out</NavLink>
             </div>
         </div>
             :
@@ -70,7 +72,7 @@ const NavBar = () => {
                 <h2 className="h2-loggedin-out">All your faves in one place</h2>
             </div>
             <form className="login-form" onSubmit={handleLogin}>
-            <label className="login-field">
+                <label className="login-field">
                     <input className="login-input"
                         type="email"
                         placeholder="Email"
@@ -89,9 +91,14 @@ const NavBar = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         required />
                 </label>
-                {errorMsg ? <p>Email or password incorrect</p> : null}
                 <button className="button login-btn" type="submit">LOGIN</button>
-                <NavLink to="signup" className="signup">sign up</NavLink>
+                <div className="sign-forgot-error-container">
+                    <p className={errorMsg ? "signin-error show-error" : "signin-error"}>Email or password incorrect</p>
+                    <div className="sign-forgot-container">
+                        <NavLink to="reset_password" className="signup-forgot">Forgot password?</NavLink>
+                        <NavLink to="signup" className="signup-forgot">sign up</NavLink>
+                    </div>
+                </div>
             </form>
         </div>
         }

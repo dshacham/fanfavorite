@@ -15,11 +15,12 @@ const Account = () => {
     const [isFicListClicked, setIsFicListClicked] = useState(false);
     const [isEpListClicked, setIsEpListClicked] = useState(false);
     // this state change fragment between info and inputs to be edited
-    const [editInfo, setEditInfo] = useState(false);
+    const [editUsername, setEditUsername] = useState(false);
+    const [editPassword, setEditPassword] = useState(false);
     // this will be the new info inserted by the user:
     const [newUsername, setNewUsername] = useState('');
-    const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const [isAccountDeleted, setIsAccountDeleted] = useState(false);
 
@@ -28,31 +29,16 @@ const Account = () => {
         getUserData();
     }, []);
 
-    const [refresh, setRefresh] = useState(true);
-    useEffect(() => {
-        getUserData();
-        setRefresh(false)
-    }, [refresh]);
-
-    const handleSubmit = async (e) => {
+    const handleEditUsername = async (e) => {
         e.preventDefault();
 
         // old data:
         const { username, email, password, ficLists, epsLists, fics, eps } = userData;
 
         const newInfo = {
-            username: newUsername === '' ? username : newUsername,
-            email: newEmail === '' ? email : newEmail,
-            ficLists: ficLists,
-            epsLists: epsLists,
-            fics: fics,
-            eps: eps
-        };
-
-        const newInfoAndPassword = {
-            username: newUsername === '' ? username : newUsername,
-            email: newEmail === '' ? email : newEmail,
-            password: newPassword,
+            username: newUsername,
+            email: email,
+            password: password,
             ficLists: ficLists,
             epsLists: epsLists,
             fics: fics,
@@ -65,15 +51,56 @@ const Account = () => {
                 "Content-Type": "application/json",
                 "x-auth": token
             },
-            body: JSON.stringify(newPassword === '' ? newInfo : newInfoAndPassword)
+            body: JSON.stringify(newInfo)
         };
 
-        const response = await fetch('/users', newUserData);
+        const response = await fetch('/users/username', newUserData);
         const data = await response.json();
-
         if (data.success) {
             setUserData(data.user);
-            setEditInfo(false);
+            setEditUsername(false);
+        } else {
+            window.alert(Object.values(data.message[0]));
+        };
+    }
+
+    const handleEditPassword = async (e) => {
+        e.preventDefault();
+
+        // old data:
+        const { username, email, password, ficLists, epsLists, fics, eps } = userData;
+        
+        if (newPassword === confirmPassword) {
+            const newInfo = {
+                username: username,
+                email: email,
+                password: newPassword,
+                ficLists: ficLists,
+                epsLists: epsLists,
+                fics: fics,
+                eps: eps
+            };
+
+            const newUserData = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-auth": token
+                },
+                body: JSON.stringify(newInfo)
+            };
+        
+            const response = await fetch('/users/password', newUserData);
+            const data = await response.json();
+            console.log(data)
+            if (data.success) {
+                setUserData(data.user);
+                setEditPassword(false);
+            } else {
+                window.alert(Object.values(data.message[0]));
+            };
+        } else {
+            window.alert('Password doesn\'t match.');
         };
     };
 
@@ -84,12 +111,12 @@ const Account = () => {
             method: "DELETE",
             headers: {
                 "x-auth": token,
-                "accountId": userData._id
             },
         };
 
-        const request = await fetch('/users', deletedUser);
+        const request = await fetch('/users/' + userData._id, deletedUser);
         const response = await request.json();
+        console.log(response)
         if (response.success) {
             setIsAccountDeleted(true);
             setLoggedIn(false);
@@ -100,7 +127,7 @@ const Account = () => {
     useEffect(() => {
         isFicListClicked && history.push("/ficlist");
         isEpListClicked && history.push("/eplist");
-        isAccountDeleted && history.push('/');
+        isAccountDeleted && history.push("/");
     });
     
     return (
@@ -108,25 +135,31 @@ const Account = () => {
             <div className="personal-account slide-from-left">
                 <h4 className="h4-account">ACCOUNT INFO</h4>
                 {
-                    editInfo ?
+                    editUsername ?
                         <Fragment>
                             <div className="personal-info">
-                                <form onSubmit={handleSubmit} className="edit-form">
+                                <form onSubmit={handleEditUsername} className="edit-form">
                                     <label htmlFor="username" className="edit-label edit-label-user-info">
                                         <input type="text" placeholder="New username..." onChange={(e) => setNewUsername(e.target.value)} />
                                     </label>
-                                    <label htmlFor="email" className="edit-label edit-label-user-info">
-                                        <input type="email" placeholder="New email..." onChange={(e) => setNewEmail(e.target.value)} />
-                                    </label>
+                                    <button type="submit" className="save-button">SAVE</button>
+                                    <p className="cancel-edit" onClick={() => setEditUsername(false)}>Cancel</p>
+                                </form>
+                            </div>
+                        </Fragment>
+                        :
+                        editPassword ?
+                        <Fragment>
+                            <div className="personal-info">
+                                <form onSubmit={handleEditPassword} className="edit-form">
                                     <label htmlFor="password" className="edit-label edit-label-user-info">
                                         <input type="password" placeholder="New password..." onChange={(e) => setNewPassword(e.target.value)} />
                                     </label>
-                                    <button type='submit' className="save-button">SAVE</button>
-                                    <p className="cancel-edit" onClick={() => setEditInfo(false)}>Cancel</p>
-                                    <Link to="deletedaccount" className="delete-button button-margin" onClick={(e) => {
-                                        if (window.confirm(`Deleting your account will delete all of your lists. \n\nAre you sure you want to continue?`)) { localStorage.clear(); deleteAccount(e) }
-                                    }}>Delete Account
-                                         </Link>
+                                    <label htmlFor="confirmPassword" className="edit-label edit-label-user-info">
+                                        <input type="password" placeholder="Confirm password..." onChange={(e) => setConfirmPassword(e.target.value)} />
+                                    </label>
+                                    <button type="submit" className="save-button">SAVE</button>
+                                    <p className="cancel-edit" onClick={() => setEditPassword(false)}>Cancel</p>
                                 </form>
                             </div>
                         </Fragment>
@@ -137,7 +170,12 @@ const Account = () => {
                                 <p className="info">{userData && userData.username}</p>
                                 <p className="label">Email:</p>
                                 <p className="info">{userData && userData.email}</p>
-                                <button className="edit-btn" onClick={() => setEditInfo(true)}>EDIT / CHANGE PASSWORD</button>
+                                <button className="edit-btn edit-btn-one" onClick={() => setEditUsername(true)}>CHANGE USERNAME</button>
+                                <button className="edit-btn" onClick={() => setEditPassword(true)}>CHANGE PASSWORD</button>
+                                <p className="delete-button" onClick={(e) => {
+                                        if (window.confirm(`Deleting your account will delete all of your lists. \n\nAre you sure you want to continue?`)) { localStorage.clear(); deleteAccount(e) }
+                                    }}>Delete Account
+                                </p>
                                 <div className="create-links">
                                     <Link to="addepslist">Create Episodes List</Link>
                                     <Link to="addficlist">Create Fan Fiction List</Link>
@@ -151,12 +189,12 @@ const Account = () => {
                     <h3 className="lists-title">Fan Fiction Lists</h3>
                     <div className="list-item-title">
                     {
-                        userFicLists &&
-                        userFicLists &&
-                        userFicLists.length ?
+                        userData &&
+                        userData.ficLists &&
+                        userData.ficLists.length ?
                             <Fragment>
                                 {
-                                    userFicLists.map((el, i) => <FicListCard className="list-card" key={i} setIsFicListClicked={setIsFicListClicked} el={el} />)
+                                    userData.ficLists.map((el, i) => <FicListCard className="list-card" key={i} setIsFicListClicked={setIsFicListClicked} el={el} />)
                                 }
                             </Fragment>
                         :
@@ -168,20 +206,22 @@ const Account = () => {
                 </div>
                 <div className="eps-list-container">
                     <h3 className="lists-title">Episodes Lists</h3>
-                    {
-                        userEpLists &&
-                        userEpLists &&
-                        userEpLists.length ?
-                            <Fragment>
-                                {
-                                    userEpLists.map((el, i) => <EpListCard className="list-card" key={i} setIsEpListClicked={setIsEpListClicked} el={el} />)
-                                }
-                            </Fragment>
-                            :
-                            <Fragment>
-                                <p className="no-lists">You haven't added any lists.</p>
-                            </Fragment>
-                    }
+                    <div className="list-item-title">
+                        {
+                            userData &&
+                            userData.epsLists &&
+                            userData.epsLists.length ?
+                                <Fragment>
+                                    {
+                                        userData.epsLists.map((el, i) => <EpListCard className="list-card" key={i} setIsEpListClicked={setIsEpListClicked} el={el} />)
+                                    }
+                                </Fragment>
+                                :
+                                <Fragment>
+                                    <p className="no-lists">You haven't added any lists.</p>
+                                </Fragment>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

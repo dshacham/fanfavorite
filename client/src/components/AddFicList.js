@@ -11,6 +11,7 @@ const AddFicList = () => {
 
     const [fandom, setFandom] = useState('');
     const listType = 'fanfiction';
+    const fics = [];
 
     // route to list page after creation
     const [statusAdded, setStatusAdded] = useState(false)
@@ -25,6 +26,7 @@ const AddFicList = () => {
         const ficListData = {
             fandom,
             listType,
+            fics
         }
 
         const postListData = {
@@ -38,11 +40,10 @@ const AddFicList = () => {
 
         const resp = await fetch('/ficlists', postListData);
         const data = await resp.json();
-
         if (data.success) {
             setUserData(data.user);
-            setListInfo(data.ficList);
-            localStorage.setItem('list-info', JSON.stringify(data.ficList));
+            setListInfo(data);
+            localStorage.setItem('list-info', JSON.stringify(data));
             setStatusAdded(true)
         }
     }

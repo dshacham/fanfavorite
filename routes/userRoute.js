@@ -1,6 +1,8 @@
 const Route = require("express").Router();
-const { getUsers, getUser, postUser, putUser, deleteUser, login} = require("../controllers/userController");
+const { getUsers, getUser, postUser, putUsername, putPassword, deleteUser, login} = require("../controllers/userController");
 const { validateUser } = require("../middleware/userValidator");
+const { editUsernameValidator } = require("../middleware/editUsernameValidator");
+const { editPasswordValidator } = require("../middleware/editPasswordValidator");
 const auth = require("../middleware/authenticator");
 const isAdmin = require("../middleware/rolesAuthenticator");
 
@@ -9,7 +11,8 @@ Route.get("/admin", auth, isAdmin, getUsers);
 Route.get("/", auth, getUser);
 Route.post("/", validateUser(), postUser);
 Route.post("/login", login);
-Route.put("/", auth, putUser);
-Route.delete("/", auth, deleteUser);
+Route.put("/username", auth, editUsernameValidator(), putUsername);
+Route.put("/password", auth, editPasswordValidator(), putPassword);
+Route.delete("/:id", auth, deleteUser);
 
 module.exports = Route;

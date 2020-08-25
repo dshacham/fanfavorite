@@ -13,6 +13,8 @@ import AddFicList from "./AddFicList";
 import AddEpsList from "./AddEpsList";
 import FicListData from "./FicListData.js"
 import EpListData from "./EpListData.js"
+import ForgotPassword from "./ForgotPassword";
+import UpdatePassword from "./UpdatePassword";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,6 +27,12 @@ function App() {
   const [listItems, setListItems] = useState('');
   const [userData, setUserData] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
+
+  const allFicLists = [];
+  const allFics = [];
+  const allEpsLists = [];
+  const allEps = [];
+
 
   // const [navClass, setNavClass] = useState('/');
 
@@ -51,11 +59,6 @@ function App() {
         'x-auth': token
       }
     };
-
-    const allFicLists = [];
-    const allFics = [];
-    const allEpsLists = [];
-    const allEps = [];
 
     const request1 = await fetch('/ficlists', options);
     const response1 = await request1.json();
@@ -122,17 +125,13 @@ function App() {
       fetchFaves();
   }, [listInfo]);
 
-//   useEffect(() => {
-//     fetchFaves();
-// }, [userFanfics]);
-
   useEffect(() => {
     fetchFaves();
   }, [userData]);
 
   return (
     <div className="App">
-      <Context.Provider value={{fetchFaves, userFicLists, setUserFicLists, userFanfics, setUserFanfics, userEpLists, setUserEpLists, userEpisodes, setUserEpisodes, listInfo, setListInfo, listItems, setListItems, userData, setUserData, getUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn, winWidth, setWinWidth}}>
+      <Context.Provider value={{fetchFaves, allFicLists, allFics, allEpsLists, allEps, userFicLists, setUserFicLists, userFanfics, setUserFanfics, userEpLists, setUserEpLists, userEpisodes, setUserEpisodes, listInfo, setListInfo, listItems, setListItems, userData, setUserData, getUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn, winWidth, setWinWidth}}>
         <Router>
         <NavBar />
           {/* {winWidth === 'desktop' ?
@@ -148,6 +147,8 @@ function App() {
             <Route path="/addepslist" exact component={AddEpsList} />
             <Route path="/ficlist" exact component={FicListData} />
             <Route path="/eplist" exact component={EpListData} />
+            <Route path="/reset_password" exact component={ForgotPassword} />
+            <Route path="/password/reset/:userId/:resetToken" exact component={UpdatePassword} />
           </Switch>
           <Footer />
         </Router>

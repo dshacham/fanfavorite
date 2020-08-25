@@ -8,6 +8,7 @@
         display: flex;
         justify-content: space-between;
         text-align: center;
+        width: 100%;
 
         .number-container {
             display: flex;
@@ -15,11 +16,11 @@
             margin: 0 4rem;
 
             .number {
-                font-size: 20rem;
+                font-size: 20vw;
             }
 
             .text {
-                font-size: 2.5rem;
+                font-size: 2.5vw;
             }
         }
 
