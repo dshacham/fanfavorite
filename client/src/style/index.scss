@@ -18,13 +18,16 @@ $cafe-au-lait: #B07D62;
 $brown-sugar: #9D6B53;
 $coffee: #8A5A44;
 $coffee-darker: #774936;
+$coffee-darkest: #503124;
 
 /* FONTS */
 @import url("https://fonts.googleapis.com/css2?family=Calistoga&family=El+Messiri:wght@500&family=Pangolin&family=Special+Elite&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;900&display=swap");
 // font-family: 'Calistoga', cursive;
 // font-family: 'Pangolin', cursive;
 // font-family: 'Special Elite', cursive;
 // font-family: 'El Messiri', sans-serif;
+// font-family: 'Londrina Solid', cursive;
 
 $border: 0.15rem;
 
@@ -46,7 +49,7 @@ html {
 body {
     
     font-family: 'El Messiri', sans-serif;
-    background-color: $champagne-darker;
+    background-color: $champagne;
     color: $coffee;
     position: relative;
     min-height: 100%;

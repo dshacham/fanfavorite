@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../style/Footer.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEnvelope, faAddressCard } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faTumblr } from '@fortawesome/free-brands-svg-icons';
 
 const Footer = () => {
@@ -9,6 +10,7 @@ const Footer = () => {
         <footer>
             <p className="footer-name">&copy;FanFavorite2020</p>
             <div className="footer-contact">
+                <Link to="/about"><FontAwesomeIcon className="icon" title="about" icon={faQuestionCircle} /></Link>
                 <a href="https://twitter.com/GhostLoveSc0re" target="_blank" rel="noopener noreferrer">
                     <FontAwesomeIcon className="icon" title="twitter" icon={faTwitter} />
                 </a>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../style/App.scss";
 import Context from "./Context";
-// import Home from "./Home";
+import Home from "./Home";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import Landing from "./Landing";
@@ -140,7 +140,11 @@ function App() {
             <DropDownNav />
           } */}
           <Switch>
-            <Route path="/" exact component={Landing} />
+            { loggedIn ?
+              <Route path="/" exact component={Home} />
+              :
+              <Route path="/" exact component={Landing} />
+            }
             <Route path="/signup" exact component={SignUp} />
             <Route path="/account" exact component={Account} />
             <Route path="/addficlist" exact component={AddFicList} />

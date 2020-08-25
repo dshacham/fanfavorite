@@ -2,9 +2,9 @@
 
 .nav {
     width: 100%;
-    background-color: $desert-sand;
+    background-color: $coffee-darkest;
     padding: 1rem 0;
-    box-shadow: 0 1px 5px $coffee-darker;
+    box-shadow: 0 1px 5px $coffee-darkest;
     
     .not-logged-container, .logged-in-container {
         display: flex;
@@ -14,20 +14,23 @@
     
         .titles {
             display: flex;
+            flex-direction: column;
             align-items: center;
 
             .logo {
-                font-family: 'Calistoga', cursive;
-                font-size: 1.8rem;
-                color: $coffee-darker;
-                text-shadow: 2px 2px $antique-brass;
+                font-family: 'Londrina Solid', cursive;
+                font-size: 2.15rem;
+                color: $champagne;
+                text-shadow: -2px -3px 2px $cafe-au-lait, 1px -3px 2px $cafe-au-lait, -1px 3px 2px $cafe-au-lait, 2px 3px 2px $cafe-au-lait;
             }
 
             .h2-loggedin-out {
-                font-family: 'El Messiri', sans-serif;
-                margin-left: 2rem;
+                font-family: 'Londrina Solid', cursive;
+                font-weight: 100;
+                margin-top: -0.8rem;
                 align-self: flex-end;
                 color: $cafe-au-lait;
+                font-weight: bold;
             }
         }
 
@@ -46,15 +49,16 @@
         .login-form {
             .login-input, .login-btn {
                 margin-right: 0.5rem;
-                padding: 0.4rem;
-                border: 1px solid $coffee;
+                padding: 0.5rem;
+                border: 3px solid $cafe-au-lait;
                 border-radius: $border;
                 color: $coffee-darker;
+                background-color: $champagne;
 
                 &::placeholder {
                     font-family: 'El Messiri', sans-serif;
-                    color: $coffee-darker;
-                    opacity: 0.5;
+                    color: $cafe-au-lait;
+                    
                 }
             }
             .login-input:focus {
@@ -64,8 +68,9 @@
             .login-btn {
                 background-color: $cafe-au-lait;
                 color: $champagne;
+                font-weight: bold;
                 cursor: pointer;
-                box-shadow: 1px 1px 3px $coffee-darker;
+                box-shadow: 1px 1px 3px rgb(80, 49, 36);
             }
             .login-btn:hover {
                 color: $desert-sand;
@@ -76,7 +81,8 @@
                 justify-content: space-between;
 
                 .signin-error {
-                    color: $brown-sugar;
+                    color: $desert-sand;
+                    opacity: 0.6;
                     font-size: 0.8rem;
                     visibility: hidden;
                 }
@@ -93,6 +99,11 @@
                         font-size: 0.85rem;
                         text-decoration: underline;
                         margin-left: 1.2rem;
+                        color: $desert-sand;
+                        opacity: 0.6;
+                    }
+                    .signup-forgot:hover {
+                        opacity: 0.7;
                     }
                 }
             }
