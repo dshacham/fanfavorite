@@ -8,12 +8,12 @@ import { faPencilAlt, faTrashAlt, faCheck, faTimes } from '@fortawesome/free-sol
 
 const FicListData = () => {
     const history = useHistory();
-    const { listInfo, setListInfo, getUserData, setUserData, token } = useContext(Context);
+    const { listInfo, setListInfo, getUserData, userData, setUserData, token } = useContext(Context);
 
     const [isListDeleted, setIsListDeleted] = useState(false);
     const [editListInfo, setEditListInfo] = useState(false);
 
-    const [fandom, setFandom] = useState('');
+    const [listFandom, setListFandom] = useState('');
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [ship, setShip] = useState('');
@@ -22,7 +22,7 @@ const FicListData = () => {
     const [source, setSource] = useState('');
     const [listId, setListId] = useState('');
     
-    const [newFandom, setNewFandom] = useState('');
+    const [newListFandom, setNewListFandom] = useState('');
     
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -35,7 +35,7 @@ const FicListData = () => {
     }, []);
 
     useEffect(() => {
-        listInfo.ficList ? setFandom(listInfo.ficList.fandom) : setFandom(listInfo.fandom);
+        listInfo.ficList ? setListFandom(listInfo.ficList.listFandom) : setListFandom(listInfo.listFandom);
         listInfo.ficList ? setListId(listInfo.ficList._id) : setListId(listInfo._id);
     });
 
@@ -49,7 +49,8 @@ const FicListData = () => {
             genre,
             description,
             source,
-            listId
+            listId,
+            userId: userData._id
         }
 
         const postFicData = {
@@ -66,6 +67,12 @@ const FicListData = () => {
         if (data.success) {
             setListInfo(data.ficList);
             localStorage.setItem('list-info', JSON.stringify(data.ficList));
+            setTitle('');
+            setAuthor('');
+            setShip('');
+            setGenre('');
+            setDescription('');
+            setSource('');
         };
     };
 
@@ -74,7 +81,7 @@ const FicListData = () => {
         e.preventDefault();
 
         const newListInfo = {
-            fandom: newFandom === '' ? fandom : newFandom,
+            listFandom: newListFandom === '' ? listFandom : newListFandom,
             listType: "fanfiction",
         };
 
@@ -120,7 +127,7 @@ const FicListData = () => {
 
     return (
         <div className="list-data-container">
-            <div className="list-details">
+            <div className="list-details slide-from-left">
                 {
                     listInfo && editListInfo ?
                         <Fragment>
@@ -130,8 +137,8 @@ const FicListData = () => {
                                         <button type="submit" className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
                                         <button className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditListInfo(false)}/></button>
                                     </div>
-                                    <label htmlFor="fandom" className="list-edit-label list-edit-label-info">Fandom:
-                                        <input type="text" placeholder={fandom} onChange={(e) => setNewFandom(e.target.value)} />
+                                    <label htmlFor="listFandom" className="list-edit-label list-edit-label-info">Fandom:
+                                        <input type="text" placeholder={listFandom} onChange={(e) => setNewListFandom(e.target.value)} />
                                     </label>
                                 </form>
                             </div>
@@ -145,7 +152,7 @@ const FicListData = () => {
                                     if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteList(e) }
                                 }} />
                             </div>
-                            <h2 className="list-h2"><span className="list-title">Favorite Fan Fiction:</span> {fandom}</h2>
+                            <h2 className="list-h2"><span className="list-title">Favorite Fan Fiction:</span> {listFandom}</h2>
                         </Fragment>
                         : null
                 }
@@ -167,7 +174,7 @@ const FicListData = () => {
                 </div>
             </div>
                         
-            <div className="item-form-container">
+            <div className="item-form-container slide-from-right">
                 <form className="item-form" onSubmit={handleAddItem}>
                     <h2 className="h2-item">ADD TO THE LIST</h2>
                     <label className="item-label">Title *

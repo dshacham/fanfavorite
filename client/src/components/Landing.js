@@ -1,29 +1,82 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, Fragment } from 'react';
+import { useHistory, Link } from 'react-router-dom';
+import Context from './Context';
 import '../style/Landing.scss';
-import { NavLink } from 'react-router-dom';
 
 const Landing = () => {
+    const history = useHistory();
+    const { setUserData, setToken, setLoggedIn, loggedIn, setUserFicLists, setUserEpLists } = useContext(Context);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMsg, setErrorMsg] = useState(false);
 
     useEffect(() => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
+        setUserFicLists('');
+        setUserEpLists('');
     }, []);
 
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        const loginData = {
+            email,
+            password
+        };
+
+        const logged = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify(loginData)
+        };
+        const resp = await fetch('/users/login', logged);
+        const data = await resp.json();
+        const header = resp.headers.get('x-auth');
+
+        if (data.success) {
+            localStorage.setItem('token', header);
+            setToken(header);
+            setUserData(data.user);
+            setLoggedIn(true);
+            setErrorMsg(false);
+        } else {
+            setErrorMsg(true);
+        };
+    };
+
+    useEffect(() => {
+        loggedIn && history.push("/account");
+    });
+    
     return (
-        <div className="landing">
-            <img src="../../assets/images/stars-collage-small.png" alt="register or sign in" />
-            <div className="all-nums-container">
-                <div className="number-container">
-                    <p className="number">1.</p>
-                    <p className="text">Register <br/>or <br/>Login</p>
-                </div>
-                <div className="number-container">
-                    <p className="number">2.</p>
-                    <p className="text">Create <br/>lists of <br/>faves</p>
-                </div>
-                <div className="number-container">
-                    <p className="number">3.</p>
-                    <p className="text">Never <br/>lose them <br/>again!</p>
-                </div>
+        <div className="homepage-container">
+            <div className="landing">
+                <form className="login-form" onSubmit={handleLogin}>
+                    <h2 className="h2-login">Login</h2>
+                        <label className="login-label">Email
+                            <input
+                                className="login-input"
+                                type="email"
+                                value={email}
+                                required
+                                onChange={(e) => setEmail(e.target.value)} />
+                        </label>
+                        <label className="login-label">Password
+                            <input
+                            className="login-input"
+                            type="password"
+                            value={password}
+                            required
+                            onChange={(e) => setPassword(e.target.value)} />
+                        </label>
+                    <p className={errorMsg ? "signin-error show-error" : "signin-error"}>Email or password incorrect</p>
+                    <button type="submit" className="button sign-btn">GO</button>
+                    <Link to="reset_password" className="pass-forgot">Forgot password?</Link>
+                </form>
             </div>
         </div>
     );

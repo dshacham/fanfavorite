@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 const FicList = require("../models/FicListSchema");
+const Fic = require("../models/FicSchema");
 const User = require("../models/UserSchema");
 const env = require("../config/config");
 
@@ -61,8 +62,13 @@ exports.deleteFicList = async (req, res, next) => {
 
     try {
         const ficList = await FicList.findByIdAndDelete(id);
-        if (!ficList) throw createError(404);
         const ficLists = await FicList.find({});
+        Fic.deleteMany({ listId: id }).then(function() { 
+            console.log("Data deleted");
+        }).catch(function(error){ 
+            console.log(error);
+        }); 
+        if (!ficList) throw createError(404);
         res.json({ success: true, ficLists: ficLists });
     }
     catch (err) {

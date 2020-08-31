@@ -3,7 +3,7 @@ import Context from './Context';
 import { useHistory, Link } from 'react-router-dom';
 import '../style/Account.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import FicListCard from './FicListCard';
 import EpListCard from './EpListCard';
 
@@ -25,8 +25,9 @@ const Account = () => {
     const [isAccountDeleted, setIsAccountDeleted] = useState(false);
 
     useEffect(() => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
         getUserData();
+        setListInfo('');
     }, []);
 
     const handleEditUsername = async (e) => {
@@ -128,22 +129,26 @@ const Account = () => {
         isFicListClicked && history.push("/ficlist");
         isEpListClicked && history.push("/eplist");
         isAccountDeleted && history.push("/");
+        // (!loggedIn) && history.push("/");
     });
-    
+
     return (
         <div className="account-container">
             <div className="personal-account slide-from-left">
-                <h4 className="h4-account">ACCOUNT INFO</h4>
                 {
                     editUsername ?
                         <Fragment>
                             <div className="personal-info">
-                                <form onSubmit={handleEditUsername} className="edit-form">
-                                    <label htmlFor="username" className="edit-label edit-label-user-info">
-                                        <input type="text" placeholder="New username..." onChange={(e) => setNewUsername(e.target.value)} />
-                                    </label>
-                                    <button type="submit" className="save-button">SAVE</button>
-                                    <p className="cancel-edit" onClick={() => setEditUsername(false)}>Cancel</p>
+                                <form onSubmit={handleEditUsername} className="edit-username-form">
+                                    <div className="username-labels-container">
+                                        <label htmlFor="username" className="edit-label">
+                                            <input type="text" placeholder="New username..." onChange={(e) => setNewUsername(e.target.value)} />
+                                        </label>
+                                    </div>
+                                    <div className="save-cancel-container">
+                                        <button type="submit" className="save-btn"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        <button type="text" className="cancel-btn" onClick={() => setEditUsername(false)}><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} /></button>
+                                    </div>
                                 </form>
                             </div>
                         </Fragment>
@@ -151,35 +156,47 @@ const Account = () => {
                         editPassword ?
                         <Fragment>
                             <div className="personal-info">
-                                <form onSubmit={handleEditPassword} className="edit-form">
-                                    <label htmlFor="password" className="edit-label edit-label-user-info">
-                                        <input type="password" placeholder="New password..." onChange={(e) => setNewPassword(e.target.value)} />
-                                    </label>
-                                    <label htmlFor="confirmPassword" className="edit-label edit-label-user-info">
-                                        <input type="password" placeholder="Confirm password..." onChange={(e) => setConfirmPassword(e.target.value)} />
-                                    </label>
-                                    <button type="submit" className="save-button">SAVE</button>
-                                    <p className="cancel-edit" onClick={() => setEditPassword(false)}>Cancel</p>
+                                <form onSubmit={handleEditPassword} className="edit-pass-form">
+                                    <div className="password-labels-container">
+                                        <label htmlFor="password" className="edit-label">
+                                            <input type="password" className="input-pass" placeholder="New password..." onChange={(e) => setNewPassword(e.target.value)} />
+                                        </label>
+                                        <label htmlFor="confirmPassword" className="edit-label">
+                                            <input type="password" className="input-pass" placeholder="Confirm password..." onChange={(e) => setConfirmPassword(e.target.value)} />
+                                        </label>
+                                    </div>
+                                    <div className="save-cancel-container">
+                                        <button type="submit" className="save-btn"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        <button type="text" className="cancel-btn" onClick={() => setEditPassword(false)}><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} /></button>
+                                    </div>
                                 </form>
                             </div>
                         </Fragment>
                         :
                         <Fragment>
                             <div className="personal-info">
-                                <p className="label">Username:</p>
-                                <p className="info">{userData && userData.username}</p>
-                                <p className="label">Email:</p>
-                                <p className="info">{userData && userData.email}</p>
-                                <button className="edit-btn edit-btn-one" onClick={() => setEditUsername(true)}>CHANGE USERNAME</button>
-                                <button className="edit-btn" onClick={() => setEditPassword(true)}>CHANGE PASSWORD</button>
-                                <p className="delete-button" onClick={(e) => {
-                                        if (window.confirm(`Deleting your account will delete all of your lists. \n\nAre you sure you want to continue?`)) { localStorage.clear(); deleteAccount(e) }
-                                    }}>Delete Account
-                                </p>
-                                <div className="create-links">
-                                    <Link to="addepslist">Create Episodes List</Link>
-                                    <Link to="addficlist">Create Fan Fiction List</Link>
-                                </div>
+                            {
+                                userData && userData.username ?
+                                    <Fragment>
+                                        <div className="greetings">
+                                            <p className="label-name">Hello, <span className="info">{userData && userData.username}</span>!</p>
+                                            <p className="label-email">{userData && userData.email}</p>
+                                        </div>
+                                        <div className="buttons">
+                                        <button className="edit-btn edit-btn-one" onClick={() => setEditUsername(true)}>EDIT USERNAME</button>
+                                        <button className="edit-btn" onClick={() => setEditPassword(true)}>EDIT PASSWORD</button>
+                                            <button className="delete-btn" onClick={(e) => {
+                                                if (window.confirm(`Deleting your account will delete all of your lists. \n\nAre you sure you want to continue?`)) { localStorage.clear(); deleteAccount(e) }
+                                                }}>DELETE ACCOUNT
+                                            </button>
+                                            <Link to="/"><button className="signout-btn" onClick={() => { localStorage.clear(); setLoggedIn(false); }}>SIGN OUT</button></Link>
+                                        </div>
+                                    </Fragment>
+                                :
+                                    <div className="loading-acc">
+                                        <FontAwesomeIcon icon={faSpinner} spin className="spin-icon" />
+                                    </div>
+                            } 
                             </div>
                         </Fragment>
                 }
@@ -187,41 +204,57 @@ const Account = () => {
             <div className="personal-lists slide-from-right">
                 <div className="fic-list-container">
                     <h3 className="lists-title">Fan Fiction Lists</h3>
-                    <div className="list-item-title">
+                    <Link to="addficlist" className="add-list">+ ADD LIST</Link>
                     {
-                        userData &&
-                        userData.ficLists &&
-                        userData.ficLists.length ?
+                        userFicLists &&
+                        userFicLists.length ?
                             <Fragment>
-                                {
-                                    userData.ficLists.map((el, i) => <FicListCard className="list-card" key={i} setIsFicListClicked={setIsFicListClicked} el={el} />)
-                                }
+                                <div className="list-item-title">
+                                    {
+                                        userFicLists.map((el, i) => <FicListCard className="list-card" key={i} setIsFicListClicked={setIsFicListClicked} el={el} />)
+                                    }
+                                </div>
                             </Fragment>
                         :
+                        userFicLists &&
+                        userFicLists.length === 0 ?
                             <Fragment>
                                 <p className="no-lists">You haven't added any lists.</p>
                             </Fragment>
+                        :
+                        <div className="loading-details">
+                            <FontAwesomeIcon icon={faSpinner} spin className="spin-icon" />
+                        </div>
                     }
-                    </div>
                 </div>
                 <div className="eps-list-container">
                     <h3 className="lists-title">Episodes Lists</h3>
-                    <div className="list-item-title">
-                        {
-                            userData &&
-                            userData.epsLists &&
-                            userData.epsLists.length ?
-                                <Fragment>
+                    <Link to="addepslist" className="add-list">+ ADD LIST</Link>
+                    {
+                        userEpLists &&
+                        userEpLists.length ?
+                            <Fragment>
+                                <div className="list-item-title">
                                     {
-                                        userData.epsLists.map((el, i) => <EpListCard className="list-card" key={i} setIsEpListClicked={setIsEpListClicked} el={el} />)
+                                        userEpLists.map((el, i) => {
+                                            return (
+                                                <EpListCard className="list-card" key={i} setIsEpListClicked={setIsEpListClicked} el={el} />
+                                            )
+                                        })
                                     }
-                                </Fragment>
-                                :
-                                <Fragment>
-                                    <p className="no-lists">You haven't added any lists.</p>
-                                </Fragment>
-                        }
-                    </div>
+                                </div>
+                            </Fragment>
+                        :
+                        userEpLists &&
+                        userEpLists.length === 0 ?
+                            <Fragment>
+                                <p className="no-lists">You haven't added any lists.</p>
+                            </Fragment>
+                        :
+                        <div className="loading-details">
+                            <FontAwesomeIcon icon={faSpinner} spin className="spin-icon" />
+                        </div>
+                    }
                 </div>
             </div>
         </div>

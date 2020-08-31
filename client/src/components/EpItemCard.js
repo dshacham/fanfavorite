@@ -2,13 +2,13 @@ import React, { useContext, useState, Fragment, useEffect } from 'react';
 import '../style/ItemCard.scss';
 import Context from './Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrashAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const EpItemCard = ({ ep }) => {
-    const { getUserData, userData, setUserData, setListInfo, token } = useContext(Context);
+    const { getUserData, userData, setUserData, listItems, setListInfo, token } = useContext(Context);
 
     const [editInfo, setEditInfo] = useState(false);
-
+    const [epInfo, setEpInfo] = useState('');
     const [newTitle, setNewTitle] = useState('');
     const [newSeason, setNewSeason] = useState('');
     const [newNumber, setNewNumber] = useState('');
@@ -24,15 +24,16 @@ const EpItemCard = ({ ep }) => {
         e.preventDefault();
 
         // old data:
-        const { fandom, title, season, number, whyFave, source, } = ep;
+        const { listFandom, title, season, number, whyFave, source, listId } = ep;
         
         const newInfo = {
-            fandom: fandom,
+            listFandom: listFandom,
             title: newTitle === '' ? title : newTitle,
             season: newSeason === '' ? season : newSeason,
             number: newNumber === '' ? number : newNumber,
             whyFave: newWhyFave === '' ? whyFave : newWhyFave,
             source: newSource === '' ? source : newSource,
+            listId
         };
 
         const newEpData = {
@@ -48,8 +49,9 @@ const EpItemCard = ({ ep }) => {
         const data = await response.json();
 console.log(data)
         if (data.success) {
-            setListInfo(data.ep)
+            setListInfo(data.epList)
             setEditInfo(false);
+            localStorage.setItem('list-info', JSON.stringify(data.epList));
         };
     };
 
@@ -66,7 +68,7 @@ console.log(data)
         const request = await fetch('/episodes/' + ep._id, deletedItem);
         const response = await request.json();
         if (response.success) {
-            setUserData(response.eps);
+            setListInfo(response.epList);
         };
     };
 
@@ -100,25 +102,34 @@ console.log(data)
                         </div>
                     </Fragment>
                     :
-                    <Fragment>
-                        <ul className="item-card">
-                            <li className="item"><span className="category">Title: </span>{ep.title}</li>
-                            <li className="item"><span className="category">Season: </span>{ep.season}</li>
-                            <li className="item"><span className="category">Number: </span>{ep.number}</li>
-                            <li className="item"><span className="category">Why is it a fave?: </span>{ep.whyFave}</li>
-                            {
-                                ep.source ?
-                            <li className="item"><span className="category">Source: </span><a href={ep.source} target='_blank' rel="noopener noreferrer">{ep.source}</a></li>
-                            : null
-                            }
-                        </ul>
-                        <div className="item-edit-delete">
-                            <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
-                            <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
-                                if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteItem(e) }
-                            }} />
+                    ep ?
+                        <Fragment>
+                            <ul className="item-card">
+                                <li className="item"><span className="category">Title: </span>{ep.title}</li>
+                                <li className="item"><span className="category">Season: </span>{ep.season}</li>
+                                <li className="item"><span className="category">Number: </span>{ep.number}</li>
+                                {
+                                    ep.whyFave ?
+                                        <li className="item"><span className="category">Why is it a fave?: </span>{ep.whyFave}</li>
+                                    : null
+                                }
+                                {
+                                    ep.source ?
+                                        <li className="item"><span className="category">Link to info: </span><a href={ep.source} target='_blank' rel="noopener noreferrer">{ep.source}</a></li>
+                                    : null
+                                }
+                            </ul>
+                            <div className="item-edit-delete">
+                                <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
+                                <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
+                                    if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteItem(e) }
+                                }} />
+                            </div>
+                        </Fragment>
+                    :
+                        <div className="loading-details">
+                            <FontAwesomeIcon icon={faSpinner} spin className="spin-icon" />
                         </div>
-                    </Fragment>
             }
         </div>
     )

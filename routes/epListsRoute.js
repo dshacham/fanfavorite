@@ -3,7 +3,7 @@ const { getEpList, getEpLists, postEpList, putEpList, deleteEpList } = require("
 const auth = require("../middleware/authenticator");
 
 Route.get("/", getEpLists);
-Route.get("/", getEpList);
+Route.get("/:id", getEpList);
 Route.post("/", auth, postEpList);
 Route.put("/:id", putEpList);
 Route.delete("/:id", deleteEpList);

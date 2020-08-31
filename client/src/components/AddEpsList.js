@@ -9,22 +9,25 @@ const AddEpsList = () => {
 
     const { userData, setUserData, token, setListInfo} = useContext(Context);
 
-    const [fandom, setFandom] = useState('');
+    const [listFandom, setListFandom] = useState('');
     const listType = 'episodes';
 
     // route to list page after creation
     const [statusAdded, setStatusAdded] = useState(false)
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
+        window.scrollTo(0, 0);
+
+        setListInfo('');
+    }, []);
 
     const handleCreateList = async (e) => {
         e.preventDefault();
 
         const epListData = {
-            fandom,
+            listFandom,
             listType,
+            userId: userData._id
         }
 
         const postListData = {
@@ -38,10 +41,8 @@ const AddEpsList = () => {
 
         const resp = await fetch('/eplists', postListData);
         const data = await resp.json();
-
         if (data.success) {
             setUserData(data.user);
-            setListInfo(data.epList);
             localStorage.setItem('list-info', JSON.stringify(data.epList));
             setStatusAdded(true)
         }
@@ -59,17 +60,13 @@ const AddEpsList = () => {
                     <input
                         className="list-input"
                         type="text"
-                        value={fandom}
+                        value={listFandom}
                         required
-                        onChange={(e) => setFandom(e.target.value)}
+                        onChange={(e) => setListFandom(e.target.value)}
                     />
                 </label>
-    
-                <h5 className="h5-list">* Required Fields</h5>
                 <button className="list-btn" type="submit">CONTINUE</button>
-
             </form>
-
         </div>
     )
 }

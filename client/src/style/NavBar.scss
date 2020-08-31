@@ -2,15 +2,15 @@
 
 .nav {
     width: 100%;
-    background-color: $coffee-darkest;
-    padding: 1rem 0;
-    box-shadow: 0 1px 5px $coffee-darkest;
+    background-color: $cafe-au-lait;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
     
     .not-logged-container, .logged-in-container {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        margin: 0.5rem 2rem;
+        align-items: flex-end;
+        margin: 1rem auto;
+        width: 95%;
     
         .titles {
             display: flex;
@@ -21,94 +21,82 @@
                 font-family: 'Londrina Solid', cursive;
                 font-size: 2.15rem;
                 color: $champagne;
-                text-shadow: -2px -3px 2px $cafe-au-lait, 1px -3px 2px $cafe-au-lait, -1px 3px 2px $cafe-au-lait, 2px 3px 2px $cafe-au-lait;
+                text-shadow: -3px -3px 3px $coffee-darkest, 3px -3px 3px $coffee-darkest, -3px 3px 3px $coffee-darkest, 3px 3px 3px $coffee-darkest;
+            }
+            .logo:hover {
+                color: $champagne-darker;
             }
 
             .h2-loggedin-out {
                 font-family: 'Londrina Solid', cursive;
-                font-weight: 100;
                 margin-top: -0.8rem;
-                align-self: flex-end;
-                color: $cafe-au-lait;
+                color: $coffee-darker;
                 font-weight: bold;
             }
         }
 
         .acc-signout-container {
             .icon-acc {
-                font-size: 2.5rem;
-                margin-right: 1rem;
+                font-size: 3rem;
+                color: $champagne-darker;
+                stroke: rgba(99, 60, 44, 0.8);
+                stroke-width: 25;
             }
-    
-            .signout {
-                font-size: 0.9rem;
-                text-decoration: underline;
-            }
-        }
-    
-        .login-form {
-            .login-input, .login-btn {
-                margin-right: 0.5rem;
-                padding: 0.5rem;
-                border: 3px solid $cafe-au-lait;
-                border-radius: $border;
-                color: $coffee-darker;
-                background-color: $champagne;
 
-                &::placeholder {
-                    font-family: 'El Messiri', sans-serif;
-                    color: $cafe-au-lait;
-                    
-                }
-            }
-            .login-input:focus {
-                outline: none;
-                border: 0.1rem solid $coffee;
-            }
-            .login-btn {
-                background-color: $cafe-au-lait;
-                color: $champagne;
-                font-weight: bold;
-                cursor: pointer;
-                box-shadow: 1px 1px 3px rgb(80, 49, 36);
-            }
-            .login-btn:hover {
+            .icon-acc:hover, .signout:hover {
                 color: $desert-sand;
             }
 
-            .sign-forgot-error-container {
-                display: flex;
-                justify-content: space-between;
+            .icon-signup {
+                font-size: 2.7rem;
+                stroke: rgba(99, 60, 44, 0.8);
+                stroke-width: 30;
+                color: $champagne;
+            }
+            
+            .icon-signup:hover {
+                color: $champagne-darker;
+            }
 
-                .signin-error {
-                    color: $desert-sand;
-                    opacity: 0.6;
-                    font-size: 0.8rem;
-                    visibility: hidden;
-                }
-                .show-error {
-                    visibility: visible;
-                }
+            .icon-text, .acc-text {
+                color: $coffee-darkest;
+                font-size: 0.8rem;
+                font-weight: bold;
+                margin: -0.2rem 0 0 0.2rem;
+            }
 
-                .sign-forgot-container {
-                    display: flex;
-                    justify-content: flex-end;
-                    margin-right: 0.7rem;
-                    
-                    .signup-forgot {
-                        font-size: 0.85rem;
-                        text-decoration: underline;
-                        margin-left: 1.2rem;
-                        color: $desert-sand;
-                        opacity: 0.6;
-                    }
-                    .signup-forgot:hover {
-                        opacity: 0.7;
-                    }
+            .acc-text {
+                font-size: 0.7rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .nav {
+        .not-logged-container, .logged-in-container {
+            .titles {
+                .logo {
+                    font-family: 'Londrina Solid', cursive;
+                    font-size: 1.7rem;
+                    color: $champagne;
+                    text-shadow: -3px -3px 3px $coffee-darkest, 3px -3px 3px $coffee-darkest, -3px 3px 3px $coffee-darkest, 3px 3px 3px $coffee-darkest;
+                }
+                .logo:hover {
+                    color: $champagne-darker;
+                }
+    
+                .h2-loggedin-out {
+                    font-size: 1.22rem;
+                    margin-top: -0.6rem;
                 }
             }
 
-
+            .acc-signout-container {
+                .icon-acc {
+                    font-size: 2.7rem;
+                }
+            }
         }
     }
 }

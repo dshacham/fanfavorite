@@ -52,6 +52,8 @@ exports.putEp = async (req, res, next) => {
     try {
         const updateEp = await Episode.findByIdAndUpdate(id, ep, { new: true });
         let listData = await EpList.findById(ep.listId);
+        listData.save();
+        
         if (!ep) throw createError(404);
         res.json({ success: true, ep: updateEp, epList: listData });
     }

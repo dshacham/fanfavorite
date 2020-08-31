@@ -5,26 +5,28 @@ footer {
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: $cafe-au-lait;
+    background-color: $coffee-darkest;
     padding: 1.5rem 2rem;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    color: $coffee-darker;
-    box-shadow: 0 -2px 5px $coffee-darker;
+    color: $champagne-darker;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
 
     .footer-name {
         font-family: 'Calistoga', cursive;
+        margin-top: 0.5rem;
+        opacity: 0.6;
     }
 
     .footer-contact {
         a {
-            margin: 0 0.5rem;
+            margin: 0 1rem;
             font-size: 2rem;
-            color: $coffee-darker;
+            color: $champagne-darker;
 
             .icon:hover {
-                color: $coffee
+                color: $cafe-au-lait
             }
         }
     }

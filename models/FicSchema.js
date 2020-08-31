@@ -18,6 +18,7 @@ const FicSchema = new Schema({
 
     listId: { type: String, required: true },
 
+    userId: { type: String, required: true },
 });
 
 

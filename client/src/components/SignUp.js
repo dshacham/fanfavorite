@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import Context from './Context';
 import '../style/SignUp.scss';
 
@@ -95,6 +95,7 @@ const SignUp = () => {
                 <button
                     type="submit"
                     className="button sign-btn">GO</button>
+                    <Link to="/" className="already-registered">Already registered?</Link>
             </form>
         </div>
     )

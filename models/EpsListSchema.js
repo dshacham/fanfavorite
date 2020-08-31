@@ -4,13 +4,13 @@ const jwt = require("jsonwebtoken");
 
 const EpsListSchema = new Schema({
     
-    fandom: { type: String, required: true },
+    listFandom: { type: String, required: true },
 
     listType: { type: String, default: "episodes", required: true },
 
     eps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Episode" }],
 
-    // authorId: { type: String, required: false },
+    userId: { type: String, required: true },
 });
 
 

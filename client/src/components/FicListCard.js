@@ -11,7 +11,7 @@ const FicListCard = ({ el, setIsFicListClicked }) => {
                 setListInfo(el);
                 localStorage.setItem('list-info', JSON.stringify(el));
                 setIsFicListClicked(true);
-            }} className="to-list">{el.fandom}</button>
+            }} className="to-list">{el.listFandom}</button>
         </div>
     )
 }

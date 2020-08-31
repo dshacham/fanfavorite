@@ -2,31 +2,29 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from './Context';
 import '../style/AddFicList.scss';
-import axios from 'axios';
 
 const AddFicList = () => {
     const history = useHistory();
 
     const { userData, setUserData, token, setListInfo} = useContext(Context);
 
-    const [fandom, setFandom] = useState('');
+    const [listFandom, setListFandom] = useState('');
     const listType = 'fanfiction';
-    const fics = [];
 
     // route to list page after creation
     const [statusAdded, setStatusAdded] = useState(false)
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [])
+    }, []);
 
     const handleCreateList = async (e) => {
         e.preventDefault();
 
         const ficListData = {
-            fandom,
+            listFandom,
             listType,
-            fics
+            userId: userData._id
         }
 
         const postListData = {
@@ -42,15 +40,15 @@ const AddFicList = () => {
         const data = await resp.json();
         if (data.success) {
             setUserData(data.user);
-            setListInfo(data);
-            localStorage.setItem('list-info', JSON.stringify(data));
-            setStatusAdded(true)
+            setListInfo(data.ficList);
+            localStorage.setItem('list-info', JSON.stringify(data.ficList));
+            setStatusAdded(true);
         }
     }
 
     useEffect(() => {
         statusAdded && history.push("/ficlist");
-    })
+    });
 
     return (
         <div className="form-container">
@@ -60,17 +58,13 @@ const AddFicList = () => {
                     <input
                         className="list-input"
                         type="text"
-                        value={fandom}
+                        value={listFandom}
                         required
-                        onChange={(e) => setFandom(e.target.value)}
+                        onChange={(e) => setListFandom(e.target.value)}
                     />
                 </label>
-    
-                <h5 className="h5-list">* Required Fields</h5>
                 <button className="list-btn" type="submit">CONTINUE</button>
-
             </form>
-
         </div>
     )
 }

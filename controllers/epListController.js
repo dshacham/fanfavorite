@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 const EpsList = require("../models/EpsListSchema");
+const Episode = require("../models/EpSchema");
 const User = require("../models/UserSchema");
 const env = require("../config/config");
 
@@ -31,6 +32,7 @@ exports.postEpList = async (req, res, next) => {
         const newEpList = new EpsList(req.body);
         await newEpList.save();
         let userData = await User.findById(req.user._id);
+        
         userData.epsLists.push(newEpList._id);
         userData.save();
 
@@ -46,7 +48,7 @@ exports.putEpList = async (req, res, next) => {
     const epList = req.body;
 
     try {
-        const updateEpList = await EpsList.findByIdAndUpdate(id, ep, { new: true });
+        const updateEpList = await EpsList.findByIdAndUpdate(id, epList, { new: true });
         if (!epList) throw createError(404);
         res.json({ success: true, epList: updateEpList });
     }
@@ -60,8 +62,13 @@ exports.deleteEpList = async (req, res, next) => {
 
     try {
         const epList = await EpsList.findByIdAndDelete(id);
-        if (!epList) throw createError(404);
         const epLists = await EpsList.find({});
+        Episode.deleteMany({ listId: id }).then(function() { 
+            console.log("Data deleted");
+        }).catch(function(error){ 
+            console.log(error);
+        }); 
+        if (!epList) throw createError(404);
         res.json({ success: true, epList: epLists });
     }
     catch (err) {

@@ -2,7 +2,7 @@ import React, { useContext, useState, Fragment, useEffect } from 'react';
 import '../style/ItemCard.scss';
 import Context from './Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrashAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const FicItemCard = ({ fic }) => {
     const { getUserData, setUserData, setUserFanfics, listInfo, setListInfo, token } = useContext(Context);
@@ -43,7 +43,7 @@ const FicItemCard = ({ fic }) => {
 
         // old data:
         const { title, author, ship, genre, description, source, listId } = ficInfo;
-        
+
         const newInfo = {
             title: newTitle === '' ? title : newTitle,
             author: newAuthor === '' ? author : newAuthor,
@@ -105,8 +105,8 @@ const FicItemCard = ({ fic }) => {
                         <div className="item-edit-form">
                             <form onSubmit={handleSubmitEdit} className="item-edit-form">
                                 <div className="ok-cancel">
-                                    <button type="submit" className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
-                                    <button className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditInfo(false)}/></button>
+                                    <button type="submit" className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                    <button className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} onClick={() => setEditInfo(false)}/></button>
                                 </div>
                                 <label htmlFor="title" className="item-edit-label item-edit-label-info">
                                     <input type="text" placeholder={ficInfo.title} onChange={(e) => setNewTitle(e.target.value)} />
@@ -130,22 +130,27 @@ const FicItemCard = ({ fic }) => {
                         </div>
                     </Fragment>
                     :
-                    <Fragment>
-                        <ul className="item-card">
-                            <li className="item"><span className="category">Title: </span>{ficInfo.title}</li>
-                            <li className="item"><span className="category">Author: </span>{ficInfo.author}</li>
-                            <li className="item"><span className="category">Ship: </span>{ficInfo.ship}</li>
-                            <li className="item"><span className="category">Genre: </span>{ficInfo.genre}</li>
-                            <li className="item"><span className="category">Description: </span>{ficInfo.description}</li>
-                            <li className="item"><span className="category">Source: </span><a href={ficInfo.source} target='_blank' rel="noopener noreferrer">{ficInfo.source}</a></li>
-                        </ul>
-                        <div className="item-edit-delete">
-                            <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
-                            <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
-                                if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteItem(e) }
-                            }} />
+                    ficInfo ?
+                        <Fragment>
+                            <ul className="item-card">
+                                <li className="item"><span className="category">Title: </span>{ficInfo.title}</li>
+                                <li className="item"><span className="category">Author: </span>{ficInfo.author}</li>
+                                <li className="item"><span className="category">Ship: </span>{ficInfo.ship}</li>
+                                <li className="item"><span className="category">Genre: </span>{ficInfo.genre}</li>
+                                <li className="item"><span className="category">Description: </span>{ficInfo.description}</li>
+                                <li className="item"><span className="category">Source: </span><a href={ficInfo.source} target='_blank' rel="noopener noreferrer">{ficInfo.source}</a></li>
+                            </ul>
+                            <div className="item-edit-delete">
+                                <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
+                                <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
+                                    if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteItem(e) }
+                                }} />
+                            </div>
+                        </Fragment>
+                    :
+                        <div className="loading-details">
+                            <FontAwesomeIcon icon={faSpinner} spin className="spin-icon" />
                         </div>
-                    </Fragment>
             }
         </div>
     )

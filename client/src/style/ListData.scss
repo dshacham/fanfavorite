@@ -13,7 +13,6 @@
         align-items: center;
         padding: 2rem;
         box-shadow: -1px 1px 5px rgba(119, 73, 54, 0.5);
-        // width: 80%;
         flex-basis: 60%;
 
         .list-h2 {
@@ -44,13 +43,18 @@
 
         .list-items-container {
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: column;
+            width: 100%;
+
+            .loading-details {
+                align-self: center;
+                font-size: 1.7rem;
+            }
         }
     }
 
     .item-form-container {
         flex-basis: 30%;
-        // width: 40%;
         height: auto;
         display: flex;
         justify-content: center;
@@ -58,9 +62,7 @@
     
         .item-form {
             width: 100%;
-            // height: 100%;
             padding-bottom: 2rem;
-            // margin: 2rem 0 3.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -113,15 +115,15 @@
             }
             
             .item-btn {
-                width: 10vw;
-                padding: 0.5rem;
                 cursor: pointer;
                 font-size: 1.2rem;
+                padding: 0.7rem 1.5rem;
                 color: $champagne;
-                background-color: $brown-sugar;
-                border-radius: 0.15rem;
-                border: 1px solid $coffee-darker;
-                box-shadow: 1px 1px 3px $coffee-darker;
+                background-color: $cafe-au-lait;
+                border-radius: 0.18rem;
+                border: 0.14rem solid rgba(157, 107, 83, 0.6);
+                border-right-color: rgba(113, 69, 51, 0.7);
+                border-bottom-color: rgba(113, 69, 51, 0.7);
             }
             .item-btn:hover {
                 color: $desert-sand;
@@ -140,7 +142,6 @@
         width: 100%;
 
         .list-edit-label-info {
-            // padding: 0.3rem;
             margin: 0 1rem 1.25rem;
         }
 
@@ -195,4 +196,91 @@
 
 .list-data-container:hover .list-edit-delete {
     color: $brown-sugar;
+}
+
+@media screen and (max-width: 499px) {
+    .list-data-container {
+        flex-direction: column-reverse;
+        width: 100%;
+        margin-top: 0.1rem;
+        .list-details {
+            margin-top: 2rem;
+            padding: 2rem 0.2rem;
+        }
+        .item-form-container {
+            
+            .item-form {
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding-bottom: 1rem;
+
+                .h2-item {
+                    flex-basis: 100%;
+                    margin: 0.5rem 0 0;
+                }
+                .h5-item {
+                    width: 100%;
+                }
+
+                .item-label {
+                    width: 50%;
+        
+                    .item-input {
+                        height: 2.5rem;
+                        width: 100%;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) and (min-width: 500px) {
+    .list-data-container {
+        flex-direction: column-reverse;
+        width: 100%;
+        margin-top: 0.1rem;
+        .list-details {
+            margin-top: 2rem;
+        }
+        .item-form-container {
+            
+            .item-form {
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding-bottom: 1rem;
+
+                .h2-item {
+                    flex-basis: 100%;
+                    margin: 0.5rem 0 0;
+                }
+                .h5-item {
+                    width: 100%;
+                }
+
+                .item-label {
+                    width: 30%;
+        
+                    .item-input {
+                        height: 2.5rem;
+                        width: 100%;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+    .list-data-container {
+        width: 95%;
+        .list-details {
+
+        }
+        .item-form-container {
+            flex-basis: 35%;
+        }
+    }
 }

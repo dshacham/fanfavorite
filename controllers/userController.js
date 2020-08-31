@@ -2,6 +2,8 @@ const createError = require("http-errors");
 const User = require("../models/UserSchema");
 const FicList = require("../models/FicListSchema");
 const Fic = require("../models/FicSchema");
+const EpsList = require("../models/EpsListSchema");
+const Episode = require("../models/EpSchema");
 const { encrypt } = require("../lib/encryption");
 
 
@@ -73,6 +75,26 @@ exports.deleteUser = async (req, res, next) => {
 
     try {
         const user = await User.findByIdAndDelete(id);
+        EpsList.deleteMany({ userId: id }).then(function() { 
+            console.log("Data deleted");
+        }).catch(function(error){ 
+            console.log(error);
+        });
+        Episode.deleteMany({ userId: id }).then(function() { 
+            console.log("Data deleted");
+        }).catch(function(error){ 
+            console.log(error);
+        });
+        FicList.deleteMany({ userId: id }).then(function() { 
+            console.log("Data deleted");
+        }).catch(function(error){ 
+            console.log(error);
+        });
+        Fic.deleteMany({ userId: id }).then(function() { 
+            console.log("Data deleted");
+        }).catch(function(error){ 
+            console.log(error);
+        });
         if (!user) throw createError(404);
         res.json({ success: true, user: user });
     } catch (err) {

@@ -1,0 +1,55 @@
+const createError = require("http-errors");
+const User = require("../models/UserSchema");
+const { encrypt } = require("../lib/encryption");
+
+
+exports.getUsers = async (req, res, next) => {
+    try {
+        const users = await User.find();
+        res.json({ success: true, users: users });
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.getUser = async (req, res, next) => {
+    const { token } = req.header;
+    const { id } = req.user;
+    try {
+        const user = await User.findById(id).populate("ficLists").populate("epsLists").exec();
+        res.json({ success: true, user: user });
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.putUser = async (req, res, next) => {
+    const user = req.body;
+    const { id } = req.params;
+
+    try {
+        if (Object.keys(req.body).includes("password")) {
+            const hashedPassword = await encrypt(user.password);
+            user.password = hashedPassword;
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(id, user, { new: true }).populate("ficLists").populate("epsLists").exec();
+        if (!updatedUser) throw createError(500);
+
+        res.json({ success: true, user: updatedUser });
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.deleteUser = async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+        const user = await User.findByIdAndDelete(id);
+        if (!user) throw createError(404);
+        res.json({ success: true, user: user });
+    } catch (err) {
+        next(err);
+    }
+};

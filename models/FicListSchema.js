@@ -4,13 +4,13 @@ const jwt = require("jsonwebtoken");
 
 const FicListSchema = new Schema({
     
-    fandom: { type: String, required: true },
+    listFandom: { type: String, required: true },
 
     listType: { type: String, default: "fanfiction" },
 
     fics: [{ type: mongoose.Schema.Types.ObjectId, ref: "Fic" }],
 
-    // authorId: { type: String, required: false },
+    userId: { type: String, required: true },
 });
 
 module.exports = mongoose.model("FicList", FicListSchema);

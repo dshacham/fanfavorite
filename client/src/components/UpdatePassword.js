@@ -9,7 +9,6 @@ const UpdatePassword = ({ match }) => {
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [submitted, setSubmitted] = useState(false);
     const [form, setForm] = useState(1);
 
     const updatePassword = async (e) => {

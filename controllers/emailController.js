@@ -11,18 +11,13 @@ const transporter = nodemailer.createTransport({
       pass: process.env.EMAIL_PASS
     }
   });
-// `secret` is passwordHash concatenated with user's createdAt,
-// so if someones gets a user token they still need a timestamp to intercept.
+
 const usePasswordHashToMakeToken = ({password: passwordHash, _id: userId, createdAt }) => {
   const secret = passwordHash + "-" + createdAt;
-  const resetToken = jwt.sign({ userId }, secret, {
-    expiresIn: 3600 // 1 hour
-  });
+  const resetToken = jwt.sign({ userId }, secret, { expiresIn: '1h' });
   return resetToken;
 };
 
-/*** Calling this function with a registered user's email sends an email IRL ***/
-/*** I think Nodemail has a free service specifically designed for mocking   ***/
 exports.sendPasswordResetEmail = async (req, res) => {
   const { email } = req.params;
   let user;
@@ -31,6 +26,7 @@ exports.sendPasswordResetEmail = async (req, res) => {
   } catch (err) {
     res.status(404).json("No user with that email");
   }
+
   const resetToken = usePasswordHashToMakeToken(user);
   const url = getPasswordResetURL(user, resetToken);
   const emailTemplate = resetPasswordTemplate(user, url);

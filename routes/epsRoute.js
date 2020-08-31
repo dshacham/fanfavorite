@@ -4,7 +4,7 @@ const auth = require("../middleware/authenticator");
 
 
 Route.get("/", getEps);
-Route.get("/", getEp);
+Route.get("/:id", getEp);
 Route.post("/", auth, postEp);
 Route.put("/:id", putEp);
 Route.delete("/:id", deleteEp);

@@ -8,7 +8,6 @@ import { faTwitter, faTumblr } from '@fortawesome/free-brands-svg-icons';
 const Footer = () => {
     return (
         <footer>
-            <p className="footer-name">&copy;FanFavorite2020</p>
             <div className="footer-contact">
                 <Link to="/about"><FontAwesomeIcon className="icon" title="about" icon={faQuestionCircle} /></Link>
                 <a href="https://twitter.com/GhostLoveSc0re" target="_blank" rel="noopener noreferrer">
@@ -18,6 +17,7 @@ const Footer = () => {
                     <FontAwesomeIcon className="icon" title="tumblr" icon={faTumblr} />
                 </a>
             </div>
+            <p className="footer-name">&copy;FanFavorite2020</p>
         </footer>
     )
 }

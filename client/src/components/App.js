@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../style/App.scss";
 import Context from "./Context";
-import Home from "./Home";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import Landing from "./Landing";
@@ -15,8 +14,9 @@ import FicListData from "./FicListData.js"
 import EpListData from "./EpListData.js"
 import ForgotPassword from "./ForgotPassword";
 import UpdatePassword from "./UpdatePassword";
+import AdminBoard from "./AdminBoard";
 
-function App() {
+const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [userFicLists, setUserFicLists] = useState('');
@@ -25,73 +25,17 @@ function App() {
   const [userEpisodes, setUserEpisodes] = useState('');
   const [listInfo, setListInfo] = useState('');
   const [listItems, setListItems] = useState('');
+  const [sortedEps, setSortedEps] = useState('');
   const [userData, setUserData] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  const allFicLists = [];
-  const allFics = [];
-  const allEpsLists = [];
-  const allEps = [];
-
-
-  // const [navClass, setNavClass] = useState('/');
+  const [allListEps, setAllListEps] = useState('');
 
   const [winWidth, setWinWidth] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    window.innerWidth > 768 ?
-      setWinWidth('desktop')
-      :
-      setWinWidth('mobile')
-  }, []);
-
-  // FETCH ALL FAVE LISTS:
-  const fetchFaves = async () => {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'x-auth': token
-      }
-    };
-
-    const request1 = await fetch('/ficlists', options);
-    const response1 = await request1.json();
-    response1.ficLists && 
-      response1.ficLists.map(ficList => {
-        allFicLists.push({ficList});
-    });
-    setUserFicLists(allFicLists);
-
-    const request2 = await fetch('/fanfics', options);
-    const response2 = await request2.json();
-    response2.fics && 
-      response2.fics.map(fic => {
-        allFics.push({fic});
-    });
-    setUserFanfics(allFics);
-
-    const request3 = await fetch('/eplists', options);
-    const response3 = await request3.json();
-    response3.epLists &&
-    response3.epLists.map(epList => {
-      allEpsLists.push({epList});
-    });
-    setUserEpLists(allEpsLists);
-
-    const request4 = await fetch('/episodes', options);
-    const response4 = await request4.json();
-    response4.eps &&
-    response4.eps.map(ep => {
-      allEps.push({ep});
-    });
-    setUserEpisodes(allEps);
-  };
 
   // FETCH USER INFO:
   const getUserData = async () => {
@@ -106,7 +50,12 @@ function App() {
 
     const response = await fetch('/users', options);
     const data = await response.json();
-    setUserData(data.user);
+
+    if (data.success) {
+      setUserData(data.user);
+      setUserEpLists(data.user.epsLists)
+      setUserFicLists(data.user.ficLists)
+    }
   };
 
   // LOAD THE USER DATA IF LOGGED IN:
@@ -117,36 +66,16 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchFaves();
-  }, []);
-
-  useEffect(() => {
-      fetchFaves();
-  }, [listInfo]);
-
-  useEffect(() => {
-    fetchFaves();
-  }, [userData]);
-
   return (
     <div className="App">
-      <Context.Provider value={{fetchFaves, allFicLists, allFics, allEpsLists, allEps, userFicLists, setUserFicLists, userFanfics, setUserFanfics, userEpLists, setUserEpLists, userEpisodes, setUserEpisodes, listInfo, setListInfo, listItems, setListItems, userData, setUserData, getUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn, winWidth, setWinWidth}}>
+      <Context.Provider value={{ allListEps, setAllListEps, sortedEps, setSortedEps, userFicLists, setUserFicLists, userFanfics, setUserFanfics, userEpLists, setUserEpLists, userEpisodes, setUserEpisodes, listInfo, setListInfo, listItems, setListItems, userData, setUserData, getUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn, winWidth, setWinWidth}}>
         <Router>
         <NavBar />
-          {/* {winWidth === 'desktop' ?
-            <NavBar />
-            :
-            <DropDownNav />
-          } */}
           <Switch>
-            { loggedIn ?
-              <Route path="/" exact component={Home} />
-              :
-              <Route path="/" exact component={Landing} />
-            }
+            <Route path="/" exact component={Landing} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/account" exact component={Account} />
+            <Route path="/admin" exact component={AdminBoard} />
             <Route path="/addficlist" exact component={AddFicList} />
             <Route path="/addepslist" exact component={AddEpsList} />
             <Route path="/ficlist" exact component={FicListData} />
