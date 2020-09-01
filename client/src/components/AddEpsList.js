@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from './Context';
 import '../style/AddFicList.scss';
-import axios from 'axios';
 
 const AddEpsList = () => {
     const history = useHistory();
@@ -13,7 +12,7 @@ const AddEpsList = () => {
     const listType = 'episodes';
 
     // route to list page after creation
-    const [statusAdded, setStatusAdded] = useState(false)
+    const [statusAdded, setStatusAdded] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -28,7 +27,7 @@ const AddEpsList = () => {
             listFandom,
             listType,
             userId: userData._id
-        }
+        };
 
         const postListData = {
             method: "POST",
@@ -37,20 +36,20 @@ const AddEpsList = () => {
                 'x-auth': token
             },
             body: JSON.stringify(epListData)
-        }
+        };
 
         const resp = await fetch('/eplists', postListData);
         const data = await resp.json();
         if (data.success) {
             setUserData(data.user);
             localStorage.setItem('list-info', JSON.stringify(data.epList));
-            setStatusAdded(true)
-        }
-    }
+            setStatusAdded(true);
+        };
+    };
 
     useEffect(() => {
         statusAdded && history.push("/eplist");
-    })
+    });
 
     return (
         <div className="form-container">

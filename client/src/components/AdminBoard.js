@@ -9,32 +9,30 @@ const AdminBoard = () => {
     const [allUsers, setAllUsers] = useState('');
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-        getUsers();
+        window.scrollTo(0, 0);
     }, []);
 
-    const getUsers = async () => {
-        const options = {
-          method: 'GET',
-          headers: {
-            'x-auth': token,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        };
-    
-        const response = await fetch('/admin', options);
-        const data = await response.json();
-        setAllUsers(data.users);
-      };
+    // useEffect(() => {
+    //     getUsers();
+    // }, []);
 
     useEffect(() => {
+        const getUsers = async () => {
+            const options = {
+              method: 'GET',
+              headers: {
+                'x-auth': token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+            };
+        
+            const response = await fetch('/admin', options);
+            const data = await response.json();
+            setAllUsers(data.users);
+          };
         getUsers();
-    }, []);
-
-    useEffect(() => {
-        getUsers();
-    }, [allUsers]);
+    }, [token]);
     
     return (
         <div className="admin-board">

@@ -1,5 +1,6 @@
 import React, { useContext, Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import Context from './Context';
 import '../style/ListData.scss';
 import FicItemCard from './FicItemCard';
@@ -51,7 +52,7 @@ const FicListData = () => {
             source,
             listId,
             userId: userData._id
-        }
+        };
 
         const postFicData = {
             method: "POST",
@@ -60,7 +61,7 @@ const FicListData = () => {
                 'x-auth': token
             },
             body: JSON.stringify(ficData)
-        }
+        };
 
         const resp = await fetch('/fanfics', postFicData);
         const data = await resp.json();
@@ -97,7 +98,7 @@ const FicListData = () => {
         const response = await fetch('/ficlists/' + listId, newFicListData);
         const data = await response.json();
         if (data.success) {
-            setListInfo(data.ficList)
+            setListInfo(data.ficList);
             setEditListInfo(false);
         };
     };
@@ -133,11 +134,11 @@ const FicListData = () => {
                         <Fragment>
                             <div className="list-edit-form">
                                 <form onSubmit={handleSubmitEditList} className="list-edit-form">
-                                    <div className="ok-cancel">
+                                    <div className={isMobile ? "ok-cancel-mobile" : "ok-cancel"}>
                                         <button type="submit" className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
                                         <button className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditListInfo(false)}/></button>
                                     </div>
-                                    <label htmlFor="listFandom" className="list-edit-label list-edit-label-info">Fandom:
+                                    <label htmlFor="listFandom" className={isMobile ? "margin list-edit-label" : "list-edit-label"}>Fandom:
                                         <input type="text" placeholder={listFandom} onChange={(e) => setNewListFandom(e.target.value)} />
                                     </label>
                                 </form>
@@ -146,13 +147,13 @@ const FicListData = () => {
                     :
                     listInfo ?
                         <Fragment>
-                            <div className="list-edit-delete">
+                            <div className={isMobile ? "list-edit-delete-mobile" : "list-edit-delete"}>
                                 <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditListInfo(true)} />
                                 <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
                                     if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteList(e) }
                                 }} />
                             </div>
-                            <h2 className="list-h2"><span className="list-title">Favorite Fan Fiction:</span> {listFandom}</h2>
+                            <h2 className={isMobile ? "list-h2-mobile" : "list-h2"}><span className="list-title">Fan Fiction List:</span> {listFandom}</h2>
                         </Fragment>
                         : null
                 }

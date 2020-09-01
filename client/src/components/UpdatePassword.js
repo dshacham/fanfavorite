@@ -24,20 +24,20 @@ const UpdatePassword = ({ match }) => {
                         'Content-Type': 'multipart/form-data',
                     }
                 });
-                console.log(res)
+                console.log(res);
                 if (res.status) {
                     setForm(3);
                 } else {
                     alert('Sorry, there was an issue updating your password. Please make sure it is longer than 6 characters or try again later.');
-                }
+                };
     
             } catch (err) {
                 console.log('this is the error: ', err)
-            }
+            };
         } else {
             window.alert('Password doesn\'t match or is shorter than 6 characters');
-        }
-    }
+        };
+    };
 
     return (
         <div className="update-password">
@@ -67,12 +67,11 @@ const UpdatePassword = ({ match }) => {
                                 placeholder="Retype password..."
                             />
                         </label>
-                        <button
-                            type="submit"
-                            className="update-btn">SEND</button>
+                        <button type="submit" className="update-btn">SEND</button>
                     </form>
             }
       </div>
     );
-}
+};
+
 export default UpdatePassword;

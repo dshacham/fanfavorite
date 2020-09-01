@@ -26,6 +26,18 @@
                 margin-right: 1rem;
             }
         }
+        .list-h2-mobile {
+            font-weight: bold;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+
+            .list-title {
+                font-size: 2rem;
+                font-weight: 300;
+                margin-right: 1rem;
+            }
+        }
 
         .list-edit-delete {
             display: flex;
@@ -38,6 +50,20 @@
             }
             .icon-ed-de:hover {
                 color: $coffee-darker;
+            }
+        }
+
+        .list-edit-delete-mobile {
+            display: flex;
+            margin-bottom: 1rem;
+            justify-content: space-between;
+            width: 100%;
+    
+            .icon-ed-de {
+                margin: 0 1rem;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: $cafe-au-lait;
             }
         }
 
@@ -141,19 +167,20 @@
         flex-wrap: wrap;
         width: 100%;
 
-        .list-edit-label-info {
-            margin: 0 1rem 1.25rem;
+        .margin {
+            margin: 1rem 0 3.5rem;
         }
 
         .list-edit-label {
             display: flex;
             align-items: center;
+            justify-content: center;
             font-size: 1.5rem;
 
             input {
                 height: 2rem;
                 width: 65%;
-                padding: 0.8rem;
+                padding: 1.25rem 0.8rem;
                 margin: 0.3rem 0 0 1.5rem;
                 border: 1px solid $cafe-au-lait;
                 border-radius: $border;
@@ -190,6 +217,20 @@
                 color: $coffee-darker;
             }
         }
+        .ok-cancel-mobile {
+            flex-basis: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 0.2rem;
+            
+            .list-save-button {
+                border: none;
+                background: none;
+                color: $brown-sugar;
+                margin: 0 1rem;
+                font-size: 1.5rem;
+            }
+        }
     }
 }  
 
@@ -206,6 +247,8 @@
         .list-details {
             margin-top: 2rem;
             padding: 2rem 0.2rem;
+            flex-basis: 100%;
+            width: 100%;
         }
         .item-form-container {
             

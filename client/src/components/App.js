@@ -15,23 +15,17 @@ import EpListData from "./EpListData.js"
 import ForgotPassword from "./ForgotPassword";
 import UpdatePassword from "./UpdatePassword";
 import AdminBoard from "./AdminBoard";
+import About from "./About";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [userFicLists, setUserFicLists] = useState('');
-  const [userFanfics, setUserFanfics] = useState('');
   const [userEpLists, setUserEpLists] = useState('');
-  const [userEpisodes, setUserEpisodes] = useState('');
   const [listInfo, setListInfo] = useState('');
-  const [listItems, setListItems] = useState('');
-  const [sortedEps, setSortedEps] = useState('');
   const [userData, setUserData] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
-
-  const [allListEps, setAllListEps] = useState('');
-
-  const [winWidth, setWinWidth] = useState('');
+  
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,9 +60,13 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    getUserData();
+  }, [userData]);
+
   return (
     <div className="App">
-      <Context.Provider value={{ allListEps, setAllListEps, sortedEps, setSortedEps, userFicLists, setUserFicLists, userFanfics, setUserFanfics, userEpLists, setUserEpLists, userEpisodes, setUserEpisodes, listInfo, setListInfo, listItems, setListItems, userData, setUserData, getUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn, winWidth, setWinWidth}}>
+      <Context.Provider value={{ userFicLists, setUserFicLists, userEpLists, setUserEpLists, listInfo, setListInfo, userData, setUserData, getUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn }}>
         <Router>
         <NavBar />
           <Switch>
@@ -80,10 +78,13 @@ const App = () => {
             <Route path="/addepslist" exact component={AddEpsList} />
             <Route path="/ficlist" exact component={FicListData} />
             <Route path="/eplist" exact component={EpListData} />
+            <Route path="/about" exact component={About} />
             <Route path="/reset_password" exact component={ForgotPassword} />
             <Route path="/password/reset/:userId/:resetToken" exact component={UpdatePassword} />
           </Switch>
-          <Footer />
+          <div id="footer">
+            <Footer />
+          </div>
         </Router>
       </Context.Provider>
     </div>

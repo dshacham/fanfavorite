@@ -1,14 +1,15 @@
 import React, { useContext, Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import Context from './Context';
 import '../style/ListData.scss';
 import EpItemCard from './EpItemCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const EpListData = () => {
     const history = useHistory();
-    const { listItems, setListItems, listInfo, setListInfo, userData, setUserData, token, getUserData, sortedEps, setSortedEps } = useContext(Context);
+    const { listInfo, setListInfo, userData, setUserData, token, getUserData } = useContext(Context);
 
     const [isListDeleted, setIsListDeleted] = useState(false);
     const [editListInfo, setEditListInfo] = useState(false);
@@ -38,7 +39,7 @@ const EpListData = () => {
     useEffect(() => {
         listInfo.epList ? setListFandom(listInfo.epList.listFandom) : setListFandom(listInfo.listFandom);
         listInfo.epList ? setListId(listInfo.epList._id) : setListId(listInfo._id);
-    });
+    }, [listInfo.epList, listInfo.listFandom, listInfo._id]);
 
     const fetchListEps = async () => {
         const options = {
@@ -79,9 +80,11 @@ const EpListData = () => {
         };
         return comparison;
     };
+
     if (allListEps) {
         allListEps.sort(compare);
-    } 
+    };
+    
 
     const handleAddItem = async (e) => {
         e.preventDefault();
@@ -94,16 +97,17 @@ const EpListData = () => {
             source,
             listId,
             userId: userData._id
-        }
+        };
 
         const postEpData = {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'x-auth': token
             },
             body: JSON.stringify(epData)
-        }
+        };
 
         const resp = await fetch('/episodes', postEpData);
         const data = await resp.json();
@@ -170,12 +174,8 @@ const EpListData = () => {
     });
 
     useEffect(() => {
-        getUserData();
-    }, [getUserData])
-
-    useEffect(() => {
         fetchListEps();
-    }, [listInfo])
+    }, [listInfo]);
 
     return (
         <div className="list-data-container">
@@ -185,11 +185,11 @@ const EpListData = () => {
                         <Fragment>
                             <div className="list-edit-form">
                                 <form onSubmit={handleSubmitEditList} className="list-edit-form">
-                                    <div className="ok-cancel">
+                                    <div className={isMobile ? "ok-cancel-mobile" : "ok-cancel"}>
                                         <button type="submit" className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
                                         <button className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditListInfo(false)}/></button>
                                     </div>
-                                    <label htmlFor="listFandom" className="list-edit-label list-edit-label-info">Fandom:
+                                    <label htmlFor="listFandom" className={isMobile ? "margin list-edit-label" : "list-edit-label"}>Fandom:
                                         <input type="text" placeholder={listFandom} onChange={(e) => setNewListFandom(e.target.value)} />
                                     </label>
                                 </form>
@@ -198,13 +198,13 @@ const EpListData = () => {
                     :
                     listInfo ?
                         <Fragment>
-                            <div className="list-edit-delete">
+                            <div className={isMobile ? "list-edit-delete-mobile" : "list-edit-delete"}>
                                 <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditListInfo(true)} />
                                 <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
                                     if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteList(e) }
                                 }} />
                             </div>
-                            <h2 className="list-h2"><span className="list-title">Favorite Episodes:</span> {listFandom}</h2>
+                            <h2 className={isMobile ? "list-h2-mobile" : "list-h2"}><span className="list-title">Episodes List:</span> {listFandom}</h2>
                         </Fragment>
                         : null
                 }
@@ -212,7 +212,7 @@ const EpListData = () => {
                     {
                         allListEps ? allListEps.map((ep, i) => {
                                 return (
-                                <EpItemCard key={i} ep={ep} fetchListEps={fetchListEps} />
+                                <EpItemCard key={i} ep={ep} />
                             )
                         })
                         : null

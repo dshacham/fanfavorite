@@ -1,11 +1,12 @@
 import React, { useContext, useState, Fragment, useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
 import '../style/ItemCard.scss';
 import Context from './Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const FicItemCard = ({ fic }) => {
-    const { getUserData, setUserData, setUserFanfics, listInfo, setListInfo, token } = useContext(Context);
+    const { listInfo, setListInfo, token } = useContext(Context);
 
     const [editInfo, setEditInfo] = useState(false);
     const [ficInfo, setFicInfo] = useState('');
@@ -17,26 +18,28 @@ const FicItemCard = ({ fic }) => {
     const [newSource, setNewSource] = useState('');
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-        getUserData();
+        window.scrollTo(0, 0);
     }, []);
 
-    const fetchFic = async () => {
-        const options = {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'x-auth': token,
-          }
-        };
-
-        const request1 = await fetch('/fanfics/' + fic, options);
-        const response1 = await request1.json();
-        if (response1.fic) {
-            setFicInfo(response1.fic);
-        }
-      };
+    useEffect(() => {
+        const fetchFic = async () => {
+            const options = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'x-auth': token,
+              }
+            };
+    
+            const request1 = await fetch('/fanfics/' + fic, options);
+            const response1 = await request1.json();
+            if (response1.fic) {
+                setFicInfo(response1.fic);
+            };
+          };
+        fetchFic();
+    }, [listInfo, fic, token]);
 
     const handleSubmitEdit = async (e) => {
         e.preventDefault();
@@ -89,16 +92,14 @@ const FicItemCard = ({ fic }) => {
         };
     };
 
-    useEffect(() => {
-        fetchFic();
-    }, []);
+    // useEffect(() => {
+    //     fetchFic();
+    // }, []);
 
-    useEffect(() => {
-        fetchFic();
-    }, [listInfo]);
+    
 
     return (
-        <div className="item-cards-container">
+        <div className={isMobile ? "item-cards-container-mobile" : "item-cards-container-desktop"}>
             {
                 editInfo ?
                     <Fragment>

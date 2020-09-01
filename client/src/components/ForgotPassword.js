@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import '../style/ForgotPassword.scss';
-import Context from './Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 
 const ForgotPassword = () => {
-    const { getUserData } = useContext(Context)
 
     const [form, setForm] = useState(1);
     const [email, setEmail] = useState('');
@@ -21,7 +19,7 @@ const ForgotPassword = () => {
                     'Content-Type': 'multipart/form-data',
                 }
             });
-            console.log(res)
+            console.log(res);
             if (res.data.success) {
                 setForm(3);
             } else {
@@ -29,7 +27,7 @@ const ForgotPassword = () => {
             }
 
         } catch (err) {
-            console.log('this is the error: ', err)
+            console.log('this is the error: ', err);
         }
     }
 
@@ -61,5 +59,6 @@ const ForgotPassword = () => {
             }
       </div>
     );
-}
+};
+
 export default ForgotPassword;

@@ -1,2 +1,198 @@
 @import 'index';
 
+.about-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding-top: 2rem;
+
+    .theme-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 1rem;
+        font-size: 0.9rem;
+
+        ul {
+            li {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .side-link {
+            color: $antique-brass;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .side-link:hover {
+            color: $brown-sugar;
+        }
+    }
+
+    
+
+    .questions-container {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 3.5rem;
+    
+        h3 {
+            font-size: 5rem;
+            padding: 0;
+        }
+    
+        .contact {
+            margin: 0 0.25rem;
+            text-decoration: underline;
+        }
+    
+        .contact, h6 {
+            color: $antique-brass;
+            cursor: pointer;
+        }
+        .contact:hover, h6:hover {
+            color: $brown-sugar;
+        }
+    
+        .questions {
+            font-family: "Montserrat", sans-serif;
+            margin: 5rem 0;
+            text-align: left;
+        }
+    
+        p, ol {
+            padding: 0.5rem 1rem;
+        }
+    
+        #whatisfanfavorite, #howtocreatelists, #howtocreateaccount, #editpersonalinfo, #deleteaccount, #timetostart, #suggestions {
+            margin: 2rem 0;
+        }
+    }
+}
+
+@media screen and (max-width: 399px) {
+    .about-container {
+        flex-direction: column;
+        padding-top: 1rem;
+
+        .theme-list {
+            padding: 2rem 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .questions-container {
+            width: 100%;
+            padding: 0 0.5rem;
+    
+            h3 {
+                font-size: 1.7rem;
+            }
+    
+            h5 {
+                padding-top: 0.5rem;
+            }
+
+            .questions {
+                margin: 1.5rem 0.5rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) and (min-width: 400px) {
+    .about-container {
+        flex-direction: column;
+        padding-top: 1rem;
+
+        .theme-list {
+            align-self: flex-start;
+        }
+
+        .questions-container {
+            width: 100%;
+            padding: 0 1rem;
+    
+            h3 {
+                font-size: 2rem;
+            }
+    
+            h5 {
+                padding-top: 0.5rem;
+            }
+
+            .questions {
+                margin: 2.5rem 1.5rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 882px) and (min-width: 600px) {
+    .about-container {
+        flex-direction: column;
+        padding-top: 1rem;
+
+        .theme-list {
+            align-self: flex-start;
+        }
+
+        .questions-container {
+            width: 100%;
+            padding: 0 2rem;
+    
+            h3 {
+                font-size: 2.5rem;
+            }
+    
+            h5 {
+                padding-top: 0.5rem;
+            }
+
+            .questions {
+                margin: 2.5rem 1.5rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 999px) and (min-width: 883px) {
+    .about-container {
+        .questions-container {
+            padding-bottom: 2rem;
+            h3 {
+                font-size: 3rem;
+            }
+    
+            .questions {
+                margin: 3rem 1.5rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1100px) and (min-width: 1000px) {
+    .about-container {
+
+        .questions-container {
+            padding-bottom: 2rem;
+            h3 {
+                font-size: 4rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1240px) and (min-width: 1101px) {
+    .about-container {
+        .questions-container {
+            padding-bottom: 2rem;
+            h3 {
+                font-size: 4.5rem;
+            }
+        }
+    }
+}
+

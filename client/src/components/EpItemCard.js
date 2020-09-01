@@ -1,14 +1,14 @@
 import React, { useContext, useState, Fragment, useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
 import '../style/ItemCard.scss';
 import Context from './Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const EpItemCard = ({ ep }) => {
-    const { getUserData, userData, setUserData, listItems, setListInfo, token } = useContext(Context);
+    const { setListInfo, token } = useContext(Context);
 
     const [editInfo, setEditInfo] = useState(false);
-    const [epInfo, setEpInfo] = useState('');
     const [newTitle, setNewTitle] = useState('');
     const [newSeason, setNewSeason] = useState('');
     const [newNumber, setNewNumber] = useState('');
@@ -16,8 +16,7 @@ const EpItemCard = ({ ep }) => {
     const [newSource, setNewSource] = useState('');
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-        getUserData();
+        window.scrollTo(0, 0);
     }, []);
 
     const handleSubmitEdit = async (e) => {
@@ -47,9 +46,8 @@ const EpItemCard = ({ ep }) => {
 
         const response = await fetch('/episodes/' + ep._id, newEpData);
         const data = await response.json();
-console.log(data)
         if (data.success) {
-            setListInfo(data.epList)
+            setListInfo(data.epList);
             setEditInfo(false);
             localStorage.setItem('list-info', JSON.stringify(data.epList));
         };
@@ -73,7 +71,7 @@ console.log(data)
     };
 
     return (
-        <div className="item-cards-container">
+        <div className={isMobile ? "item-cards-container-mobile" : "item-cards-container-desktop"}>
             {
                 editInfo ?
                     <Fragment>
@@ -115,7 +113,7 @@ console.log(data)
                                 }
                                 {
                                     ep.source ?
-                                        <li className="item"><span className="category">Link to info: </span><a href={ep.source} target='_blank' rel="noopener noreferrer">{ep.source}</a></li>
+                                        <li className="item"><span className="category">Link to info: </span><a href={ep.source} target='_blank' rel="noopener noreferrer">Link</a></li>
                                     : null
                                 }
                             </ul>

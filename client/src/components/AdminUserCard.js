@@ -42,7 +42,7 @@ const AdminUserCard = ({ el, allUsers, setAllUsers }) => {
         const response = await request.json();
         if (response.success) {
             setEditInfo(false);
-        }
+        };
     };
 
     const deleteUser = async (e) => {
@@ -60,8 +60,8 @@ const AdminUserCard = ({ el, allUsers, setAllUsers }) => {
         const request = await fetch('/admin/' + _id, deletedUser);
         const response = await request.json();
         if (response.success) {
-            setAllUsers(response.users)
-        }
+            setAllUsers(response.users);
+        };
     };
 
     return (

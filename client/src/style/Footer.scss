@@ -6,27 +6,54 @@ footer {
     left: 0;
     bottom: 0;
     background-color: $coffee-darkest;
-    padding: 1.5rem 2rem;
+    padding: 1rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: $champagne-darker;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
 
-    .footer-name {
-        font-family: 'Calistoga', cursive;
-        margin-top: 0.5rem;
-        opacity: 0.6;
-    }
+    .name-help {
+        display: flex;
+        align-items: center;
+        margin: -0.5rem 0 0;
 
-    .footer-contact {
+        .footer-name {
+            font-family: 'Calistoga', cursive;
+            opacity: 0.6;
+        }
         a {
-            margin: 0 1rem;
+            margin-left: 1rem;
+            padding-top: 0.5rem;
             font-size: 2rem;
             color: $champagne-darker;
 
             .icon:hover {
                 color: $cafe-au-lait
+            }
+        }
+    }
+    
+    .footer-contact {
+        a {
+            margin: 0 1rem;
+            padding: 0;
+            font-size: 2rem;
+            color: $champagne-darker;
+
+            .icon:hover {
+                color: $cafe-au-lait
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    footer {
+        padding-bottom: 0;
+        .name-help, .footer-contact {
+            a {
+                font-size: 3rem;
             }
         }
     }

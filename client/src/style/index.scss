@@ -42,13 +42,12 @@ html {
 }
 
 body {
-    
     font-family: 'El Messiri', sans-serif;
     background-color: $champagne;
     color: $coffee;
     position: relative;
     min-height: 100%;
-    padding-bottom: 6rem;
+    padding-bottom: 8rem;
 }
 
 a {
@@ -117,5 +116,11 @@ button:focus {
     100% {
         -webkit-transform: translateX(0);
         transform: translateX(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding-bottom: 15rem;
     }
 }

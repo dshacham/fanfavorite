@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, Fragment } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import Context from './Context';
 import '../style/Landing.scss';
@@ -15,7 +15,7 @@ const Landing = () => {
         window.scrollTo(0, 0);
         setUserFicLists('');
         setUserEpLists('');
-    }, []);
+    }, [setUserFicLists, setUserEpLists]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -57,22 +57,22 @@ const Landing = () => {
             <div className="landing">
                 <form className="login-form" onSubmit={handleLogin}>
                     <h2 className="h2-login">Login</h2>
-                        <label className="login-label">Email
-                            <input
-                                className="login-input"
-                                type="email"
-                                value={email}
-                                required
-                                onChange={(e) => setEmail(e.target.value)} />
-                        </label>
-                        <label className="login-label">Password
-                            <input
+                    <label className="login-label">Email
+                        <input
+                            className="login-input"
+                            type="email"
+                            value={email}
+                            required
+                            onChange={(e) => setEmail(e.target.value)} />
+                    </label>
+                    <label className="login-label">Password
+                        <input
                             className="login-input"
                             type="password"
                             value={password}
                             required
                             onChange={(e) => setPassword(e.target.value)} />
-                        </label>
+                    </label>
                     <p className={errorMsg ? "signin-error show-error" : "signin-error"}>Email or password incorrect</p>
                     <button type="submit" className="button sign-btn">GO</button>
                     <Link to="reset_password" className="pass-forgot">Forgot password?</Link>

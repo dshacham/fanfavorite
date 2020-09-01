@@ -34,7 +34,7 @@ const Account = () => {
         e.preventDefault();
 
         // old data:
-        const { username, email, password, ficLists, epsLists, fics, eps } = userData;
+        const { email, password, ficLists, epsLists, fics, eps } = userData;
 
         const newInfo = {
             username: newUsername,
@@ -69,7 +69,7 @@ const Account = () => {
         e.preventDefault();
 
         // old data:
-        const { username, email, password, ficLists, epsLists, fics, eps } = userData;
+        const { username, email, ficLists, epsLists, fics, eps } = userData;
         
         if (newPassword === confirmPassword) {
             const newInfo = {
@@ -93,7 +93,6 @@ const Account = () => {
         
             const response = await fetch('/users/password', newUserData);
             const data = await response.json();
-            console.log(data)
             if (data.success) {
                 setUserData(data.user);
                 setEditPassword(false);
@@ -129,7 +128,6 @@ const Account = () => {
         isFicListClicked && history.push("/ficlist");
         isEpListClicked && history.push("/eplist");
         isAccountDeleted && history.push("/");
-        // (!loggedIn) && history.push("/");
     });
 
     return (
