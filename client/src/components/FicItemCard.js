@@ -92,12 +92,6 @@ const FicItemCard = ({ fic }) => {
         };
     };
 
-    // useEffect(() => {
-    //     fetchFic();
-    // }, []);
-
-    
-
     return (
         <div className={isMobile ? "item-cards-container-mobile" : "item-cards-container-desktop"}>
             {

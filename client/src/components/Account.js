@@ -126,7 +126,7 @@ const Account = () => {
     useEffect(() => {
         isFicListClicked && history.push("/ficlist");
         isEpListClicked && history.push("/eplist");
-        // isAccountDeleted && history.push("/");
+        isAccountDeleted && history.push("/");
     });
 
     return (

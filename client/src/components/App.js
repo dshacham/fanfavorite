@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import "../style/App.scss";
 import Context from "./Context";
 import NavBar from "./NavBar";
@@ -62,7 +62,7 @@ console.log(data)
   return (
     <div className="App">
       <Context.Provider value={{ getUserData, userFicLists, setUserFicLists, userEpLists, setUserEpLists, listInfo, setListInfo, userData, setUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn }}>
-        <Router>
+        <HashRouter>
         <NavBar />
           <Switch>
             {
@@ -71,8 +71,8 @@ console.log(data)
               :
                 <Route path="/" exact component={Landing} />
             }
-            {/* <Route path="/" exact component={Landing} />
-            <Route path="/account" exact component={Account} /> */}
+            {/* <Route path="/" exact component={Landing} />*/}
+            <Route path="/account" exact component={Account} /> 
             <Route path="/signup" exact component={SignUp} />
             <Route path="/admin" exact component={AdminBoard} />
             <Route path="/addficlist" exact component={AddFicList} />
@@ -86,7 +86,7 @@ console.log(data)
           <div id="footer">
             <Footer />
           </div>
-        </Router>
+        </HashRouter>
       </Context.Provider>
     </div>
   );
