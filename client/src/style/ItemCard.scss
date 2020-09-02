@@ -2,13 +2,13 @@
 
 .item-cards-container-desktop {
     display: flex;
-    flex-direction: column-reverse;
+    // flex-direction: column-reverse;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     box-shadow: -1px 1px 5px rgba(119, 73, 54, 0.4);
     border-radius: $border;
-    width: 100%;
-    padding: 2rem 0;
+    width: 90%;
+    // padding: 2rem 0;
     margin: 0.25rem 0;
 
     .loading-details {
@@ -18,9 +18,11 @@
     }
 
     .item-card {
+        width: 100%;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-around;
         flex-wrap: wrap;
+        margin: 2rem 0;
         
         .item {
             font-weight: bold;
@@ -40,12 +42,15 @@
 
     .item-edit-delete {
         display: flex;
-        margin: 0 0.5rem 0.5rem;
+        flex-direction: column;
+        justify-content: center;
+        align-self: stretch;
+        padding: 0.5rem;
+        background-color: $champagne-darker;
         visibility: hidden;
-        align-self: flex-end;
 
         .icon-ed-de {
-            margin: 0 0.3rem;
+            margin: 0.3rem 0;
             cursor: pointer;
         }
         .icon-ed-de:hover {
@@ -56,53 +61,58 @@
     // edit form:
     .item-edit-form {
         display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        width: 100%;
 
-        .item-edit-label-info {
-            padding: 0.3rem;
-            margin: 0 1rem;
-        }
-
-        .item-edit-label {
-            // width: 100%;
+        .form-fields {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-
-            input {
-                height: 2.5rem;
-                width: 100%;
-                padding: 1ch;
-                margin: 0.3rem 0;
-                border: 1px solid $cafe-au-lait;
-                border-radius: $border;
-                font-size: 1.1rem;
-                color: $dark-brown;
-
-                &::placeholder {
-                    font-family: 'El Messiri', sans-serif;
-                    color: $brown-sugar;
-                    font-size: 0.9rem;
+            align-items: center;
+            width: 100%;
+    
+            .item-edit-label {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 0.3rem 0;
+                
+                input {
+                    height: 2.5rem;
+                    width: 100%;
+                    padding: 1ch;
+                    margin: 0.3rem 0;
+                    border: 1px solid $cafe-au-lait;
+                    border-radius: $border;
+                    font-size: 1.1rem;
+                    color: $dark-brown;
+    
+                    &::placeholder {
+                        font-family: 'El Messiri', sans-serif;
+                        color: $brown-sugar;
+                        font-size: 0.9rem;
+                    }
                 }
-            }
-            input:focus {
-                outline: none;
-                border: 1px solid $coffee-darker;
+                input:focus {
+                    outline: none;
+                    border: 1px solid $coffee-darker;
+                }
             }
         }
 
         .ok-cancel {
-            flex-basis: 100%;
-            text-align: right;
-            margin: 0 1rem;
-            
+            display: flex;
+            flex-direction: column;
+            align-self: stretch;
+            justify-content: center;
+            background-color: $champagne-darker;
+
             .item-save-button {
                 border: none;
                 background: none;
                 cursor: pointer;
                 color: $brown-sugar;
-                margin: 0 0.3rem;
+                margin: 0.3rem;
                 font-size: 1rem;
             }
             .item-save-button:hover {
@@ -157,10 +167,12 @@
     }
 
     .item-edit-delete {
+        width: 100%;
         display: flex;
         justify-content: space-between;
-        margin: 1.5rem 0 1rem;
-        width: 100%;
+        margin: 0 0 1rem;
+        padding: 0.5rem 0.3rem;
+        background-color: $champagne-darker;
 
         .icon-ed-de {
             color: $cafe-au-lait;
@@ -175,52 +187,56 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        width: 100%;
 
-        .item-edit-label-info {
-            padding: 0.3rem;
-            margin: 0 1rem;
-        }
-
-        .item-edit-label {
-            // width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-
-            input {
-                height: 2.5rem;
-                width: 100%;
-                padding: 1ch;
-                margin: 0.3rem 0;
-                border: 1px solid $cafe-au-lait;
-                border-radius: $border;
-                font-size: 1.1rem;
-                color: $dark-brown;
-
-                &::placeholder {
-                    font-family: 'El Messiri', sans-serif;
-                    color: $brown-sugar;
-                    font-size: 0.9rem;
-                }
+        .form-fields {
+            .item-edit-label-info {
+                padding: 0.3rem;
+                margin: 0 1rem;
             }
-            input:focus {
-                outline: none;
-                border: 1px solid $coffee-darker;
+    
+            .item-edit-label {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+    
+                input {
+                    height: 2.5rem;
+                    width: 100%;
+                    padding: 1ch;
+                    margin: 0.3rem 0;
+                    border: 1px solid $cafe-au-lait;
+                    border-radius: $border;
+                    font-size: 1.1rem;
+                    color: $dark-brown;
+    
+                    &::placeholder {
+                        font-family: 'El Messiri', sans-serif;
+                        color: $brown-sugar;
+                        font-size: 0.9rem;
+                    }
+                }
+                input:focus {
+                    outline: none;
+                    border: 1px solid $coffee-darker;
+                }
             }
         }
 
         .ok-cancel {
-            flex-basis: 100%;
+            width: 100%;
             display: flex;
             justify-content: space-between;
-            margin: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.4rem 1rem;
+            background-color: $champagne-darker;
             
             .item-save-button {
                 border: none;
                 background: none;
                 cursor: pointer;
                 color: $cafe-au-lait;
-                margin: 0 0.3rem;
+                margin: 0 0.5rem;
                 font-size: 1.5rem;
             }
             .item-save-button:hover {

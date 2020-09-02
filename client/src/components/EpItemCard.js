@@ -81,21 +81,23 @@ const EpItemCard = ({ ep }) => {
                                     <button type="submit" className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
                                     <button className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditInfo(false)}/></button>
                                 </div>
-                                <label htmlFor="title" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ep.title} onChange={(e) => setNewTitle(e.target.value)} />
-                                </label>
-                                <label htmlFor="author" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ep.season} onChange={(e) => setNewSeason(e.target.value)} />
-                                </label>
-                                <label htmlFor="ship" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ep.number} onChange={(e) => setNewNumber(e.target.value)} />
-                                </label>
-                                <label htmlFor="genre" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ep.whyFave} onChange={(e) => setNewWhyFave(e.target.value)} />
-                                </label>
-                                <label htmlFor="source" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ep.source} onChange={(e) => setNewSource(e.target.value)} />
-                                </label>
+                                <div className="form-fields">
+                                    <label htmlFor="title" className="item-edit-label item-edit-label-info">
+                                        <input type="text" placeholder={ep.title} onChange={(e) => setNewTitle(e.target.value)} />
+                                    </label>
+                                    <label htmlFor="author" className="item-edit-label item-edit-label-info">
+                                        <input type="text" placeholder={ep.season} onChange={(e) => setNewSeason(e.target.value)} />
+                                    </label>
+                                    <label htmlFor="ship" className="item-edit-label item-edit-label-info">
+                                        <input type="text" placeholder={ep.number} onChange={(e) => setNewNumber(e.target.value)} />
+                                    </label>
+                                    <label htmlFor="genre" className="item-edit-label item-edit-label-info">
+                                        <input type="text" placeholder={ep.whyFave} onChange={(e) => setNewWhyFave(e.target.value)} />
+                                    </label>
+                                    <label htmlFor="source" className="item-edit-label item-edit-label-info">
+                                        <input type="text" placeholder={ep.source} onChange={(e) => setNewSource(e.target.value)} />
+                                    </label>
+                                </div>
                             </form>
                         </div>
                     </Fragment>

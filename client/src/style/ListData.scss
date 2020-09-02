@@ -11,7 +11,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 2rem;
+        padding-bottom: 1.5rem;
         box-shadow: -1px 1px 5px rgba(119, 73, 54, 0.5);
         flex-basis: 60%;
 
@@ -29,7 +29,7 @@
         .list-h2-mobile {
             font-weight: bold;
             font-size: 2.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             text-align: center;
 
             .list-title {
@@ -40,13 +40,16 @@
         }
 
         .list-edit-delete {
-            display: flex;
-            margin: 0 0.5rem;
-            align-self: flex-end;
+            text-align: right;
+            background-color: $brown-sugar;
+            width: 100%;
+            margin: 0 0.5rem 1rem;
+            padding: 0.3rem 0.8rem;
     
             .icon-ed-de {
                 margin: 0 0.3rem;
                 cursor: pointer;
+                color: $champagne-darker;
             }
             .icon-ed-de:hover {
                 color: $coffee-darker;
@@ -55,21 +58,24 @@
 
         .list-edit-delete-mobile {
             display: flex;
-            margin-bottom: 1rem;
             justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 0.2rem;
+            background-color: $brown-sugar;
             width: 100%;
     
             .icon-ed-de {
                 margin: 0 1rem;
                 font-size: 1.5rem;
                 cursor: pointer;
-                color: $cafe-au-lait;
+                color: $champagne-darker;
             }
         }
 
         .list-items-container {
             display: flex;
             flex-direction: column;
+            align-items: center;
             width: 100%;
 
             .loading-details {
@@ -168,7 +174,7 @@
         width: 100%;
 
         .margin {
-            margin: 1rem 0 3.5rem;
+            margin: 1rem 0 2.8rem;
         }
 
         .list-edit-label {
@@ -176,6 +182,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
+            margin-bottom: 1.3rem;
 
             input {
                 height: 2rem;
@@ -203,13 +210,15 @@
         .ok-cancel {
             flex-basis: 100%;
             text-align: right;
-            margin: 0 1rem;
+            margin: 0 0 1rem;
+            padding: 0.3rem 0.8rem;
+            background-color: $brown-sugar;
             
             .list-save-button {
                 border: none;
                 background: none;
                 cursor: pointer;
-                color: $brown-sugar;
+                color: $champagne-darker;
                 margin: 0 0.3rem;
                 font-size: 1rem;
             }
@@ -221,14 +230,16 @@
             flex-basis: 100%;
             display: flex;
             justify-content: space-between;
-            margin: 0 0.2rem;
+            margin-bottom: 1rem;
+            padding: 0.4rem 0.5rem;
+            background-color: $brown-sugar;
             
             .list-save-button {
                 border: none;
                 background: none;
-                color: $brown-sugar;
-                margin: 0 1rem;
+                margin: 0 0.5rem;
                 font-size: 1.5rem;
+                color: $champagne-darker;
             }
         }
     }
@@ -242,11 +253,11 @@
 @media screen and (max-width: 499px) {
     .list-data-container {
         flex-direction: column-reverse;
+        align-items: center;
         width: 100%;
         margin-top: 0.1rem;
         .list-details {
-            margin-top: 2rem;
-            padding: 2rem 0.2rem;
+            margin: 2rem 0.5rem 0;
             flex-basis: 100%;
             width: 100%;
         }
@@ -282,10 +293,11 @@
 @media screen and (max-width: 768px) and (min-width: 500px) {
     .list-data-container {
         flex-direction: column-reverse;
+        align-items: center;
         width: 100%;
         margin-top: 0.1rem;
         .list-details {
-            margin-top: 2rem;
+            margin: 2rem 0.5rem 0;
         }
         .item-form-container {
             
@@ -319,9 +331,7 @@
 @media screen and (max-width: 1024px) and (min-width: 769px) {
     .list-data-container {
         width: 95%;
-        .list-details {
 
-        }
         .item-form-container {
             flex-basis: 35%;
         }

@@ -109,24 +109,26 @@ const FicItemCard = ({ fic }) => {
                                     <button type="submit" className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
                                     <button className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} onClick={() => setEditInfo(false)}/></button>
                                 </div>
-                                <label htmlFor="title" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ficInfo.title} onChange={(e) => setNewTitle(e.target.value)} />
-                                </label>
-                                <label htmlFor="author" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ficInfo.author} onChange={(e) => setNewAuthor(e.target.value)} />
-                                </label>
-                                <label htmlFor="ship" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ficInfo.ship} onChange={(e) => setNewShip(e.target.value)} />
-                                </label>
-                                <label htmlFor="genre" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ficInfo.genre} onChange={(e) => setNewGenre(e.target.value)} />
-                                </label>
-                                <label htmlFor="description" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ficInfo.description} onChange={(e) => setNewDescription(e.target.value)} />
-                                </label>
-                                <label htmlFor="source" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={ficInfo.source} onChange={(e) => setNewSource(e.target.value)} />
-                                </label>
+                                <div className="form-fields">
+                                    <label htmlFor="title" className="item-edit-label">
+                                        <input type="text" placeholder={ficInfo.title} onChange={(e) => setNewTitle(e.target.value)} />
+                                    </label>
+                                    <label htmlFor="author" className="item-edit-label">
+                                        <input type="text" placeholder={ficInfo.author} onChange={(e) => setNewAuthor(e.target.value)} />
+                                    </label>
+                                    <label htmlFor="ship" className="item-edit-label">
+                                        <input type="text" placeholder={ficInfo.ship} onChange={(e) => setNewShip(e.target.value)} />
+                                    </label>
+                                    <label htmlFor="genre" className="item-edit-label">
+                                        <input type="text" placeholder={ficInfo.genre} onChange={(e) => setNewGenre(e.target.value)} />
+                                    </label>
+                                    <label htmlFor="description" className="item-edit-label">
+                                        <input type="text" placeholder={ficInfo.description} onChange={(e) => setNewDescription(e.target.value)} />
+                                    </label>
+                                    <label htmlFor="source" className="item-edit-label">
+                                        <input type="text" placeholder={ficInfo.source} onChange={(e) => setNewSource(e.target.value)} />
+                                    </label>
+                                </div>
                             </form>
                         </div>
                     </Fragment>
@@ -139,7 +141,7 @@ const FicItemCard = ({ fic }) => {
                                 <li className="item"><span className="category">Ship: </span>{ficInfo.ship}</li>
                                 <li className="item"><span className="category">Genre: </span>{ficInfo.genre}</li>
                                 <li className="item"><span className="category">Description: </span>{ficInfo.description}</li>
-                                <li className="item"><span className="category">Source: </span><a href={ficInfo.source} target='_blank' rel="noopener noreferrer">{ficInfo.source}</a></li>
+                                <li className="item"><span className="category">Source: </span><a href={ficInfo.source} target='_blank' rel="noopener noreferrer">Link</a></li>
                             </ul>
                             <div className="item-edit-delete">
                                 <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
