@@ -22,7 +22,6 @@ const Account = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    
     const [isAccountDeleted, setIsAccountDeleted] = useState(false);
 
     useEffect(() => {
