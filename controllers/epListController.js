@@ -18,7 +18,7 @@ exports.getEpList = async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        const epList = await EpsList.findById(id);
+        const epList = await EpsList.findById(id).populate("eps").exec();
         if (!epList) throw createError(404);
         res.json({ success: true, epList: epList });
     }
@@ -48,7 +48,7 @@ exports.putEpList = async (req, res, next) => {
     const epList = req.body;
 
     try {
-        const updateEpList = await EpsList.findByIdAndUpdate(id, epList, { new: true });
+        const updateEpList = await EpsList.findByIdAndUpdate(id, epList, { new: true }).populate("eps").exec();
         if (!epList) throw createError(404);
         res.json({ success: true, epList: updateEpList });
     }

@@ -19,7 +19,7 @@ exports.getFicList = async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        const ficList = await FicList.findById(id).populate('fics');
+        const ficList = await FicList.findById(id).populate("fics").exec();
         if (!ficList) throw createError(404);
         res.json({ success: true, ficList: ficList });
     }
@@ -48,7 +48,7 @@ exports.putFicList = async (req, res, next) => {
     const ficList = req.body;
 
     try {
-        const updateFicList = await FicList.findByIdAndUpdate(id, ficList, { new: true });
+        const updateFicList = await FicList.findByIdAndUpdate(id, ficList, { new: true }).populate("fics").exec();
         if (!ficList) throw createError(404);
         res.json({ success: true, ficList: updateFicList });
     }

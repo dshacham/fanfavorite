@@ -106,7 +106,7 @@ exports.login = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).populate("ficLists").populate("epsLists").exec();
         const valid = await user.checkPassword(password);
         if (!valid) throw createError(403);
         let token = user.generateAuthToken();
