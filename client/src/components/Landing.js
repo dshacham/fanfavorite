@@ -13,9 +13,7 @@ const Landing = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        setUserFicLists('');
-        setUserEpLists('');
-    }, [setUserFicLists, setUserEpLists]);
+    }, []);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -41,6 +39,8 @@ const Landing = () => {
             localStorage.setItem('token', header);
             setToken(header);
             setUserData(data.user);
+            setUserEpLists(data.user.epsLists);
+            setUserFicLists(data.user.ficLists);
             setLoggedIn(true);
             setErrorMsg(false);
         } else {

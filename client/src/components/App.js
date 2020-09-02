@@ -29,7 +29,9 @@ const App = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    getUserData();
+    setLoggedIn(true);
+  }, [token]);
 
   // FETCH USER INFO:
   const getUserData = async () => {
@@ -44,7 +46,7 @@ const App = () => {
 
     const response = await fetch('/users', options);
     const data = await response.json();
-
+console.log(data)
     if (data.success) {
       setUserData(data.user);
       setUserEpLists(data.user.epsLists)
@@ -53,20 +55,35 @@ const App = () => {
   };
 
   // LOAD THE USER DATA IF LOGGED IN:
-  useEffect(() => {
-    if (token) {
-      setLoggedIn(true);
-      getUserData();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (token) {
+  //     const getUserData = async () => {
+  //       const options = {
+  //         method: 'GET',
+  //         headers: {
+  //           'x-auth': token,
+  //           'Content-Type': 'application/json',
+  //           'Accept': 'application/json'
+  //         }
+  //       };
+    
+  //       const response = await fetch('/users', options);
+  //       const data = await response.json();
+  //   console.log(data)
+  //       if (data.success) {
+  //         setUserData(data.user);
+  //         setUserEpLists(data.user.epsLists);
+  //         setUserFicLists(data.user.ficLists);
+  //       }
+  //     };
+  //     setLoggedIn(true);
+  //     getUserData();
+  //   }
 
-  useEffect(() => {
-    getUserData();
-  }, [userData]);
-
+  // }, []);
   return (
     <div className="App">
-      <Context.Provider value={{ userFicLists, setUserFicLists, userEpLists, setUserEpLists, listInfo, setListInfo, userData, setUserData, getUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn }}>
+      <Context.Provider value={{ getUserData, userFicLists, setUserFicLists, userEpLists, setUserEpLists, listInfo, setListInfo, userData, setUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn }}>
         <Router>
         <NavBar />
           <Switch>

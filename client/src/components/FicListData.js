@@ -27,7 +27,6 @@ const FicListData = () => {
     
     useEffect(() => {
         window.scrollTo(0, 0);
-        getUserData();
 
         const list = localStorage.getItem('list-info');
         if (list) {
@@ -38,7 +37,7 @@ const FicListData = () => {
     useEffect(() => {
         listInfo.ficList ? setListFandom(listInfo.ficList.listFandom) : setListFandom(listInfo.listFandom);
         listInfo.ficList ? setListId(listInfo.ficList._id) : setListId(listInfo._id);
-    });
+    }, [listInfo.ficList, listInfo.listFandom, listInfo._id]);
 
     const handleAddItem = async (e) => {
         e.preventDefault();
@@ -98,6 +97,7 @@ const FicListData = () => {
         const response = await fetch('/ficlists/' + listId, newFicListData);
         const data = await response.json();
         if (data.success) {
+            setUserData(data.user);
             setListInfo(data.ficList);
             setEditListInfo(false);
         };

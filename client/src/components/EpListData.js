@@ -9,7 +9,7 @@ import { faPencilAlt, faTrashAlt, faCheck, faTimes } from '@fortawesome/free-sol
 
 const EpListData = () => {
     const history = useHistory();
-    const { listInfo, setListInfo, userData, setUserData, token, getUserData } = useContext(Context);
+    const { listInfo, setListInfo, getUserData, userData, setUserData, token, userEpLists } = useContext(Context);
 
     const [isListDeleted, setIsListDeleted] = useState(false);
     const [editListInfo, setEditListInfo] = useState(false);
@@ -41,50 +41,6 @@ const EpListData = () => {
         listInfo.epList ? setListId(listInfo.epList._id) : setListId(listInfo._id);
     }, [listInfo.epList, listInfo.listFandom, listInfo._id]);
 
-    const fetchListEps = async () => {
-        const options = {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'x-auth': token
-            }
-        };
-
-        if (listInfo.eps) {
-            listInfo.eps.map(async(epId) => {
-                const request1 = await fetch('/episodes/' + epId, options);
-                const response1 = await request1.json();
-                response1.ep &&
-                unsortedEps.push(response1.ep);
-                setAllListEps(unsortedEps);
-            });
-        };
-    };
-
-    const compare = (a, b) => {
-        const seasonA = a.season;
-        const seasonB = b.season;
-        const numberA = a.number;
-        const numberB = b.number;
-        
-        let comparison = 0;
-        if (seasonA > seasonB) {
-            comparison = 1;
-        } else if (seasonA < seasonB) {
-            comparison = -1;
-        } else if (seasonA === seasonB && numberA > numberB) {
-            comparison = 1;
-        } else if (seasonA === seasonB && numberA < numberB) {
-            comparison = -1;
-        };
-        return comparison;
-    };
-
-    if (allListEps) {
-        allListEps.sort(compare);
-    };
-    
 
     const handleAddItem = async (e) => {
         e.preventDefault();
@@ -114,7 +70,6 @@ const EpListData = () => {
         if (data.success) {
             setListInfo(data.epList);
             localStorage.setItem('list-info', JSON.stringify(data.epList));
-            localStorage.setItem('list-items', JSON.stringify(data.epList.eps));
             setTitle('');
             setSeason('');
             setNumber('');
@@ -144,7 +99,7 @@ const EpListData = () => {
         const response = await fetch('/eplists/' + listId, newEpListData);
         const data = await response.json();
         if (data.success) {
-            setUserData(data.user)
+            setUserData(data.user);
             setListInfo(data.epList);
             setEditListInfo(false);
         };
@@ -170,12 +125,59 @@ const EpListData = () => {
     };
 
     useEffect(() => {
-        isListDeleted && history.push('/account');
-    });
-
-    useEffect(() => {
+        const fetchListEps = async () => {
+            const options = {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                  'x-auth': token
+                }
+            };
+    
+            if (listInfo.eps) {
+                listInfo.eps.map(async(epId) => {
+                    const request1 = await fetch('/episodes/' + epId, options);
+                    const response1 = await request1.json();
+                    response1.ep &&
+                    unsortedEps.push(response1.ep);
+                    setAllListEps(unsortedEps);
+                });
+            };
+        };
         fetchListEps();
     }, [listInfo]);
+
+    const compare = (a, b) => {
+        const seasonA = a.season;
+        const seasonB = b.season;
+        const numberA = a.number;
+        const numberB = b.number;
+        
+        let comparison = 0;
+        if (seasonA > seasonB) {
+            comparison = 1;
+        } else if (seasonA < seasonB) {
+            comparison = -1;
+        } else if (seasonA === seasonB && numberA > numberB) {
+            comparison = 1;
+        } else if (seasonA === seasonB && numberA < numberB) {
+            comparison = -1;
+        };
+        return comparison;
+    };
+
+    if (allListEps) {
+        allListEps.sort(compare);
+    };
+
+    useEffect(() => {
+        getUserData();
+    }, [listInfo]);
+
+    useEffect(() => {
+        isListDeleted && history.push('/account');
+    });
 
     return (
         <div className="list-data-container">

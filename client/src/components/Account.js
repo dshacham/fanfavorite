@@ -10,7 +10,7 @@ import EpListCard from './EpListCard';
 const Account = () => {
     const history = useHistory();
 
-    const { setLoggedIn, getUserData, userData, setUserData, setListInfo, token, userFicLists, userEpLists } = useContext(Context);
+    const { setLoggedIn, userData, setUserData, getUserData, setListInfo, token, userFicLists, userEpLists } = useContext(Context);
 
     const [isFicListClicked, setIsFicListClicked] = useState(false);
     const [isEpListClicked, setIsEpListClicked] = useState(false);
@@ -22,12 +22,12 @@ const Account = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    
     const [isAccountDeleted, setIsAccountDeleted] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         getUserData();
-        setListInfo('');
     }, []);
 
     const handleEditUsername = async (e) => {
