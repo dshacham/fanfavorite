@@ -26,7 +26,7 @@ server.use(cors);
 server.use(express.urlencoded({ extended: false }));
 server.use(express.static("client/build"));
 
-server.use("/*", indexRoute);
+server.use("/", indexRoute);
 server.use("/users", userRoute);
 server.use("/admin", adminRoute);
 server.use("/ficlists", ficListsRoute);

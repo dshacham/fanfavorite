@@ -65,9 +65,15 @@ console.log(data)
         <Router>
         <NavBar />
           <Switch>
-            <Route path="/" exact component={Landing} />
+            {
+              loggedIn ?
+                <Route path="/" exact component={Account} />
+              :
+                <Route path="/" exact component={Landing} />
+            }
+            {/* <Route path="/" exact component={Landing} />
+            <Route path="/account" exact component={Account} /> */}
             <Route path="/signup" exact component={SignUp} />
-            <Route path="/account" exact component={Account} />
             <Route path="/admin" exact component={AdminBoard} />
             <Route path="/addficlist" exact component={AddFicList} />
             <Route path="/addepslist" exact component={AddEpsList} />

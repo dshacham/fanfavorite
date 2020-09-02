@@ -48,9 +48,9 @@ const Landing = () => {
         };
     };
 
-    useEffect(() => {
-        loggedIn && history.push("/account");
-    });
+    // useEffect(() => {
+    //     loggedIn && history.push("/account");
+    // });
     
     return (
         <div className="homepage-container">
