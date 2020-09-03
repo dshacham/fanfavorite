@@ -5,7 +5,7 @@ import Context from './Context';
 import '../style/ListData.scss';
 import FicItemCard from './FicItemCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrashAlt, faCheck, faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes, faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const FicListData = () => {
     const history = useHistory();
@@ -14,6 +14,8 @@ const FicListData = () => {
     const [isListDeleted, setIsListDeleted] = useState(false);
     const [editListInfo, setEditListInfo] = useState(false);
     const [addToList, setAddToList] = useState(false);
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [isAddButtonClicked, setIsAddButtonClicked] = useState(false);
 
     const [listFandom, setListFandom] = useState('');
     const [title, setTitle] = useState('');
@@ -68,7 +70,8 @@ const FicListData = () => {
         if (data.success) {
             setListInfo(data.ficList);
             localStorage.setItem('list-info', JSON.stringify(data.ficList));
-            setAddToList(false)
+            setAddToList(false);
+            setIsAddButtonClicked(false);
             setTitle('');
             setAuthor('');
             setShip('');
@@ -102,6 +105,7 @@ const FicListData = () => {
             setUserData(data.user);
             setListInfo(data.ficList);
             setEditListInfo(false);
+            setIsButtonClicked(false);
         };
     };
 
@@ -127,7 +131,7 @@ const FicListData = () => {
     useEffect(() => {
         isListDeleted && history.push('/account');
     });
-
+console.log(listInfo)
     return (
         <div className="list-data-container">
             <div className="list-details">
@@ -137,7 +141,12 @@ const FicListData = () => {
                             <div className="list-edit-form">
                                 <form onSubmit={handleSubmitEditList} className="list-edit-form">
                                     <div className={isMobile ? "ok-cancel-mobile" : "ok-cancel"}>
-                                        <button type="submit" className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
+                                        {
+                                            isButtonClicked ?
+                                                <button className="list-save-spinner" type="submit"><FontAwesomeIcon icon={faSpinner} spin /></button>
+                                            :
+                                                <button type="submit" className="list-save-button" onClick={() => setIsButtonClicked(true)}><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
+                                        }
                                         <button className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditListInfo(false)}/></button>
                                     </div>
                                     <label htmlFor="listFandom" className={isMobile ? "margin list-edit-label" : "list-edit-label"}>Fandom:
@@ -209,8 +218,13 @@ const FicListData = () => {
                                 </label>
                                 <h5 className="h5-item">* Required Fields</h5>
                                 <div className="save-cancel-container">
-                                        <button type="submit" className="save-btn"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
-                                        <button type="text" className="cancel-btn" onClick={() => setAddToList(false)}><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} /></button>
+                                    {
+                                        isAddButtonClicked ?
+                                            <button type="submit" className="icon-spin"><FontAwesomeIcon icon={faSpinner} spin /></button>
+                                        :
+                                        <button type="submit" className="save-btn" onClick={() => setIsAddButtonClicked(true)}><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                    }
+                                    <button type="text" className="cancel-btn" onClick={() => setAddToList(false)}><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} /></button>
                                 </div>
                             </form>
                         </div>

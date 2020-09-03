@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from './Context';
 import '../style/AddFicList.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const AddFicList = () => {
     const history = useHistory();
@@ -11,8 +13,8 @@ const AddFicList = () => {
     const [listFandom, setListFandom] = useState('');
     const listType = 'fanfiction';
 
-    // route to list page after creation
     const [statusAdded, setStatusAdded] = useState(false);
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -43,6 +45,7 @@ const AddFicList = () => {
             setListInfo(data.ficList);
             localStorage.setItem('list-info', JSON.stringify(data.ficList));
             setStatusAdded(true);
+            setIsButtonClicked(false);
         };
     };
 
@@ -63,7 +66,12 @@ const AddFicList = () => {
                         onChange={(e) => setListFandom(e.target.value)}
                     />
                 </label>
-                <button className="list-btn" type="submit">CONTINUE</button>
+                {
+                    isButtonClicked ?
+                        <button className="list-btn" type="submit"><FontAwesomeIcon icon={faSpinner} spin className="spin-icon" /></button>
+                    :
+                        <button className="list-btn" type="submit" onClick={() => setIsButtonClicked(true)}>CONTINUE</button>
+                }
             </form>
         </div>
     )

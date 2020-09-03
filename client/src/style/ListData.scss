@@ -169,7 +169,7 @@
 
                     .save-cancel-container {
                         display: flex;
-                        .save-btn, .cancel-btn {
+                        .save-btn, .cancel-btn, .icon-spin {
                             padding: 0.7rem 1.2rem;
                             color: $cafe-au-lait;
                             background-color: $champagne;
@@ -182,9 +182,12 @@
                             cursor: pointer;
                             font-weight: bold;
                         }
-
                         .save-btn:hover, .cancel-btn:hover {
                             color: $desert-sand;
+                        }
+
+                        .icon-spin {
+                            cursor: initial;
                         }
                     }
                 }
@@ -240,7 +243,7 @@
             padding: 0.3rem 0.8rem;
             background-color: $brown-sugar;
             
-            .list-save-button {
+            .list-save-button, .list-save-spinner {
                 border: none;
                 background: none;
                 cursor: pointer;
@@ -250,6 +253,9 @@
             }
             .list-save-button:hover {
                 color: $coffee-darker;
+            }
+            .list-save-spinner {
+                cursor: initial;
             }
         }
         .ok-cancel-mobile {
@@ -275,84 +281,6 @@
 .list-data-container:hover .list-edit-delete {
     color: $brown-sugar;
 }
-
-// @media screen and (max-width: 499px) {
-//     .list-data-container {
-//         flex-direction: column-reverse;
-//         align-items: center;
-//         width: 100%;
-//         margin-top: 0.1rem;
-//         .list-details {
-//             margin: 2rem 0.5rem 0;
-//             flex-basis: 100%;
-//             width: 100%;
-//         }
-//         .item-form-container {
-            
-//             .item-form {
-//                 flex-direction: row;
-//                 flex-wrap: wrap;
-//                 padding-bottom: 1rem;
-
-//                 .h2-item {
-//                     flex-basis: 100%;
-//                     margin: 0.5rem 0 0;
-//                 }
-//                 .h5-item {
-//                     width: 100%;
-//                 }
-
-//                 .item-label {
-//                     width: 50%;
-        
-//                     .item-input {
-//                         height: 2.5rem;
-//                         width: 100%;
-//                         margin: 0;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
-
-// @media screen and (max-width: 768px) and (min-width: 500px) {
-//     .list-data-container {
-//         flex-direction: column-reverse;
-//         align-items: center;
-//         width: 100%;
-//         margin-top: 0.1rem;
-//         .list-details {
-//             margin: 2rem 0.5rem 0;
-//         }
-//         .item-form-container {
-            
-//             .item-form {
-//                 flex-direction: row;
-//                 flex-wrap: wrap;
-//                 padding-bottom: 1rem;
-
-//                 .h2-item {
-//                     flex-basis: 100%;
-//                     margin: 0.5rem 0 0;
-//                 }
-//                 .h5-item {
-//                     width: 100%;
-//                 }
-
-//                 .item-label {
-//                     width: 30%;
-        
-//                     .item-input {
-//                         height: 2.5rem;
-//                         width: 100%;
-//                         margin: 0;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
 
 @media screen and (max-width: 450px) {
     .list-data-container {

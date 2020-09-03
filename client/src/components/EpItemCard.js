@@ -15,6 +15,8 @@ const EpItemCard = ({ ep }) => {
     const [newWhyFave, setNewWhyFave] = useState('');
     const [newSource, setNewSource] = useState('');
 
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -49,7 +51,7 @@ const EpItemCard = ({ ep }) => {
         if (data.success) {
             setListInfo(data.epList);
             setEditInfo(false);
-            localStorage.setItem('list-info', JSON.stringify(data.epList));
+            setIsButtonClicked(false);
         };
     };
 
@@ -78,7 +80,12 @@ const EpItemCard = ({ ep }) => {
                         <div className="item-edit-form">
                             <form onSubmit={handleSubmitEdit} className="item-edit-form">
                                 <div className="ok-cancel">
-                                    <button type="submit" className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
+                                    {
+                                        isButtonClicked ?
+                                            <button className="item-save-spinner" type="submit"><FontAwesomeIcon icon={faSpinner} spin /></button>
+                                        :
+                                            <button type="submit" className="item-save-button" onClick={() => setIsButtonClicked(true)}><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
+                                    }
                                     <button className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditInfo(false)}/></button>
                                 </div>
                                 <div className="form-fields">

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import Context from './Context';
 import '../style/SignUp.scss';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const SignUp = () => {
     const history = useHistory();
@@ -12,6 +13,7 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -43,11 +45,14 @@ const SignUp = () => {
                 setToken(header);
                 setUserData(data.user);
                 setLoggedIn(true);
+                setIsButtonClicked(false);
             } else {
                 window.alert(Object.values(data.message[0]));
+                setIsButtonClicked(false);
             };
         } else {
             window.alert('Password doesnn\'t match');
+            setIsButtonClicked(false);
         };
     };
 
@@ -92,10 +97,13 @@ const SignUp = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)} />
                 </label>
                 <h5 className="h5-signup"> * Required fields </h5>
-                <button
-                    type="submit"
-                    className="button sign-btn">GO</button>
-                    <Link to="/" className="already-registered">Already registered?</Link>
+                {
+                    isButtonClicked ?
+                        <button className="sign-btn" type="submit"><FontAwesomeIcon icon={faSpinner} spin className="spin-icon" /></button>
+                    :
+                        <button className="sign-btn" type="submit" onClick={() => setIsButtonClicked(true)}>GO</button>
+                }
+                <Link to="/" className="already-registered">Already registered?</Link>
             </form>
         </div>
     )

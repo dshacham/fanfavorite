@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import Context from './Context';
 import '../style/Landing.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Landing = () => {
     const history = useHistory();
@@ -10,6 +12,7 @@ const Landing = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState(false);
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -75,7 +78,12 @@ const Landing = () => {
                             onChange={(e) => setPassword(e.target.value)} />
                     </label>
                     <p className={errorMsg ? "signin-error show-error" : "signin-error"}>Email or password incorrect</p>
-                    <button type="submit" className="button sign-btn">GO</button>
+                    {
+                    isButtonClicked && !errorMsg ?
+                        <button className="sign-btn" type="submit"><FontAwesomeIcon icon={faSpinner} spin className="spin-icon" /></button>
+                    :
+                        <button className="sign-btn" type="submit" onClick={() => {setIsButtonClicked(true); setErrorMsg(false)}}>GO</button>
+                    }
                     <Link to="reset_password" className="pass-forgot">Forgot password?</Link>
                 </form>
             </div>

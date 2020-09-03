@@ -5,7 +5,7 @@ import Context from './Context';
 import '../style/ListData.scss';
 import EpItemCard from './EpItemCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrashAlt, faCheck, faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes, faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const EpListData = () => {
     const history = useHistory();
@@ -14,6 +14,8 @@ const EpListData = () => {
     const [isListDeleted, setIsListDeleted] = useState(false);
     const [editListInfo, setEditListInfo] = useState(false);
     const [addToList, setAddToList] = useState(false);
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [isAddButtonClicked, setIsAddButtonClicked] = useState(false);
 
     const [listFandom, setListFandom] = useState('');
     const [title, setTitle] = useState('');
@@ -42,91 +44,6 @@ const EpListData = () => {
         listInfo && listInfo.epList ? setListId(listInfo.epList._id) : setListId(listInfo._id);
     }, [listInfo.epList, listInfo.listFandom, listInfo._id]);
 
-
-    const handleAddItem = async (e) => {
-        e.preventDefault();
-
-        const epData = {
-            title,
-            season,
-            number,
-            whyFave,
-            source,
-            listId,
-            userId: userData._id
-        };
-
-        const postEpData = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'x-auth': token
-            },
-            body: JSON.stringify(epData)
-        };
-
-        const resp = await fetch('/episodes', postEpData);
-        const data = await resp.json();
-        if (data.success) {
-            setListInfo(data.epList);
-            localStorage.setItem('list-info', JSON.stringify(data.epList));
-            setAddToList(false);
-            setTitle('');
-            setSeason('');
-            setNumber('');
-            setWhyFave('');
-            setSource('');
-        };
-    };
-
-    // EDIT LiST TITLE:
-    const handleSubmitEditList = async (e) => {
-        e.preventDefault();
-
-        const newListInfo = {
-            listFandom: newListFandom === '' ? listFandom : newListFandom,
-            listType: "episodes",
-        };
-
-        const newEpListData = {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "x-auth": token
-            },
-            body: JSON.stringify(newListInfo)
-        };
-
-        const response = await fetch('/eplists/' + listId, newEpListData);
-        const data = await response.json();
-        if (data.success) {
-            setUserData(data.user);
-            setListInfo(data.epList);
-            setEditListInfo(false);
-        };
-    };
-
-    const deleteList = async (e) => {
-        e.preventDefault();
-
-        const deletedList = {
-            method: "DELETE",
-            headers: {
-                "x-auth": token,
-            },
-        };
-
-        const request = await fetch('/eplists/' + listId, deletedList);
-        const response = await request.json();
-        if (response.success) {
-            setUserData(response.user);
-            setListInfo(response.epList);
-            localStorage.removeItem('list-info');
-            setIsListDeleted(true);
-        };
-    };
-
     useEffect(() => {
         const fetchListEps = async () => {
             const options = {
@@ -137,8 +54,8 @@ const EpListData = () => {
                   'x-auth': token
                 }
             };
-    
-            if (listInfo.eps) {
+
+            if (listInfo && listInfo.eps) {
                 listInfo.eps.map(async(epId) => {
                     const request1 = await fetch('/episodes/' + epId, options);
                     const response1 = await request1.json();
@@ -174,6 +91,93 @@ const EpListData = () => {
         allListEps.sort(compare);
     };
 
+    const handleAddItem = async (e) => {
+        e.preventDefault();
+
+        const epData = {
+            title,
+            season,
+            number,
+            whyFave,
+            source,
+            listId,
+            userId: userData._id
+        };
+
+        const postEpData = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'x-auth': token
+            },
+            body: JSON.stringify(epData)
+        };
+
+        const resp = await fetch('/episodes', postEpData);
+        const data = await resp.json();
+        if (data.success) {
+            setListInfo(data.epList);
+            localStorage.setItem('list-info', JSON.stringify(data.epList));
+            setAddToList(false);
+            setIsAddButtonClicked(false);
+            setTitle('');
+            setSeason('');
+            setNumber('');
+            setWhyFave('');
+            setSource('');
+        };
+    };
+
+    // EDIT LiST TITLE:
+    const handleSubmitEditList = async (e) => {
+        e.preventDefault();
+
+        const newListInfo = {
+            listFandom: newListFandom === '' ? listFandom : newListFandom,
+            listType: "episodes",
+        };
+
+        const newEpListData = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "x-auth": token
+            },
+            body: JSON.stringify(newListInfo)
+        };
+
+        const response = await fetch('/eplists/' + listId, newEpListData);
+        const data = await response.json();
+
+        if (data.success) {
+            setUserData(data.user);
+            setListInfo(data.epList);
+            setEditListInfo(false);
+            setIsButtonClicked(false);
+        };
+    };
+
+    const deleteList = async (e) => {
+        e.preventDefault();
+
+        const deletedList = {
+            method: "DELETE",
+            headers: {
+                "x-auth": token,
+            },
+        };
+
+        const request = await fetch('/eplists/' + listId, deletedList);
+        const response = await request.json();
+        if (response.success) {
+            setUserData(response.user);
+            setListInfo(response.epList);
+            localStorage.removeItem('list-info');
+            setIsListDeleted(true);
+        };
+    };
+
     // useEffect(() => {
     //     getUserData();
     // }, [listInfo]);
@@ -181,7 +185,7 @@ const EpListData = () => {
     useEffect(() => {
         isListDeleted && history.push('/account');
     });
-console.log(listInfo)
+
     return (
         <div className="list-data-container">
             <div className="list-details">
@@ -191,7 +195,12 @@ console.log(listInfo)
                             <div className="list-edit-form">
                                 <form onSubmit={handleSubmitEditList} className="list-edit-form">
                                     <div className={isMobile ? "ok-cancel-mobile" : "ok-cancel"}>
-                                        <button type="submit" className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
+                                        {
+                                            isButtonClicked ?
+                                                <button type="submit" className="list-save-spinner"><FontAwesomeIcon icon={faSpinner} spin /></button>
+                                            :
+                                                <button type="submit" className="list-save-button" onClick={() => setIsButtonClicked(true)}><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
+                                        }
                                         <button className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditListInfo(false)}/></button>
                                     </div>
                                     <label htmlFor="listFandom" className={isMobile ? "margin list-edit-label" : "list-edit-label"}>Fandom:
@@ -257,7 +266,12 @@ console.log(listInfo)
                                     </label>
                                     <h5 className="h5-item">* Required Fields</h5>
                                     <div className="save-cancel-container">
-                                        <button type="submit" className="save-btn"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        {
+                                            isAddButtonClicked ?
+                                                <button type="submit" className="icon-spin"><FontAwesomeIcon icon={faSpinner} spin /></button>
+                                            :
+                                            <button type="submit" className="save-btn" onClick={() => setIsAddButtonClicked(true)}><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        }
                                         <button type="text" className="cancel-btn" onClick={() => setAddToList(false)}><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} /></button>
                                     </div>
                                 </form>

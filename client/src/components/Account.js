@@ -9,7 +9,7 @@ import EpListCard from './EpListCard';
 
 const Account = () => {
     const history = useHistory();
-    const { loggedIn, setLoggedIn, userData, setUserData, setListInfo, token, userFicLists, userEpLists } = useContext(Context);
+    const { loggedIn, setLoggedIn, userData, setUserData, getUserData, setListInfo, token, userFicLists, userEpLists } = useContext(Context);
 
     const [isFicListClicked, setIsFicListClicked] = useState(false);
     const [isEpListClicked, setIsEpListClicked] = useState(false);
@@ -21,11 +21,13 @@ const Account = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
     const [isAccountDeleted, setIsAccountDeleted] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         setListInfo('');
+        getUserData();
     }, []);
 
     const handleEditUsername = async (e) => {
@@ -58,8 +60,10 @@ const Account = () => {
         if (data.success) {
             setUserData(data.user);
             setEditUsername(false);
+            setIsButtonClicked(false);
         } else {
             window.alert(Object.values(data.message[0]));
+            setIsButtonClicked(false);
         };
     }
 
@@ -94,11 +98,14 @@ const Account = () => {
             if (data.success) {
                 setUserData(data.user);
                 setEditPassword(false);
+                setIsButtonClicked(false);
             } else {
                 window.alert(Object.values(data.message[0]));
+                setIsButtonClicked(false);
             };
         } else {
             window.alert('Password doesn\'t match.');
+            setIsButtonClicked(false);
         };
     };
 
@@ -147,7 +154,12 @@ const Account = () => {
                                         </label>
                                     </div>
                                     <div className="save-cancel-container">
-                                        <button type="submit" className="save-btn"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        {
+                                            isButtonClicked ?
+                                                <button className="save-btn-spin" type="submit"><FontAwesomeIcon icon={faSpinner} spin /></button>
+                                            :
+                                                <button type="submit" className="save-btn" onClick={() => setIsButtonClicked(true)}><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        }
                                         <button type="text" className="cancel-btn" onClick={() => setEditUsername(false)}><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} /></button>
                                     </div>
                                 </form>
@@ -171,7 +183,12 @@ const Account = () => {
                                         </label>
                                     </div>
                                     <div className="save-cancel-container">
-                                        <button type="submit" className="save-btn"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        {
+                                            isButtonClicked ?
+                                                <button className="save-btn-spin" type="submit"><FontAwesomeIcon icon={faSpinner} spin /></button>
+                                            :
+                                                <button type="submit" className="save-btn" onClick={() => setIsButtonClicked(true)}><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        }
                                         <button type="text" className="cancel-btn" onClick={() => setEditPassword(false)}><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} /></button>
                                     </div>
                                 </form>

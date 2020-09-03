@@ -107,7 +107,7 @@
             justify-content: center;
             background-color: $champagne-darker;
 
-            .item-save-button {
+            .item-save-button, .item-save-spinner {
                 border: none;
                 background: none;
                 cursor: pointer;
@@ -117,6 +117,9 @@
             }
             .item-save-button:hover {
                 color: $coffee-darker;
+            }
+            .item-save-spinner {
+                cursor: initial;
             }
         }
     }
@@ -231,7 +234,7 @@
             padding: 0.4rem 1rem;
             background-color: $champagne-darker;
             
-            .item-save-button {
+            .item-save-button, .item-save-spinner {
                 border: none;
                 background: none;
                 cursor: pointer;
@@ -241,6 +244,9 @@
             }
             .item-save-button:hover {
                 color: $coffee-darker;
+            }
+            .item-save-spinner {
+                cursor: initial;
             }
         }
     }

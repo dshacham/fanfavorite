@@ -48,7 +48,7 @@ exports.putEpList = async (req, res, next) => {
     const epList = req.body;
 
     try {
-        const updateEpList = await EpsList.findByIdAndUpdate(id, epList, { new: true }).populate("eps").exec();
+        const updateEpList = await EpsList.findByIdAndUpdate(id, epList, { new: true });
         if (!epList) throw createError(404);
         res.json({ success: true, epList: updateEpList });
     }

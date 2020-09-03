@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from './Context';
 import '../style/AddFicList.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const AddEpsList = () => {
     const history = useHistory();
@@ -11,8 +13,8 @@ const AddEpsList = () => {
     const [listFandom, setListFandom] = useState('');
     const listType = 'episodes';
 
-    // route to list page after creation
     const [statusAdded, setStatusAdded] = useState(false);
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -40,10 +42,12 @@ const AddEpsList = () => {
 
         const resp = await fetch('/eplists', postListData);
         const data = await resp.json();
+        console.log(data)
         if (data.success) {
             setUserData(data.user);
             localStorage.setItem('list-info', JSON.stringify(data.epList));
             setStatusAdded(true);
+            setIsButtonClicked(false);
         };
     };
 
@@ -64,7 +68,12 @@ const AddEpsList = () => {
                         onChange={(e) => setListFandom(e.target.value)}
                     />
                 </label>
-                <button className="list-btn" type="submit">CONTINUE</button>
+                {
+                    isButtonClicked ?
+                        <button className="list-btn" type="submit"><FontAwesomeIcon icon={faSpinner} spin className="spin-icon" /></button>
+                    :
+                        <button className="list-btn" type="submit" onClick={() => setIsButtonClicked(true)}>CONTINUE</button>
+                }
             </form>
         </div>
     )

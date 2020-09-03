@@ -4,7 +4,7 @@ const User = require("../models/UserSchema");
 exports.editUsernameValidator = () => {
     return [
         body("username")
-            .isLength({ min: 6 })
+            .isLength({ min: 4 })
             .trim()
             .withMessage("Username must be at least 6 characters long.")
             .custom((value, {req}) => {

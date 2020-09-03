@@ -17,8 +17,8 @@ exports.getUsers = async (req, res, next) => {
 };
 
 exports.getUser = async (req, res, next) => {
-    const { token } = req.header;
     const { id } = req.user;
+    
     try {
         const user = await User.findById(id).populate("ficLists").populate("epsLists").exec();
         res.json({ success: true, user: user });
