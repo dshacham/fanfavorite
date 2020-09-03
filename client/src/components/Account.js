@@ -9,7 +9,7 @@ import EpListCard from './EpListCard';
 
 const Account = () => {
     const history = useHistory();
-    const { setLoggedIn, userData, setUserData, setListInfo, token, userFicLists, userEpLists } = useContext(Context);
+    const { loggedIn, setLoggedIn, userData, setUserData, setListInfo, token, userFicLists, userEpLists } = useContext(Context);
 
     const [isFicListClicked, setIsFicListClicked] = useState(false);
     const [isEpListClicked, setIsEpListClicked] = useState(false);
@@ -126,6 +126,7 @@ const Account = () => {
         isFicListClicked && history.push("/ficlist");
         isEpListClicked && history.push("/eplist");
         isAccountDeleted && history.push("/");
+        (!loggedIn) && history.push("/");
     });
 
     return (
@@ -192,7 +193,7 @@ const Account = () => {
                                                 <FontAwesomeIcon className="icon-account" title="delete account" icon={faTrashAlt} onClick={(e) => {
                                                     if (window.confirm(`Deleting your account will delete all of your lists. \n\nAre you sure you want to continue?`)) { localStorage.clear(); deleteAccount(e) }
                                                     }} />
-                                                <FontAwesomeIcon className="icon-account" title="sign out" icon={faPowerOff} onClick={() => { localStorage.clear(); setLoggedIn(false); }} />
+                                                <FontAwesomeIcon className="icon-account" title="sign out" icon={faPowerOff} onClick={() => { localStorage.clear(); setLoggedIn(false); setUserData(null); }} />
                                             </div>
                                         </Fragment>
                                     </div>
