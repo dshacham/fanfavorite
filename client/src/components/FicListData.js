@@ -131,7 +131,7 @@ const FicListData = () => {
     useEffect(() => {
         isListDeleted && history.push('/account');
     });
-console.log(listInfo)
+
     return (
         <div className="list-data-container">
             <div className="list-details">
