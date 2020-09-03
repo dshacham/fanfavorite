@@ -14,7 +14,7 @@ const ForgotPassword = () => {
         setForm(2);
 
         try {
-            const res = await axios.post('http://localhost:4000/reset_password/user/' + email, {
+            const res = await axios.post('https://fanfavorite.herokuapp.com/reset_password/user/' + email, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }

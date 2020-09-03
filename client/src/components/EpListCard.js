@@ -8,7 +8,7 @@ const EpListCard = ({ el, setIsEpListClicked }) => {
     return (
         <div>
             <button onClick={() => {
-                setListInfo(el);
+                // setListInfo(el);
                 localStorage.setItem('list-info', JSON.stringify(el));
                 setIsEpListClicked(true);
             }} className="to-list">{el.listFandom}</button>

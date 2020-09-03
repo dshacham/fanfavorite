@@ -44,7 +44,7 @@ const App = () => {
 
     const response = await fetch('/users', options);
     const data = await response.json();
-console.log(data)
+    console.log(data)
     if (data.success) {
       setUserData(data.user);
       setUserEpLists(data.user.epsLists);
@@ -59,11 +59,15 @@ console.log(data)
     };
   }, []);
 
+  useEffect(() => {
+        getUserData();
+    }, [listInfo]);
+
   return (
     <div className="App">
       <Context.Provider value={{ getUserData, userFicLists, setUserFicLists, userEpLists, setUserEpLists, listInfo, setListInfo, userData, setUserData, token, setToken, isAdmin, setIsAdmin, loggedIn, setLoggedIn }}>
         <HashRouter>
-        <NavBar />
+          <NavBar />
           <Switch>
             {
               loggedIn ?
@@ -71,7 +75,6 @@ console.log(data)
               :
                 <Route path="/" exact component={Landing} />
             }
-            {/* <Route path="/" exact component={Landing} />*/}
             <Route path="/account" exact component={Account} /> 
             <Route path="/signup" exact component={SignUp} />
             <Route path="/admin" exact component={AdminBoard} />

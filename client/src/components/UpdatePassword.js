@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 
 const UpdatePassword = ({ match }) => {
-    const SERVER_URI = "http://localhost:4000";
+    const SERVER_URI = "https://fanfavorite.herokuapp.com";
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');

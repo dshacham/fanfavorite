@@ -1,6 +1,6 @@
 
 exports.getPasswordResetURL = (user, resetToken) => {
-    return `http://localhost:3000/password/reset/${user._id}/${resetToken}`
+    return `https://fanfavorite.herokuapp.com/password/reset/${user._id}/${resetToken}`
 }
 
 exports.resetPasswordTemplate = (user, url) => {

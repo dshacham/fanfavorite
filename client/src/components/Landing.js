@@ -43,6 +43,7 @@ const Landing = () => {
             setUserFicLists(data.user.ficLists);
             setLoggedIn(true);
             setErrorMsg(false);
+            history.push("/account");
         } else {
             setErrorMsg(true);
         };

@@ -13,29 +13,39 @@
     }
 
     .personal-account {
+        background-color: $champagne-darker;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         flex-basis: 100%;
-        padding: 0.5rem;
+        padding: 0 0.5rem;
         box-shadow: inset 1px 1px 5px $cafe-au-lait;
 
+        .loading-acc {
+            width: 100%;
+            text-align: center;
+            padding: 0.6rem 0;
+            .spin-icon {
+                font-size: 1.5rem;
+            }
+        }
+
         .personal-info {
-            margin: 0.7rem 0;
+            width: 100%;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            margin: 0 1rem;
 
             .greetings {
-                margin-right: 1rem;
                 color: $brown-sugar;
                 text-align: center;
                 
                 .label-name {
-                    font-size: 1.4rem;
+                    font-size: 1.2rem;
 
                     .info {
-                        font-size: 1.8rem;
+                        font-size: 1.5rem;
                         color: $coffee;
                         font-weight: bold;
                     }
@@ -50,7 +60,17 @@
             .buttons {
                 display: flex;
 
+                .icon-account {
+                    font-size: 1.5rem;
+                    margin: 0 1rem;
+                    cursor: pointer;
+                }
+                .icon-account:hover {
+                    color: $cafe-au-lait;
+                }
+
                 .edit-btn, .signout-btn, .delete-btn {
+                    width: 10rem;
                     background-color: $champagne-darker;
                     color: $cafe-au-lait;
                     border-radius: 0.18rem;
@@ -60,7 +80,6 @@
                     text-align: center;
                     border-radius: $border;
                     padding: 0.7rem 1rem;
-                    margin: 0 0 0 0.5rem;
                     cursor: pointer;
                     font-weight: bold;
                 }
@@ -73,18 +92,14 @@
                 }
             }
 
-            .loading-acc {
-                justify-content: center;
-                .spin-icon {
-                    font-size: 2rem;
-                }
-            }
+            
 
             // edit form:
             .edit-username-form, .edit-pass-form {
                 display: flex;
                 align-items: center;
-                padding: 0.08rem 0;
+                justify-content: flex-end;
+                width: 100%;
 
                 .username-labels-container, .password-labels-container {
                     display: flex;
@@ -96,6 +111,7 @@
                         input {
                             width: 100%;
                             padding: 0.5rem;
+                            margin: 0 0.2rem;
                             border: 1px solid $cafe-au-lait;
                             border-radius: $border;
                             font-size: 1.1rem;
@@ -111,9 +127,6 @@
                             outline: none;
                             border: 1px solid $coffee-darker;
                         }
-                        // .input-pass {
-                        //     padding: 0 0.7rem;
-                        // }
                     }
                 }
 
@@ -124,15 +137,18 @@
                         background-color: $champagne-darker;
                         color: $cafe-au-lait;
                         border-radius: 0.18rem;
-                        border: 0.14rem solid rgba(157, 107, 83, 0.6);
-                        border-right-color: rgba(113, 69, 51, 0.7);
-                        border-bottom-color: rgba(113, 69, 51, 0.7);
+                        border: none;
                         text-align: center;
-                        border-radius: $border;
-                        padding: 0.7rem 1rem;
-                        margin: 0 0 0 0.5rem;
+                        
                         cursor: pointer;
                         font-weight: bold;
+                        font-size: 1.5rem;
+                    }
+                    .save-btn {
+                        margin-left: 1rem;
+                    }
+                    .cancel-btn {
+                        margin: 0 0.5rem 0 2rem;
                     }
                 }
             }
@@ -200,145 +216,77 @@
     }
 }
 
-@media screen and (max-width: 327px) {
+@media screen and (max-width: 460px) {
     .account-container {
         .personal-account {
+            .loading-acc {
+                padding: 1.4rem 0;
+            }
+
             .personal-info {
                 flex-direction: column;
-                align-items: center;
-                margin-top: 0;
-                .label {
-                    margin: 0;
-                }
-                .buttons {
-                    flex-direction: column;
-                    .edit-btn, .signout-btn, .delete-btn {
-                        margin: 0;
-                    }
-                }
-
-                .edit-pass-form {
-                    padding: 0.7rem 0 0;
+                margin: 0;
+                .greetings {
                     width: 100%;
-                    flex-direction: column;
-
-                    .password-labels-container {
-                        flex-wrap: wrap;
-                    }
-                    .save-cancel-container {
-                        align-items: center;
-                        margin-top: 0.2rem;
-                        .save-btn, .cancel-btn {
-                            width: 80%;
-                        }
-                    }
-                }
-            }
-        }
-
-        .personal-lists {
-            flex-direction: column;
-            margin: 2rem 0.5rem;
-        }
-    }
-}
-
-@media screen and (max-width: 420px) {
-    .account-container {
-        .personal-account {
-            .personal-info {
-                .edit-username-form {
-                    padding: 1.43rem;
-                    flex-direction: column;
-                    
-                    .save-cancel-container {
-                        flex-direction: row;
-                        align-items: center;
-                        flex-basis: 100%;
-                        margin-top: 0.2rem;
-                        .save-btn, .cancel-btn {
-                            width: 80%;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media screen and (max-width: 505px) and (min-width: 328px) {
-    .account-container {
-        .personal-account {
-            .personal-info {
-                flex-direction: column;
-                align-items: center;
-                margin-top: 0;
-                .label {
-                    margin: 0;
-                }
-
-                .buttons {
+                    display: flex;
                     flex-wrap: wrap;
-                    justify-content: center;
-                    .edit-btn, .signout-btn, .delete-btn {
+                    justify-content: space-around;
+                    align-items: center;
+    
+                    .label-email {
                         margin: 0;
                     }
                 }
-
-                .edit-pass-form {
-                    padding: 0.7rem 0 0;
+                
+                .buttons {
                     width: 100%;
-                    .password-labels-container {
-                        flex-wrap: wrap;
-                    }
-                    .save-cancel-container {
-                        flex-direction: column;
-                        align-items: center;
-                        .save-btn, .cancel-btn {
-                            width: 80%;
-                        }
+                    margin: 0.5rem 0;
+                    justify-content: space-around;
+
+                    .icon-account {
+                        font-size: 1.8rem;
                     }
                 }
-                .edit-username-form {
-                    padding: 1.43rem;
+
+                .edit-username-form, .edit-pass-form {
+                    justify-content: space-around;
+                    margin: 0.05rem 0 0.3rem;
                 }
             }
-        }
-
-        .personal-lists {
-            flex-direction: column;
-            margin: 2rem 0.5rem;
         }
     }
 }
 
-@media screen and (max-width: 790px) and (min-width: 506px) {
+@media screen and (max-width: 555px) and (min-width: 461px) {
     .account-container {
         .personal-account {
-            .personal-info {
-                flex-direction: column;
-                align-items: center;
-                margin-top: 0;
-                .label {
-                    margin: 0;
-                }
-                .buttons {
-                    .edit-btn, .signout-btn, .delete-btn {
-                        margin: 0;
-                    }
-                }
+            .loading-acc {
+                padding: 0.35rem 0;
+            }
+        }
+    }
+}
 
-                .edit-pass-form {
-                    padding: 0.7rem 0 0;
-                    width: 80%;
-                    .password-labels-container {
-                        flex-wrap: wrap;
+@media screen and (max-width: 555px) {
+    .account-container {
+        .personal-account {
+            width: 100%;
+            padding: 0.3rem 0;
+
+            .personal-info {
+                .greetings {
+                    .label-name {
+                        font-size: 1.2rem;
+                        .info {
+                            font-size: 1.2rem;
+                        }
                     }
-                }
-                .edit-username-form {
-                    padding: 1.43rem;
                 }
             }
+        }
+        .personal-lists {
+            flex-direction: column;
+            margin: 0;
         }
     }
 }

@@ -19,7 +19,7 @@ const About = () => {
 
     return (
         <div className="about-container">
-            <div className="theme-list slide-from-left">
+            <div className="theme-list">
                 <ul>
                     <li><HashLink onClick={hideHash} className="side-link" to="/about#whatisfanfavorite">What is FanFavorite?</HashLink></li>
                     <li><HashLink onClick={hideHash} className="side-link" to="/about#howtocreatelists">How to create lists?</HashLink></li>
@@ -30,7 +30,7 @@ const About = () => {
                     <li><HashLink onClick={hideHash} className="side-link" to="/about#suggestions">Can I suggest changes for FanFavorite?</HashLink></li>
                 </ul>
             </div>
-            <div className="questions-container slide-from-right">
+            <div className="questions-container">
                 <div className="questions-headline">
                     <h3>FANFAVORITE IS HERE</h3>
                     <h3>FOR ANY QUESTIONS</h3>

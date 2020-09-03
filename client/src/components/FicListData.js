@@ -5,14 +5,15 @@ import Context from './Context';
 import '../style/ListData.scss';
 import FicItemCard from './FicItemCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrashAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const FicListData = () => {
     const history = useHistory();
-    const { listInfo, setListInfo, getUserData, userData, setUserData, token } = useContext(Context);
+    const { listInfo, setListInfo, userData, setUserData, token } = useContext(Context);
 
     const [isListDeleted, setIsListDeleted] = useState(false);
     const [editListInfo, setEditListInfo] = useState(false);
+    const [addToList, setAddToList] = useState(false);
 
     const [listFandom, setListFandom] = useState('');
     const [title, setTitle] = useState('');
@@ -67,6 +68,7 @@ const FicListData = () => {
         if (data.success) {
             setListInfo(data.ficList);
             localStorage.setItem('list-info', JSON.stringify(data.ficList));
+            setAddToList(false)
             setTitle('');
             setAuthor('');
             setShip('');
@@ -128,7 +130,7 @@ const FicListData = () => {
 
     return (
         <div className="list-data-container">
-            <div className="list-details slide-from-left">
+            <div className="list-details">
                 {
                     listInfo && editListInfo ?
                         <Fragment>
@@ -159,59 +161,68 @@ const FicListData = () => {
                 }
                 <div className="list-items-container">
                     {
-                        listInfo && listInfo.fics ? listInfo.fics.map((fic, i) => {
-                            return (
-                                <FicItemCard key={i} fic={fic} />
-                            )
-                        })
+                        listInfo.fics && (listInfo.fics.length > 0) ? 
+                            listInfo.fics.map((fic, i) => {
+                                return (
+                                    <FicItemCard key={i} fic={fic} />
+                                )
+                            })
                         :
-                        listInfo && listInfo.ficList.fics ? listInfo.ficList.fics.map((fic, i) => {
-                            return (
-                                <FicItemCard key={i} fic={fic} />
-                            )
-                        })
-                        : null
+                            <p className="no-lists">You haven't added any items.</p>
+                    }
+                </div>
+                <div className="add-form">
+                    {
+                        addToList ?
+                        <div className="item-form-container">
+                            <form className="item-form" onSubmit={handleAddItem}>
+                                <h2 className="h2-item">ADD TO THE LIST</h2>
+                                <label className="item-label">Title *
+                                    <input className="item-input" type="text" value={title} required
+                                        onChange={(e) => setTitle(e.target.value)}
+                                    />
+                                </label>
+                                <label className="item-label">Author *
+                                    <input className="item-input" type="text" value={author} required
+                                        onChange={(e) => setAuthor(e.target.value)}
+                                    />
+                                </label>
+                                <label className="item-label">Ship *
+                                    <input className="item-input" type="text" value={ship} required
+                                        onChange={(e) => setShip(e.target.value)}
+                                    />
+                                </label>
+                                <label className="item-label">Genre
+                                    <input className="item-input" type="text" value={genre}
+                                        onChange={(e) => setGenre(e.target.value)}
+                                    />
+                                </label>
+                                <label className="item-label">Description
+                                    <input className="item-input" type="text" value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    />
+                                </label>
+                                <label className="item-label">Source *
+                                    <input className="item-input" type="text" value={source} required
+                                        onChange={(e) => setSource(e.target.value)}
+                                    />
+                                </label>
+                                <h5 className="h5-item">* Required Fields</h5>
+                                <div className="save-cancel-container">
+                                        <button type="submit" className="save-btn"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        <button type="text" className="cancel-btn" onClick={() => setAddToList(false)}><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} /></button>
+                                </div>
+                            </form>
+                        </div>
+                        :
+                        <div className="add-to-list">
+                            <FontAwesomeIcon className="icon-add" title="add" icon={faPlus} onClick={() => setAddToList(true)}/>
+                        </div>
                     }
                 </div>
             </div>
                         
-            <div className="item-form-container slide-from-right">
-                <form className="item-form" onSubmit={handleAddItem}>
-                    <h2 className="h2-item">ADD TO THE LIST</h2>
-                    <label className="item-label">Title *
-                        <input className="item-input" type="text" value={title} required
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                    </label>
-                    <label className="item-label">Author *
-                        <input className="item-input" type="text" value={author} required
-                            onChange={(e) => setAuthor(e.target.value)}
-                        />
-                    </label>
-                    <label className="item-label">Ship *
-                        <input className="item-input" type="text" value={ship} required
-                            onChange={(e) => setShip(e.target.value)}
-                        />
-                    </label>
-                    <label className="item-label">Genre
-                        <input className="item-input" type="text" value={genre}
-                            onChange={(e) => setGenre(e.target.value)}
-                        />
-                    </label>
-                    <label className="item-label">Description
-                        <input className="item-input" type="text" value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                    </label>
-                    <label className="item-label">Source *
-                        <input className="item-input" type="text" value={source} required
-                            onChange={(e) => setSource(e.target.value)}
-                        />
-                    </label>
-                    <h5 className="h5-item">* Required Fields</h5>
-                    <button className="item-btn" type="submit">ADD</button>
-                </form>
-            </div>
+            
         </div>
     );
 }

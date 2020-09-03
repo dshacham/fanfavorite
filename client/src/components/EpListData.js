@@ -5,14 +5,15 @@ import Context from './Context';
 import '../style/ListData.scss';
 import EpItemCard from './EpItemCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrashAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const EpListData = () => {
     const history = useHistory();
-    const { listInfo, setListInfo, getUserData, userData, setUserData, token, userEpLists } = useContext(Context);
+    const { listInfo, setListInfo, userData, setUserData, token } = useContext(Context);
 
     const [isListDeleted, setIsListDeleted] = useState(false);
     const [editListInfo, setEditListInfo] = useState(false);
+    const [addToList, setAddToList] = useState(false);
 
     const [listFandom, setListFandom] = useState('');
     const [title, setTitle] = useState('');
@@ -37,8 +38,8 @@ const EpListData = () => {
     }, []);
 
     useEffect(() => {
-        listInfo.epList ? setListFandom(listInfo.epList.listFandom) : setListFandom(listInfo.listFandom);
-        listInfo.epList ? setListId(listInfo.epList._id) : setListId(listInfo._id);
+        listInfo && listInfo.epList ? setListFandom(listInfo.epList.listFandom) : setListFandom(listInfo.listFandom);
+        listInfo && listInfo.epList ? setListId(listInfo.epList._id) : setListId(listInfo._id);
     }, [listInfo.epList, listInfo.listFandom, listInfo._id]);
 
 
@@ -70,6 +71,7 @@ const EpListData = () => {
         if (data.success) {
             setListInfo(data.epList);
             localStorage.setItem('list-info', JSON.stringify(data.epList));
+            setAddToList(false);
             setTitle('');
             setSeason('');
             setNumber('');
@@ -118,7 +120,8 @@ const EpListData = () => {
         const request = await fetch('/eplists/' + listId, deletedList);
         const response = await request.json();
         if (response.success) {
-            setUserData(response.epLists);
+            setUserData(response.user);
+            setListInfo(response.epList);
             localStorage.removeItem('list-info');
             setIsListDeleted(true);
         };
@@ -171,17 +174,17 @@ const EpListData = () => {
         allListEps.sort(compare);
     };
 
-    useEffect(() => {
-        getUserData();
-    }, [listInfo]);
+    // useEffect(() => {
+    //     getUserData();
+    // }, [listInfo]);
 
     useEffect(() => {
         isListDeleted && history.push('/account');
     });
-
+console.log(listInfo)
     return (
         <div className="list-data-container">
-            <div className="list-details slide-from-left">
+            <div className="list-details">
                 {
                     listInfo && editListInfo ?
                         <Fragment>
@@ -212,48 +215,61 @@ const EpListData = () => {
                 }
                 <div className="list-items-container">
                     {
-                        allListEps ? allListEps.map((ep, i) => {
+                        listInfo.eps && (listInfo.eps.length > 0) && allListEps ? allListEps.map((ep, i) => {
                                 return (
                                 <EpItemCard key={i} ep={ep} />
                             )
                         })
-                        : null
+                        :
+                            <p className="no-lists">You haven't added any items.</p>
+                    }
+                </div>
+                <div className="add-form">
+                    {
+                        addToList ?
+                            <div className="item-form-container">
+                                <form className="item-form" onSubmit={handleAddItem}>
+                                    <h2 className="h2-item">ADD TO THE LIST</h2>
+                                    <label className="item-label">Title *
+                                        <input className="item-input" type="text" value={title} required placeholder="episode name..."
+                                            onChange={(e) => setTitle(e.target.value)}
+                                        />
+                                    </label>
+                                    <label className="item-label">Season *
+                                        <input className="item-input" type="text" value={season} required placeholder="season number..."
+                                            onChange={(e) => setSeason(e.target.value)}
+                                        />
+                                    </label>
+                                    <label className="item-label">Number *
+                                        <input className="item-input" type="text" value={number} required placeholder="episode number..."
+                                            onChange={(e) => setNumber(e.target.value)}
+                                        />
+                                    </label>
+                                    <label className="item-label">Why is it a fave?
+                                        <input className="item-input" type="text" value={whyFave} placeholder="to help you remember the ep..."
+                                            onChange={(e) => setWhyFave(e.target.value)}
+                                        />
+                                    </label>
+                                    <label className="item-label">Link to info
+                                        <input className="item-input" type="text" value={source} placeholder="imdb page for example..."
+                                            onChange={(e) => setSource(e.target.value)}
+                                        />
+                                    </label>
+                                    <h5 className="h5-item">* Required Fields</h5>
+                                    <div className="save-cancel-container">
+                                        <button type="submit" className="save-btn"><FontAwesomeIcon className="icon-ch-ca" title="approve" icon={faCheck}/></button>
+                                        <button type="text" className="cancel-btn" onClick={() => setAddToList(false)}><FontAwesomeIcon className="icon-ch-ca" title="cancel" icon={faTimes} /></button>
+                                    </div>
+                                </form>
+                            </div>
+                        :
+                            <div className="add-to-list">
+                                <FontAwesomeIcon className="icon-add" title="add" icon={faPlus} onClick={() => setAddToList(true)}/>
+                            </div>
                     }
                 </div>
             </div>
                         
-            <div className="item-form-container slide-from-right">
-                <form className="item-form" onSubmit={handleAddItem}>
-                    <h2 className="h2-item">ADD TO THE LIST</h2>
-                    <label className="item-label">Title *
-                        <input className="item-input" type="text" value={title} required placeholder="episode name..."
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                    </label>
-                    <label className="item-label">Season *
-                        <input className="item-input" type="text" value={season} required placeholder="season number..."
-                            onChange={(e) => setSeason(e.target.value)}
-                        />
-                    </label>
-                    <label className="item-label">Number *
-                        <input className="item-input" type="text" value={number} required placeholder="episode number..."
-                            onChange={(e) => setNumber(e.target.value)}
-                        />
-                    </label>
-                    <label className="item-label">Why is it a fave?
-                        <input className="item-input" type="text" value={whyFave} placeholder="to help you remember the ep..."
-                            onChange={(e) => setWhyFave(e.target.value)}
-                        />
-                    </label>
-                    <label className="item-label">Link to info
-                        <input className="item-input" type="text" value={source} placeholder="imdb page for example..."
-                            onChange={(e) => setSource(e.target.value)}
-                        />
-                    </label>
-                    <h5 className="h5-item">* Required Fields</h5>
-                    <button className="item-btn" type="submit">ADD</button>
-                </form>
-            </div>
         </div>
     );
 }
