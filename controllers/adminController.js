@@ -23,9 +23,22 @@ exports.getUser = async (req, res, next) => {
     }
 };
 
-exports.putUser = async (req, res, next) => {
+exports.putUserInfo = async (req, res, next) => {
     const user = req.body;
-    const { id } = req.params;
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.user._id, user, { new: true }).populate("ficLists").populate("epsLists").exec();
+        const users = await User.find();
+        if (!updatedUser) throw createError(500);
+
+        res.json({ success: true, user: updatedUser, users: users });
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.putPassword = async (req, res, next) => {
+    const user = req.body;
 
     try {
         if (Object.keys(req.body).includes("password")) {
@@ -33,7 +46,7 @@ exports.putUser = async (req, res, next) => {
             user.password = hashedPassword;
         }
 
-        const updatedUser = await User.findByIdAndUpdate(id, user, { new: true }).populate("ficLists").populate("epsLists").exec();
+        const updatedUser = await User.findByIdAndUpdate(req.user._id, user, { new: true }).populate("ficLists").populate("epsLists").exec();
         if (!updatedUser) throw createError(500);
 
         res.json({ success: true, user: updatedUser });

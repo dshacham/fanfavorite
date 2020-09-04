@@ -8,6 +8,7 @@ import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner, faChevronDown, fa
 const EpItemCard = ({ ep }) => {
     const { setListInfo, token } = useContext(Context);
 
+    const { listFandom, title, season, number, whyFave, source, listId } = ep;
     const [editInfo, setEditInfo] = useState(false);
     const [newTitle, setNewTitle] = useState('');
     const [newSeason, setNewSeason] = useState('');
@@ -22,11 +23,16 @@ const EpItemCard = ({ ep }) => {
         window.scrollTo(0, 0);
     }, []);
 
+    useEffect(() => {
+        setNewTitle(title);
+        setNewSeason(season);
+        setNewNumber(number);
+        setNewWhyFave(whyFave);
+        setNewSource(source);
+    }, [ep])
+
     const handleSubmitEdit = async (e) => {
         e.preventDefault();
-
-        // old data:
-        const { listFandom, title, season, number, whyFave, source, listId } = ep;
         
         const newInfo = {
             listFandom: listFandom,
@@ -91,19 +97,19 @@ const EpItemCard = ({ ep }) => {
                                 </div>
                                 <div className="form-fields">
                                     <label htmlFor="title" className="item-edit-label item-edit-label-info">
-                                        <input type="text" placeholder={ep.title} onChange={(e) => setNewTitle(e.target.value)} />
+                                        <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
                                     </label>
                                     <label htmlFor="author" className="item-edit-label item-edit-label-info">
-                                        <input type="text" placeholder={ep.season} onChange={(e) => setNewSeason(e.target.value)} />
+                                        <input type="text" value={newSeason} onChange={(e) => setNewSeason(e.target.value)} />
                                     </label>
                                     <label htmlFor="ship" className="item-edit-label item-edit-label-info">
-                                        <input type="text" placeholder={ep.number} onChange={(e) => setNewNumber(e.target.value)} />
+                                        <input type="text" value={newNumber} onChange={(e) => setNewNumber(e.target.value)} />
                                     </label>
                                     <label htmlFor="genre" className="item-edit-label item-edit-label-info">
-                                        <input type="text" placeholder={ep.whyFave} onChange={(e) => setNewWhyFave(e.target.value)} />
+                                        <input type="text" value={newWhyFave} onChange={(e) => setNewWhyFave(e.target.value)} />
                                     </label>
                                     <label htmlFor="source" className="item-edit-label item-edit-label-info">
-                                        <input type="text" placeholder={ep.source} onChange={(e) => setNewSource(e.target.value)} />
+                                        <input type="text" value={newSource} onChange={(e) => setNewSource(e.target.value)} />
                                     </label>
                                 </div>
                             </form>

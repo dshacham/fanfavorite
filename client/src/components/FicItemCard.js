@@ -8,8 +8,8 @@ import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner, faChevronDown, fa
 const FicItemCard = ({ fic }) => {
     const { listInfo, setListInfo, token } = useContext(Context);
 
-    const [editInfo, setEditInfo] = useState(false);
     const [ficInfo, setFicInfo] = useState('');
+    const { title, author, ship, genre, description, source, listId } = ficInfo;
     const [newTitle, setNewTitle] = useState('');
     const [newAuthor, setNewAuthor] = useState('');
     const [newShip, setNewShip] = useState('');
@@ -17,12 +17,24 @@ const FicItemCard = ({ fic }) => {
     const [newDescription, setNewDescription] = useState('');
     const [newSource, setNewSource] = useState('');
 
+    const [editInfo, setEditInfo] = useState(false);
+    
+
     const [isButtonClicked, setIsButtonClicked] = useState(false);
     const [isListExpended, setIsListExpended] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    useEffect(() => {
+        setNewTitle(title);
+        setNewAuthor(author);
+        setNewShip(ship);
+        setNewGenre(genre);
+        setNewDescription(description);
+        setNewSource(source);
+    }, [ficInfo]);
 
     useEffect(() => {
         const fetchFic = async () => {
@@ -47,16 +59,13 @@ const FicItemCard = ({ fic }) => {
     const handleSubmitEdit = async (e) => {
         e.preventDefault();
 
-        // old data:
-        const { title, author, ship, genre, description, source, listId } = ficInfo;
-
         const newInfo = {
-            title: newTitle === '' ? title : newTitle,
-            author: newAuthor === '' ? author : newAuthor,
-            ship: newShip === '' ? ship : newShip,
-            genre: newGenre === '' ? genre : newGenre,
-            description: newDescription === '' ? description : newDescription,
-            source: newSource === '' ? source : newSource,
+            title: newTitle === title ? title : newTitle,
+            author: newAuthor === author ? author : newAuthor,
+            ship: newShip === ship ? ship : newShip,
+            genre: newGenre === genre ? genre : newGenre,
+            description: newDescription === description ? description : newDescription,
+            source: newSource === source ? source : newSource,
             listId
         };
 
@@ -114,22 +123,22 @@ const FicItemCard = ({ fic }) => {
                                 </div>
                                 <div className="form-fields">
                                     <label htmlFor="title" className="item-edit-label">
-                                        <input type="text" placeholder={ficInfo.title} onChange={(e) => setNewTitle(e.target.value)} />
+                                        <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
                                     </label>
                                     <label htmlFor="author" className="item-edit-label">
-                                        <input type="text" placeholder={ficInfo.author} onChange={(e) => setNewAuthor(e.target.value)} />
+                                        <input type="text" value={newAuthor} onChange={(e) => setNewAuthor(e.target.value)} />
                                     </label>
                                     <label htmlFor="ship" className="item-edit-label">
-                                        <input type="text" placeholder={ficInfo.ship} onChange={(e) => setNewShip(e.target.value)} />
+                                        <input type="text" value={newShip} onChange={(e) => setNewShip(e.target.value)} />
                                     </label>
                                     <label htmlFor="genre" className="item-edit-label">
-                                        <input type="text" placeholder={ficInfo.genre} onChange={(e) => setNewGenre(e.target.value)} />
+                                        <input type="text" value={newGenre} onChange={(e) => setNewGenre(e.target.value)} />
                                     </label>
                                     <label htmlFor="description" className="item-edit-label">
-                                        <input type="text" placeholder={ficInfo.description} onChange={(e) => setNewDescription(e.target.value)} />
+                                        <input type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
                                     </label>
                                     <label htmlFor="source" className="item-edit-label">
-                                        <input type="text" placeholder={ficInfo.source} onChange={(e) => setNewSource(e.target.value)} />
+                                        <input type="text" value={newSource} onChange={(e) => setNewSource(e.target.value)} />
                                     </label>
                                 </div>
                             </form>

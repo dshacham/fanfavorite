@@ -99,13 +99,13 @@
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
-                width: 100%;
+                // width: 100%;
 
                 .username-labels-container, .password-labels-container {
                     display: flex;
                     
                     .edit-label {
-                        width: 100%;
+                        // width: 100%;
                         display: flex;
     
                         input {
@@ -258,7 +258,7 @@
 
                 .edit-username-form, .edit-pass-form {
                     justify-content: space-around;
-                    margin: 0.05rem 0 0.3rem;
+                    margin: 0.05rem 0.5rem 0.3rem;
                 }
             }
         }
@@ -275,7 +275,7 @@
     }
 }
 
-@media screen and (max-width: 555px) {
+@media screen and (max-width: 768px) {
     .account-container {
         margin: 0 0 3rem;
         .personal-account {
@@ -288,6 +288,16 @@
                         font-size: 1.2rem;
                         .info {
                             font-size: 1.2rem;
+                        }
+                    }
+                }
+                .edit-username-form, .edit-pass-form {
+                    .save-cancel-container {
+                        .save-btn, .save-btn-spin {
+                            margin-left: 0.5rem;
+                        }
+                        .cancel-btn {
+                            margin: 0 0 0 1rem;
                         }
                     }
                 }

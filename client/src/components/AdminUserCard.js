@@ -6,11 +6,13 @@ import { faPencilAlt, faTrashAlt, faCheck, faTimes } from '@fortawesome/free-sol
 
 const AdminUserCard = ({ el, allUsers, setAllUsers }) => {
     const { token } = useContext(Context);
-
+    
+    const { username, role, email, _id } = el;
     const [editInfo, setEditInfo] = useState(false);
-    const [newUsername, setNewUserName] = useState('');
-    const [newRole, setNewRole] = useState('');
-    const [newEmail, setNewEmail] = useState('');
+    const [editPassword, setEditPassword] = useState(false);
+    const [newUsername, setNewUserName] = useState(username);
+    const [newRole, setNewRole] = useState(role);
+    const [newEmail, setNewEmail] = useState(email);
     const [newPassword, setNewPassword] = useState('');
 
     useEffect(() => {
@@ -20,12 +22,38 @@ const AdminUserCard = ({ el, allUsers, setAllUsers }) => {
     const handleEditUser = async (e) => {
         e.preventDefault();
 
-        const { username, role, email, password, _id } = el;
+        // const { username, role, email, _id } = el;
 
         const newInfo = {
-            username: newUsername === '' ? username : newUsername,
-            role: newRole === '' ? role : newRole,
-            email: newEmail === '' ? email : newEmail,
+            username: newUsername !== username ? newUsername : username,
+            role: newRole !== role ? newRole : role,
+            email: newEmail !== email ? newEmail : email,
+        };
+
+        const newUserData = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "x-auth": token
+            },
+            body: JSON.stringify(newInfo)
+        };
+
+        const request = await fetch('/admin/userinfo/' + _id, newUserData);
+        const response = await request.json();
+        console.log(response)
+        if (response.success) {
+            setEditInfo(false);
+            setAllUsers(response.users)
+        };
+    };
+
+    const handleEditPassword = async (e) => {
+        e.preventDefault();
+
+        const { password, _id } = el;
+
+        const newInfo = {
             password: newPassword === '' ? password : newPassword,
         };
 
@@ -38,10 +66,10 @@ const AdminUserCard = ({ el, allUsers, setAllUsers }) => {
             body: JSON.stringify(newInfo)
         };
 
-        const request = await fetch('/admin/' + _id, newUserData);
+        const request = await fetch('/admin/password/' + _id, newUserData);
         const response = await request.json();
         if (response.success) {
-            setEditInfo(false);
+            setEditPassword(false);
         };
     };
 
@@ -72,16 +100,13 @@ const AdminUserCard = ({ el, allUsers, setAllUsers }) => {
                         <div className="item-edit-form">
                             <form onSubmit={handleEditUser} className="item-edit-form">
                                 <label htmlFor="username" className="item-edit-label item-edit-label-info">
-                                    <input type="text" placeholder={el.username} onChange={(e) => setNewUserName(e.target.value)} />
+                                    <input type="text" value={newUsername} onChange={(e) => setNewUserName(e.target.value)} />
                                 </label>
                                 <label htmlFor="role" className="item-edit-label item-edit-label-info">
                                     <input type="text" placeholder={el.role} onChange={(e) => setNewRole(e.target.value)} />
                                 </label>
                                 <label htmlFor="email" className="item-edit-label item-edit-label-info">
                                     <input type="email" placeholder={el.email} onChange={(e) => setNewEmail(e.target.value)} />
-                                </label>
-                                <label htmlFor="password" className="item-edit-label item-edit-label-info">
-                                    <input type="password" placeholder="password" onChange={(e) => setNewPassword(e.target.value)} />
                                 </label>
                                 <div className="ok-cancel">
                                     <button type="submit" className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
@@ -90,21 +115,43 @@ const AdminUserCard = ({ el, allUsers, setAllUsers }) => {
                             </form>
                         </div>
                     </Fragment>
+                :
+                    editPassword ?
+                        <Fragment>
+                            <div className="item-edit-form">
+                                <form onSubmit={handleEditPassword} className="item-edit-form">
+                                    <label htmlFor="password" className="item-edit-label item-edit-label-info">
+                                        <input type="password" placeholder="password" onChange={(e) => setNewPassword(e.target.value)} />
+                                    </label>
+                                    <div className="ok-cancel">
+                                        <button type="submit" className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faCheck}/></button>
+                                        <button className="item-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditInfo(false)}/></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </Fragment>
                     :
-                    <Fragment>
-                        <ul className="item-card">
-                            <li className="item"><span className="category">Username: </span>{el.username}</li>
-                            <li className="item"><span className="category">Role: </span>{el.role}</li>
-                            <li className="item"><span className="category">Email: </span>{el.email}</li>
-                            <li className="item"><span className="category">Password: </span>...</li>
-                            </ul>
-                        <div className="item-edit-delete">
-                            <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
-                            <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
-                                if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteUser(e) }
-                            }} />
-                        </div>
-                    </Fragment>
+                        <Fragment>
+                            <div className="item-card">
+                                <div className="edit-info">
+                                    <p className="item"><span className="category">Username: </span>{el.username}</p>
+                                    <p className="item"><span className="category">Role: </span>{el.role}</p>
+                                    <p className="item"><span className="category">Email: </span>{el.email}</p>
+                                    <div className="item-edit-delete">
+                                        <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
+                                        <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
+                                            if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteUser(e) }
+                                        }} />
+                                    </div>
+                                </div>
+                                <div className="edit-pass">
+                                    <p className="item"><span className="category">Password: </span>...</p>
+                                    <div className="item-edit-delete">
+                                        <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditPassword(true)} />
+                                    </div>
+                                </div>
+                            </div>
+                        </Fragment>
             }
         </div>
     )

@@ -44,6 +44,7 @@ const FicListData = () => {
 
     useEffect(() => {
         listInfo.ficList ? setListFandom(listInfo.ficList.listFandom) : setListFandom(listInfo.listFandom);
+        listInfo.ficList ? setNewListFandom(listInfo.ficList.listFandom) : setNewListFandom(listInfo.listFandom);
         listInfo.ficList ? setListId(listInfo.ficList._id) : setListId(listInfo._id);
     }, [listInfo.ficList, listInfo.listFandom, listInfo._id]);
 
@@ -91,7 +92,7 @@ const FicListData = () => {
         e.preventDefault();
 
         const newListInfo = {
-            listFandom: newListFandom === '' ? listFandom : newListFandom,
+            listFandom: newListFandom === listFandom ? listFandom : newListFandom,
             listType: "fanfiction",
         };
 
@@ -155,7 +156,7 @@ const FicListData = () => {
                                         <button className="list-save-button"><FontAwesomeIcon className="icon-ch-ca" title="edit" icon={faTimes} onClick={() => setEditListInfo(false)}/></button>
                                     </div>
                                     <label htmlFor="listFandom" className={isMobile ? "margin list-edit-label" : "list-edit-label"}>Fandom:
-                                        <input type="text" placeholder={listFandom} onChange={(e) => setNewListFandom(e.target.value)} />
+                                        <input type="text" value={newListFandom} onChange={(e) => setNewListFandom(e.target.value)} />
                                     </label>
                                 </form>
                             </div>

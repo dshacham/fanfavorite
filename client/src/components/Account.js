@@ -144,7 +144,7 @@ const Account = () => {
                         <Fragment>
                             <div className="personal-info">
                                 <div className="greetings">
-                                    <p className="label-name">Hello, <span className="info">{userData && userData.username}</span>!</p>
+                                    <p className="label-name">Hi, <span className="info">{userData && userData.username}</span>!</p>
                                     <p className="label-email">{userData && userData.email}</p>
                                 </div>
                                 <form onSubmit={handleEditUsername} className="edit-username-form">
@@ -170,7 +170,7 @@ const Account = () => {
                         <Fragment>
                             <div className="personal-info">
                                 <div className="greetings">
-                                    <p className="label-name">Hello, <span className="info">{userData && userData.username}</span>!</p>
+                                    <p className="label-name">Hi, <span className="info">{userData && userData.username}</span>!</p>
                                     <p className="label-email">{userData && userData.email}</p>
                                 </div>
                                 <form onSubmit={handleEditPassword} className="edit-pass-form">
@@ -201,7 +201,7 @@ const Account = () => {
                                     <div className="personal-info">
                                         <Fragment>
                                             <div className="greetings">
-                                                <p className="label-name">Hello, <span className="info">{userData && userData.username}</span>!</p>
+                                                <p className="label-name">Hi, <span className="info">{userData && userData.username}</span>!</p>
                                                 <p className="label-email">{userData && userData.email}</p>
                                             </div>
                                             <div className="buttons">
