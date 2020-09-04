@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import Context from './Context';
 import '../style/Landing.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -57,10 +58,10 @@ const Landing = () => {
     // });
     
     return (
-        <div className="homepage-container">
-            <div className="landing">
+        <div className={isMobile ? "homepage-container" : "homepage-container desktop-margin"}>
+            <div className={isMobile ? "landing mobile-width" : "landing"}>
                 <form className="login-form" onSubmit={handleLogin}>
-                    <h2 className="h2-login">Login</h2>
+                    <h2 className="h2-login">LOGIN</h2>
                     <label className="login-label">Email
                         <input
                             className="login-input"

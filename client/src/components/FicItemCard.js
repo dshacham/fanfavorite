@@ -3,7 +3,7 @@ import { isMobile } from 'react-device-detect';
 import '../style/ItemCard.scss';
 import Context from './Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 const FicItemCard = ({ fic }) => {
     const { listInfo, setListInfo, token } = useContext(Context);
@@ -18,6 +18,7 @@ const FicItemCard = ({ fic }) => {
     const [newSource, setNewSource] = useState('');
 
     const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [isListExpended, setIsListExpended] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -135,15 +136,63 @@ const FicItemCard = ({ fic }) => {
                         </div>
                     </Fragment>
                     :
-                    ficInfo ?
+                    ficInfo && isMobile ?
+                        <Fragment>
+                            {
+                                isListExpended ?
+                                    <FontAwesomeIcon className="arrow" title="collapse list" icon={faChevronUp} onClick={(e) => setIsListExpended(false)} />
+                                :
+                                    <FontAwesomeIcon className="arrow" title="expend list" icon={faChevronDown} onClick={(e) => setIsListExpended(true)} />
+                            }
+                            <ul className="item-card">
+                                {
+                                    isListExpended ?
+                                        <Fragment>
+                                            <li className="item"><span className="category">Title: </span><a href={ficInfo.source} target='_blank' rel="noopener noreferrer">{ficInfo.title}</a></li>
+                                            <li className="item"><span className="category">Ship: </span>{ficInfo.ship}</li>
+                                            <li className="item"><span className="category">Author: </span>{ficInfo.author}</li>
+                                            {
+                                                ficInfo.genre ?
+                                                    <li className="item"><span className="category">Genre: </span>{ficInfo.genre}</li>
+                                                : null
+                                            }
+                                            {
+                                                ficInfo.description ?
+                                                    <li className="item"><span className="category">Description: </span>{ficInfo.description}</li>
+                                                : null
+                                            }
+                                        </Fragment>
+                                    :
+                                        <Fragment>
+                                            <li className="item"><span className="category">Title: </span><a href={ficInfo.source} target='_blank' rel="noopener noreferrer">{ficInfo.title}</a></li>
+                                            <li className="item"><span className="category">Ship: </span>{ficInfo.ship}</li>
+                                        </Fragment>
+                                }
+                            </ul>
+                            <div className="item-edit-delete">
+                                <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
+                                <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
+                                    if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteItem(e) }
+                                }} />
+                            </div>
+                        </Fragment>
+                    :
+                    ficInfo && !isMobile ?
                         <Fragment>
                             <ul className="item-card">
-                                <li className="item"><span className="category">Title: </span>{ficInfo.title}</li>
-                                <li className="item"><span className="category">Author: </span>{ficInfo.author}</li>
+                                <li className="item"><span className="category">Title: </span><a href={ficInfo.source} target='_blank' rel="noopener noreferrer">{ficInfo.title}</a></li>
                                 <li className="item"><span className="category">Ship: </span>{ficInfo.ship}</li>
-                                <li className="item"><span className="category">Genre: </span>{ficInfo.genre}</li>
-                                <li className="item"><span className="category">Description: </span>{ficInfo.description}</li>
-                                <li className="item"><span className="category">Source: </span><a href={ficInfo.source} target='_blank' rel="noopener noreferrer">Link</a></li>
+                                <li className="item"><span className="category">Author: </span>{ficInfo.author}</li>
+                                {
+                                    ficInfo.genre ?
+                                        <li className="item"><span className="category">Genre: </span>{ficInfo.genre}</li>
+                                    : null
+                                }
+                                {
+                                    ficInfo.description ?
+                                        <li className="item"><span className="category">Description: </span>{ficInfo.description}</li>
+                                    : null
+                                }
                             </ul>
                             <div className="item-edit-delete">
                                 <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />

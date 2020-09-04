@@ -165,7 +165,7 @@
     
         .fic-list-container, .eps-list-container {
             width: 100%;
-            padding: 1rem 2rem 3rem 2rem;
+            padding: 1rem 2rem 3rem;
             border: 1.1rem solid rgba(176, 125, 98, 0.05);
             box-shadow: 1px 1px 5px rgba(176, 125, 98, 0.5);
             border-radius: $border;
@@ -214,6 +214,12 @@
                 font-weight: bold;
                 align-self: center;
             }
+        }
+        .fic-list-container {
+            margin-right: 1rem;
+        } 
+        .eps-list-container {
+            margin-left: 1rem;
         }
     }
 }
@@ -271,6 +277,7 @@
 
 @media screen and (max-width: 555px) {
     .account-container {
+        margin: 0 0 3rem;
         .personal-account {
             width: 100%;
             padding: 0.3rem 0;
@@ -289,6 +296,11 @@
         .personal-lists {
             flex-direction: column;
             margin: 0.05rem 0;
+
+            .fic-list-container, .eps-list-container {
+                margin: 0;
+                padding: 2rem 0;
+            }
         }
     }
 }

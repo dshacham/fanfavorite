@@ -1,5 +1,6 @@
 import React, { useContext, Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { isMobile } from 'react-device-detect';
 import Context from './Context';
 import '../style/ListData.scss';
@@ -29,6 +30,10 @@ const EpListData = () => {
 
     const unsortedEps = [];
     const [allListEps, setAllListEps] = useState([]);
+
+    const hideHash = (e) => {
+        e.preventDefault();
+    };
     
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -187,7 +192,7 @@ const EpListData = () => {
     });
 
     return (
-        <div className="list-data-container">
+        <div className={isMobile ? "list-data-container mobile-width" : "list-data-container"}>
             <div className="list-details">
                 {
                     listInfo && editListInfo ?
@@ -219,6 +224,9 @@ const EpListData = () => {
                                 }} />
                             </div>
                             <h2 className={isMobile ? "list-h2-mobile" : "list-h2"}><span className="list-title">Episodes List:</span> {listFandom}</h2>
+                            <div className="add-to-list-top">
+                                <HashLink onClick={hideHash} to="/eplist#add-form"><FontAwesomeIcon className="icon-add" title="add" icon={faPlus} onClick={() => setAddToList(true)}/></HashLink>
+                            </div>
                         </Fragment>
                         : null
                 }
@@ -233,11 +241,11 @@ const EpListData = () => {
                             <p className="no-lists">You haven't added any items.</p>
                     }
                 </div>
-                <div className="add-form">
+                <div className="add-form" id="add-form">
                     {
                         addToList ?
                             <div className="item-form-container">
-                                <form className="item-form" onSubmit={handleAddItem}>
+                                <form className={isMobile ? "item-form item-form-mobile" : "item-form"} onSubmit={handleAddItem}>
                                     <h2 className="h2-item">ADD TO THE LIST</h2>
                                     <label className="item-label">Title *
                                         <input className="item-input" type="text" value={title} required placeholder="episode name..."

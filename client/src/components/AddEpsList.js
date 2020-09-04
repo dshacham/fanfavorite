@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import Context from './Context';
-import '../style/AddFicList.scss';
+import '../style/AddList.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
@@ -56,9 +57,12 @@ const AddEpsList = () => {
     });
 
     return (
-        <div className="form-container">
+        <div className={isMobile ? "form-container mobile-width" : "form-container"}>
             <form className="list-form" onSubmit={handleCreateList}>
-                <h2 className="h2-list">CREATE AN EPISODE LIST</h2>
+                <div className="h2-list">
+                    <p>CREATE A LIST:</p>
+                    <h2>EPISODES</h2>
+                </div>
                 <label className="list-label">Fandom *
                     <input
                         className="list-input"

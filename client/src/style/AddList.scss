@@ -7,12 +7,12 @@
     display: flex;
     justify-content: center;
     color: $brown-sugar;
+    margin: 2rem 0 3.5rem;
 
     .list-form {
         width: 100%;
         height: 100%;
         padding: 2rem 0;
-        margin: 2rem 0 3.5rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -22,7 +22,7 @@
         border-radius: $border;
 
         .h2-list {
-            margin: 1rem 0;
+            margin: 0 0 1rem;
             letter-spacing: 0.1rem;
             text-align: center;
         }
@@ -74,24 +74,30 @@
     }
 }
 
-@media screen and (max-width: 599px) {
-    .form-container {
-        width: 95%;
-        .list-form {
-            margin: 2rem 0 2rem;
-            padding: 2rem 0.5rem;
-            .list-label {
-                width: 100%;
-            }
-        }
-    }
+.mobile-width {
+    width: 100%;
+    padding: 0.1rem 0;
+    margin: 0;
 }
 
-@media screen and (max-width: 768px) and (min-width: 600px) {
-    .form-container {
-        width: 75%;
-    }
-}
+// @media screen and (max-width: 599px) {
+//     .form-container {
+//         width: 95%;
+//         .list-form {
+//             margin: 2rem 0 2rem;
+//             padding: 2rem 0.5rem;
+//             .list-label {
+//                 width: 100%;
+//             }
+//         }
+//     }
+// }
+
+// @media screen and (max-width: 768px) and (min-width: 600px) {
+//     .form-container {
+//         width: 75%;
+//     }
+// }
 
 @media screen and (max-width: 949px) and (min-width: 769px) {
     .form-container {

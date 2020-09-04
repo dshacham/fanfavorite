@@ -3,7 +3,7 @@ import { isMobile } from 'react-device-detect';
 import '../style/ItemCard.scss';
 import Context from './Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrashAlt, faCheck, faTimes, faSpinner, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 const EpItemCard = ({ ep }) => {
     const { setListInfo, token } = useContext(Context);
@@ -16,6 +16,7 @@ const EpItemCard = ({ ep }) => {
     const [newSource, setNewSource] = useState('');
 
     const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [isListExpended, setIsListExpended] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -109,7 +110,48 @@ const EpItemCard = ({ ep }) => {
                         </div>
                     </Fragment>
                     :
-                    ep ?
+                    ep && isMobile ?
+                        <Fragment>
+                            {
+                                isListExpended ?
+                                    <FontAwesomeIcon className="arrow" title="collapse list" icon={faChevronUp} onClick={(e) => setIsListExpended(false)} />
+                                :
+                                    <FontAwesomeIcon className="arrow" title="expend list" icon={faChevronDown} onClick={(e) => setIsListExpended(true)} />
+                            }
+                            <ul className="item-card">
+                                {
+                                    isListExpended ?
+                                        <Fragment>
+                                            <li className="item"><span className="category">Title: </span>{ep.title}</li>
+                                            <li className="item"><span className="category">Season: </span>{ep.season}</li>
+                                            <li className="item"><span className="category">Number: </span>{ep.number}</li>
+                                            {
+                                                ep.whyFave ?
+                                                    <li className="item"><span className="category">Why is it a fave?: </span>{ep.whyFave}</li>
+                                                : null
+                                            }
+                                            {
+                                                ep.source ?
+                                                    <li className="item"><span className="category">Link to info: </span><a href={ep.source} target='_blank' rel="noopener noreferrer">Link</a></li>
+                                                : null
+                                            }
+                                        </Fragment>
+                                    :
+                                        <Fragment>
+                                            <li className="item"><span className="category">Title: </span>{ep.title}</li>
+                                            <li className="item">{ep.season} x {ep.number}</li>
+                                        </Fragment>
+                                }
+                            </ul>
+                            <div className="item-edit-delete">
+                                <FontAwesomeIcon className="icon-ed-de" title="edit" icon={faPencilAlt} onClick={() => setEditInfo(true)} />
+                                <FontAwesomeIcon className="icon-ed-de" title="delete" icon={faTrashAlt} onClick={(e) => {
+                                    if (window.confirm(`Are you sure you want to delete item from list?`)) { deleteItem(e) }
+                                }} />
+                            </div>
+                        </Fragment>
+                    :
+                    ep && !isMobile ?
                         <Fragment>
                             <ul className="item-card">
                                 <li className="item"><span className="category">Title: </span>{ep.title}</li>

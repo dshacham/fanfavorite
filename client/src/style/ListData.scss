@@ -5,15 +5,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 60%;
 
     .list-details {
         display: flex;
         flex-direction: column;
         align-items: center;
-        // padding-bottom: 1.5rem;
-        box-shadow: -1px 1px 5px rgba(119, 73, 54, 0.5);
-        flex-basis: 60%;
+        box-shadow: inset -1px 1px 5px rgba(119, 73, 54, 0.5);
+        flex-basis: 100%;
 
         .list-h2 {
             font-weight: bold;
@@ -39,9 +38,21 @@
             }
         }
 
+        .add-to-list-top {
+            margin: 0 0 1rem;
+            .icon-add {
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 1.25rem;
+            }
+            .icon-add:hover {
+                color: $cafe-au-lait;
+            }
+        }
+
         .list-edit-delete {
             text-align: right;
-            background-color: $brown-sugar;
+            background-color: $browner-sugar;
             width: 100%;
             margin: 0 0.5rem 1rem;
             padding: 0.3rem 0.8rem;
@@ -49,10 +60,10 @@
             .icon-ed-de {
                 margin: 0 0.3rem;
                 cursor: pointer;
-                color: $champagne-darker;
+                color: $champagne-darkest;
             }
             .icon-ed-de:hover {
-                color: $coffee-darker;
+                color: $antique-brass;
             }
         }
 
@@ -61,16 +72,17 @@
             justify-content: space-between;
             margin-bottom: 1.5rem;
             padding: 0.5rem 0.2rem;
-            background-color: $brown-sugar;
+            background-color: $browner-sugar;
             width: 100%;
     
             .icon-ed-de {
                 margin: 0 1rem;
                 font-size: 1.5rem;
                 cursor: pointer;
-                color: $champagne-darker;
+                color: $champagne-darkest;
             }
         }
+
 
         .list-items-container {
             display: flex;
@@ -86,14 +98,12 @@
 
         .add-form {
             width: 100%;
-            margin-top: 2rem;
 
             .add-to-list {
                 width: 100%;
                 background-color: $champagne-darker;
                 display: flex;
                 justify-content: center;
-                margin-top: 2rem;
                 padding: 0.3rem 0.8rem;
 
                 .icon-add {
@@ -109,7 +119,6 @@
 
             .item-form-container {
                 width: 100%;
-                height: auto;
                 display: flex;
                 justify-content: center;
                 color: $brown-sugar;
@@ -190,6 +199,9 @@
                             cursor: initial;
                         }
                     }
+                }
+                .item-form-mobile {
+                    width: 100%;
                 }
             }
         }
@@ -277,53 +289,19 @@
     }
 }  
 
-
 .list-data-container:hover .list-edit-delete {
     color: $brown-sugar;
 }
 
-@media screen and (max-width: 450px) {
-    .list-data-container {
-        .list-details {
-            flex-basis: 95%;
-
-            .add-form {
-                .item-form-container {
-                    .item-form {
-                        width: 100%;
-                        flex-direction: column;
-                        .item-label {
-                            width: 95%;
-                        }
-                    }
-                }
-            }
-        }
-
-    }
+.mobile-width {
+    width: 100%;
+    padding: 0.05rem 0;
+    margin: 0 0 3rem;
 }
 
-@media screen and (max-width: 600px) and (min-width: 451px) {
+@media screen and (max-width: 1024px) and (min-width: 769px) {
     .list-data-container {
-        .list-details {
-            flex-basis: 95%;
-
-            .add-form {
-                .item-form-container {
-                    .item-form {
-                        width: 100%;
-                    }
-                }
-            }
-        }
-
-    }
-}
-
-@media screen and (max-width: 1024px) and (min-width: 601px) {
-    .list-data-container {
-        .list-details {
-            flex-basis: 80%;
-        }
+        width: 80%;
+        margin-top: 2rem;
     }
 }

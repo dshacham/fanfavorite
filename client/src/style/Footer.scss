@@ -8,54 +8,101 @@ footer {
     background-color: $coffee-darkest;
     color: $champagne-darker;
     width: 100%;
-    padding: 1rem 0;
+    padding: 1rem;
     margin: 4rem 0 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
 
-    .name-help {
-        display: flex;
-        align-items: center;
-        margin: -0.5rem 0 0;
+    .to-top {
+        .to-top-btn {
+            background: none;
+            border: none;
 
-        .footer-name {
-            font-family: 'Calistoga', cursive;
-            opacity: 0.6;
+            .icon-top {
+                margin: 0 1rem;
+                font-size: 2.5rem;
+                color: $champagne-darker;
+                cursor: pointer;
+            }
+            .icon-top:hover {
+                color: $cafe-au-lait
+            }
         }
+    }
+
+    .footer-contact {
+        text-align: center;
+    }
+    
+    .footer-contact, .about-icon {
         a {
-            margin-left: 1rem;
-            padding-top: 0.5rem;
+            margin: 0 1rem;
+            padding: 0;
             font-size: 2rem;
-            color: $champagne-darker;
+            color: $champagne-darkest;
 
             .icon:hover {
                 color: $cafe-au-lait
             }
         }
-    }
-    
-    .footer-contact {
-        a {
-            margin: 0 1rem;
-            padding: 0;
-            font-size: 2rem;
-            color: $champagne-darker;
 
-            .icon:hover {
-                color: $cafe-au-lait
+        .footer-name {
+            font-family: 'Calistoga', cursive;
+            text-align: center;
+            font-size: 0.8rem;
+            letter-spacing: 0.1rem;
+            opacity: 0.6;
+        }
+    }
+    .about-icon {
+        a {
+            color: $champagne-darker;
+        }
+    }
+}
+
+@media screen and (max-width: 317px) {
+    footer {
+        align-items: flex-start;
+        .to-top {
+            .to-top-btn {
+                .icon-top {
+                    margin: 0 0.5rem;
+                }
+            }
+        }
+        .footer-contact {
+            a {
+                margin: 0 0.5rem;
+            }
+        }
+        .about-icon {
+            a {
+                margin: 0 0.5rem;
             }
         }
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) and (min-width: 318px) {
     footer {
-        padding-bottom: 0;
-        .name-help, .footer-contact {
+        .to-top {
+            .to-top-btn {
+                .icon-top {
+                    margin: 0 0.5rem;
+                }
+            }
+        }
+        .footer-contact {
             a {
-                font-size: 3rem;
+                margin: 0 1rem;
+            }
+        }
+        .about-icon {
+            a {
+                margin: 0 0.5rem;
             }
         }
     }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import Context from './Context';
 import '../style/SignUp.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -62,7 +63,7 @@ const SignUp = () => {
 
     return (
         <div className="signup-container">
-            <form className="signup-form" onSubmit={handleSignUp}>
+            <form className={isMobile ? "signup-form mobile-width" : "signup-form"} onSubmit={handleSignUp}>
                 <h2 className="h2-signup">SIGN UP</h2>
                 <label className="signup-label">Username *
                     <input
