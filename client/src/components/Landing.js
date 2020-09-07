@@ -8,7 +8,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Landing = () => {
     const history = useHistory();
-    const { setUserData, setToken, setLoggedIn, loggedIn, setUserFicLists, setUserEpLists } = useContext(Context);
+    const { setUserData, setToken, setLoggedIn, setUserFicLists, setUserEpLists } = useContext(Context);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

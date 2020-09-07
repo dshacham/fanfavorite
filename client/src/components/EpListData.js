@@ -39,7 +39,7 @@ const EpListData = () => {
         window.scrollTo(0, 0);
 
         const list = localStorage.getItem('list-info');
-        if (list) {
+        if (list && listInfo === '') {
             setListInfo(JSON.parse(list));
         };
     }, []);

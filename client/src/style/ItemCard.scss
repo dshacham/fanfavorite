@@ -18,10 +18,10 @@
     .item-card {
         width: 100%;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         flex-wrap: wrap;
         margin: 2rem 0;
-        padding-left: 1.5rem;
+        padding: 0 0.5rem;
         
         .item {
             font-weight: bold;
@@ -46,11 +46,11 @@
         align-self: stretch;
         padding: 0.5rem;
         background-color: $champagne-darker;
-        visibility: hidden;
 
         .icon-ed-de {
             margin: 0.3rem 0;
             cursor: pointer;
+            color: $cafe-au-lait;
         }
         .icon-ed-de:hover {
             color: $coffee-darker;
@@ -124,18 +124,12 @@
     }
 }  
 
-.item-cards-container-desktop:hover .item-edit-delete {
-    visibility: visible;
-    color: $brown-sugar;
-}
-
 
 .item-cards-container-mobile {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
     justify-content: space-between;
-    // box-shadow: -1px 1px 5px rgba(119, 73, 54, 0.4);
     border-radius: $border;
     width: 100%;
     border-bottom-width: 0.1rem;
